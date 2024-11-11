@@ -1,40 +1,35 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 public class Login extends JFrame {
   public Login() {
     setLayout(null);
+    setSize(800, 600);
+    
+
     // Tombol
-    JButton button = new JButton("LOGIN");
+    JButton button = new JButton("Ayo Mulai");
     button.setBounds(700, 370, 165,50);
     add(button);
     // Frame  
     setTitle("Sistem perbelanjaan");
     setExtendedState(JFrame.MAXIMIZED_BOTH);
     setVisible(true);
+    SwingUtilities.invokeLater(() -> Background_id.updateBackground(this, "D:/PBO/UAS/project-pbo-kelompok-3/pict/LOGIN.jpg"));
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    updateBackground();
-  }
+    
+  
 
-  private void updateBackground(){
-
-    ImageIcon backgroundImage = new ImageIcon("D:/PBO/UAS/project-pbo-kelompok-3/pict/LOGIN.jpg");
-    Image img = backgroundImage.getImage();
-    Image newImg = img.getScaledInstance(getWidth(), getHeight(), Image.SCALE_SMOOTH);
-    backgroundImage = new ImageIcon(newImg);
-
-    JLabel backgroundLabel = new JLabel(backgroundImage);
-    backgroundLabel.setBounds(0, 0, backgroundImage.getIconWidth(), backgroundImage.getIconHeight());
-
-    add(backgroundLabel);
-
-    getContentPane().setComponentZOrder(backgroundLabel, getContentPane().getComponentCount()-1);
-    repaint();
-  }
-   public static void main(String[] args) {
-    Login frame = new Login();
-    frame.setVisible(true); 
-  }
-
+  // Action Listener untuk tombol
+  button.addActionListener(new ActionListener() {
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        new UserAdmin(); // Membuka jendela UserAdmin
+        dispose(); // Menutup jendela Login
+    }
+  });
+}
 }
