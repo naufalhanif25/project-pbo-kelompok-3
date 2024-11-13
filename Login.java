@@ -27,8 +27,8 @@ public class Login extends JFrame {
   button.addActionListener(new ActionListener() {
     @Override
     public void actionPerformed(ActionEvent e) {
-        new UserAdmin(); // Membuka jendela UserAdmin
-        dispose(); // Menutup jendela Login
+        new UserAdmin(); 
+        dispose(); 
     }
   });
 }
