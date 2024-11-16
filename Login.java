@@ -1,35 +1,16 @@
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 
 public class Login extends JFrame {
-  public Login() {
-    setLayout(null);
-    setSize(800, 600);
-    
+    public Login() {
 
-    // Tombol
-    JButton button = new JButton("Ayo Mulai");
-    button.setBounds(700, 370, 165,50);
-    add(button);
-    // Frame  
-    setTitle("Sistem perbelanjaan");
-    setExtendedState(JFrame.MAXIMIZED_BOTH);
-    setVisible(true);
-    SwingUtilities.invokeLater(() -> Background_id.updateBackground(this, "D:/PBO/UAS/project-pbo-kelompok-3/pict/LOGIN.jpg"));
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
-  
-
-  // Action Listener untuk tombol
-  button.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        new UserAdmin(); 
-        dispose(); 
+        JFrame login = new JFrame("Login");
+        login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        login.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        login.setSize(800, 600);
+        login.setLocationRelativeTo(null);
+        
+        // Panggil Panellogin
+        login.add(new LoginPanel());
+        login.setVisible(true);
     }
-  });
-}
 }
