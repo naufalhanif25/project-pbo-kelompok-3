@@ -110,7 +110,7 @@ public class LoginPanel extends JPanel {
         login.setBounds(700 + 20, 400, 130, 40);
         login.setFocusPainted(false);
         login.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        login.addActionListener(e -> handleLogin());
+        login.addActionListener(e -> tombollogin());
         add(login);
 
         //
@@ -128,11 +128,11 @@ public class LoginPanel extends JPanel {
         buatakun.setBounds(540 + 160, 500, 160, 40); 
         buatakun.setFocusPainted(false);
         buatakun.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        buatakun.addActionListener(e -> handleCreateAccount());
+        buatakun.addActionListener(e -> tombolcreateakun());
         add(buatakun);
     }
 
-    private void handleLogin() {
+    private void tombollogin() {
         String lusername = username.getText();
         String lpassword = new String(password.getPassword());
         String role = (String) roleBox.getSelectedItem();
@@ -151,7 +151,7 @@ public class LoginPanel extends JPanel {
         }
     }
 
-    private void handleCreateAccount() {
+    private void tombolcreateakun() {
         // Mendapatkan frame saat ini dan menutupnya
         JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (currentFrame != null) {

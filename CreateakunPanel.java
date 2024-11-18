@@ -42,49 +42,49 @@ private void addComponents() {
     JLabel titleLabel = new JLabel("Create Account");
     titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
     titleLabel.setForeground(new Color(50, 50, 50));
-    titleLabel.setBounds(650 + 80, 150, 240, 40);
+    titleLabel.setBounds(595 + 80, 185, 240, 40);
     add(titleLabel);
 
     // Role Label
     JLabel crole_id = new JLabel("Pilih Role:");
     crole_id.setFont(new Font("Arial", Font.BOLD, 16));
     crole_id.setForeground(Color.DARK_GRAY);
-    crole_id.setBounds(580 + 20, 200, 100, 30);
+    crole_id.setBounds(580 + 20, 250, 100, 30);
     add(crole_id);
 
     // ComboBox Role
     String[] roles = {"Admin", "User"};
     CroleBox = new JComboBox<>(roles);
     CroleBox.setFont(new Font("Arial", Font.PLAIN, 14));
-    CroleBox.setBounds(580 + 120, 200, 180, 30);
+    CroleBox.setBounds(580 + 120, 250, 180, 30);
     add(CroleBox);
 
     // Username Label
     JLabel cusername_id = new JLabel("Username:");
     cusername_id.setFont(new Font("Arial", Font.BOLD, 16));
     cusername_id.setForeground(Color.DARK_GRAY);
-    cusername_id.setBounds(580 + 20, 250, 100, 30);
+    cusername_id.setBounds(580 + 20, 300, 100, 30);
     add(cusername_id);
 
     // TextField Username
     Cusername = new JTextField(20);
     Cusername.setFont(new Font("Arial", Font.PLAIN, 14));
     Cusername.setBorder(new LineBorder(new Color(200, 200, 200), 1, true));
-    Cusername.setBounds(580 + 120, 250, 180, 30);
+    Cusername.setBounds(580 + 120, 300, 180, 30);
     add(Cusername);
 
     // Password Label
     JLabel cpassword_id = new JLabel("Password:");
     cpassword_id.setFont(new Font("Arial", Font.BOLD, 16));
     cpassword_id.setForeground(Color.DARK_GRAY);
-    cpassword_id.setBounds(580 + 20, 300, 100, 30);
+    cpassword_id.setBounds(580 + 20, 350, 100, 30);
     add(cpassword_id);
 
     // PasswordField Password
     Cpassword = new JPasswordField(20);
     Cpassword.setFont(new Font("Arial", Font.PLAIN, 14));
     Cpassword.setBorder(new LineBorder(new Color(200, 200, 200), 1, true));
-    Cpassword.setBounds(580 + 120, 300, 180, 30);
+    Cpassword.setBounds(580 + 120, 350, 180, 30);
     add(Cpassword);
 
     // Create Account Button
@@ -92,8 +92,9 @@ private void addComponents() {
     cbutton.setFont(new Font("Arial", Font.BOLD, 14));
     cbutton.setBackground(new Color(58, 123, 245));
     cbutton.setForeground(Color.WHITE);
-    cbutton.setBounds(700 + 20, 350, 130, 40);
+    cbutton.setBounds(700 + 20, 400, 130, 40);
     cbutton.setFocusPainted(false);
+    cbutton.addActionListener(e -> buatakun());
     cbutton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     add(cbutton);
 
@@ -101,7 +102,7 @@ private void addComponents() {
     JLabel info = new JLabel("Sudah punya akun? Login di sini!");
     info.setFont(new Font("Arial", Font.BOLD, 16));
     info.setForeground(Color.DARK_GRAY);
-    info.setBounds(630 + 20, 400, 270, 30);
+    info.setBounds(630 + 20, 450, 270, 30);
     add(info);
 
     // Back to Login Button
@@ -109,36 +110,39 @@ private void addComponents() {
     backButton.setFont(new Font("Arial", Font.PLAIN, 14));
     backButton.setBackground(new Color(255, 102, 102));
     backButton.setForeground(Color.WHITE);
-    backButton.setBounds(540 + 160, 450, 160, 40);
+    backButton.setBounds(540 + 160, 500, 160, 40);
     backButton.setFocusPainted(false);
+    backButton.addActionListener(e -> kembaliLogin());
+
     backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     add(backButton);
 
-        // Listener untuk Tombol "Kembali Login"
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Contoh kembali ke frame login (buat implementasi Anda)
-                JPanel Login = (JPanel) getParent();
-                CardLayout cardLayout = (CardLayout) Login.getLayout();
-                cardLayout.show(Login, "Login"); 
-            }
-        });
-
-        // Listener untuk Tombol "Buat Akun"
-        cbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = Cusername.getText();
-                String password = new String(Cpassword.getPassword());
-                String role = (String) CroleBox.getSelectedItem();
-
-                // Contoh logika pembuatan akun
-                JOptionPane.showMessageDialog(CreateakunPanel.this,
-                        "Akun berhasil dibuat!\nUsername: " + username + "\nRole: " + role,
-                        "Informasi",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
-    }
 }
+    private void kembaliLogin(){
+        JFrame login = (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (login != null) {
+            login.dispose();
+        }
+         add(new Login());
+         setVisible(true);   
+    }
+
+         private void buatakun() {
+            String username = Cusername.getText();
+            String password = new String(Cpassword.getPassword());
+            String role = (String) CroleBox.getSelectedItem();
+    
+            // Validasi Pembuatan Akun
+            if (username.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Harap isi semua kolom untuk membuat akun.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if ("Admin".equals(role) && username.equals("admin") && password.equals("adminpass")) {
+                JOptionPane.showMessageDialog(this, "Akun berhasil dibuat sebagai Admin!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                //Navigasi ketika sudah membuat akun kedatabases sebagai Admin!
+            } else if ("User".equals(role) && username.equals("user") && password.equals("userpass")) {
+                JOptionPane.showMessageDialog(this, "Akun berhasil dibuat sebagai User!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                // Navigasi ketika sudah membuat akun kedatabases sebagai User!
+            } else {
+                JOptionPane.showMessageDialog(this, "Username atau password salah, atau akun belum terdaftar.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
