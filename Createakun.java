@@ -1,19 +1,22 @@
 
-  import javax.swing.*;
+import javax.swing.*;
 
 public class Createakun extends JFrame {
     public Createakun() {
       // Membuat JFrame untuk Create Account
-      JFrame buatakun = new JFrame("Create Account");
-      buatakun.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      buatakun.setExtendedState(JFrame.MAXIMIZED_BOTH);
-      buatakun.setSize(800, 600);
-      buatakun.setLocationRelativeTo(null);
+      setTitle("e-commerce");
+      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      setExtendedState(JFrame.MAXIMIZED_BOTH);
+      setSize(800, 600);
+      setLocationRelativeTo(null);
+    
+
+      //ICON
+      setIconImage(new ImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\IconRB.png").getImage());
 
       // Menambahkan CreateakunPanel ke JFrame
-      buatakun.add(new CreateakunPanel());
-      buatakun.setVisible(true);
+      add(new CreateakunPanel());
+      setVisible(true);
     }
 
   }
-

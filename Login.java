@@ -2,17 +2,17 @@ import javax.swing.*;
 
 public class Login extends JFrame {
     public Login() {
-
-        JFrame login = new JFrame("Login");
-        login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        login.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        login.setSize(800, 600);
-        login.setLocationRelativeTo(null);
+        setTitle("e-commerce");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setSize(800, 600);
+        setLocationRelativeTo(null);
         
+        //icon
+        setIconImage(new ImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\IconRB.png").getImage());
         
-        setIconImage(new ImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict").getImage());
         // Panggil Panellogin
-        login.add(new LoginPanel());
-        login.setVisible(true);
+        add(new LoginPanel());
+       setVisible(true);
     }
 }

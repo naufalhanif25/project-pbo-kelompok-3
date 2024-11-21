@@ -170,11 +170,13 @@ public class LoginPanel extends JPanel {
         if (currentFrame != null) {
             currentFrame.dispose();
         }
-        // Navigasi ke Createakun
-        JFrame createAccountFrame = new JFrame("Create Akun");
-        createAccountFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        createAccountFrame.setSize(800, 600);
-        createAccountFrame.add(new Createakun());
-        createAccountFrame.setVisible(true);
+    JFrame buatakun = new JFrame("CreateAkun");
+      buatakun.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      buatakun.setExtendedState(JFrame.MAXIMIZED_BOTH);
+      buatakun.setSize(800, 600);
+      buatakun.setLocationRelativeTo(null);
+
+      new Createakun();
+
     }
 }
