@@ -9,6 +9,8 @@ public class Login extends JFrame {
         login.setSize(800, 600);
         login.setLocationRelativeTo(null);
         
+        
+        setIconImage(new ImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict").getImage());
         // Panggil Panellogin
         login.add(new LoginPanel());
         login.setVisible(true);
