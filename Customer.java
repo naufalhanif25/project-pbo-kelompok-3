@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
-    private String username;
+    private String id;
     private String password;
     private List<Barang> cart;
     private List<Barang> purchaseHistory;
 
-    public Customer(String username, String password) {
-        this.username = username;
+    public Customer(String id, String password) {
+        this.id = id;
         this.password = password;
         this.cart = new ArrayList<>();
         this.purchaseHistory = new ArrayList<>();
@@ -41,7 +41,6 @@ public class Customer {
         System.out.println("Checkout berhasil");
     }
 
-    // Melihat riwayat pembelian
     public void viewPurchaseHistory() {
         if (purchaseHistory.isEmpty()) {
             System.out.println("Belum ada riwayat pembelian.");
@@ -55,9 +54,8 @@ public class Customer {
         }
     }
 
-    // Getter untuk username dan password
-    public String getNama() {
-        return username;
+    public String getId() {
+        return id;
     }
 
     public String getPass() {

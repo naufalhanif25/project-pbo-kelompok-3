@@ -1,3 +1,3 @@
 public interface Pembayaran {
-    void pay(int amount);
+    void bayar(int jumlah);
 }

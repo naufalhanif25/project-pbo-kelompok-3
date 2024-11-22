@@ -22,12 +22,4 @@ public class Invoice {
     public void setPembayaran(Pembayaran pembayaran) {
         this.pembayaran = pembayaran;
     }
-
-    @Override
-    public String toString() {
-        return "Invoice{" +
-                "Transaksi=" + transaksi +
-                ", Pembayaran=" + pembayaran +
-                '}';
-    }
 }

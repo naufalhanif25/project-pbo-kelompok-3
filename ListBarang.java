@@ -40,7 +40,8 @@ public class ListBarang {
             saveBarang();
             
             System.out.println("Barang berhasil dihapus: " + removedBarang);
-        } else {
+        } 
+        else {
             System.out.println("Error: ID barang tidak valid");
         }
     }
@@ -71,7 +72,8 @@ public class ListBarang {
             saveBarang();
             
             System.out.println("Barang berhasil diubah");
-        } else {
+        } 
+        else {
             System.out.println("Error: ID barang tidak valid");
         }
     }
@@ -105,7 +107,8 @@ public class ListBarang {
                     listBarang.add(barang);
                 }
             }
-        } catch (IOException e) {
+        } 
+        catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -118,7 +121,8 @@ public class ListBarang {
                 writer.write(barang.getNama() + ", " + barang.getHarga());
                 writer.newLine();
             }
-        } catch (IOException e) {
+        } 
+        catch (IOException e) {
             e.printStackTrace();
         }
         

@@ -7,14 +7,12 @@ import java.io.BufferedReader;
 import java.io.File;
 
 public class Inventory {
-    // HashMap untuk menyimpan inventaris barang
     private HashMap<String, Integer> inventory;
 
     public Inventory() {
         inventory = new HashMap<>();
     }
 
-    // Menambahkan barang ke dalam inventaris
     public void addItem(String itemName, int quantity) {
         if (inventory.containsKey(itemName)) {
             inventory.put(itemName, inventory.get(itemName) + quantity);
@@ -27,7 +25,6 @@ public class Inventory {
         System.out.println(itemName + " (q: " + quantity + ") successfully added");
     }
 
-    // Mencari barang dalam inventaris
     public void searchItem(String itemName) {
         if (inventory.containsKey(itemName)) {
             System.out.println(itemName + " (q: " + inventory.get(itemName) + ") found");
@@ -37,7 +34,6 @@ public class Inventory {
         }
     }
 
-    // Menampilkan semua barang dalam inventaris
     public void displayItems() {
         if (inventory.isEmpty()) {
             System.out.println("Inventory is empty");
@@ -51,7 +47,6 @@ public class Inventory {
         }
     }
 
-    // Menghapus barang dari inventaris
     public void removeItem(String itemName) {
         if (inventory.containsKey(itemName)) {
             inventory.remove(itemName);
@@ -63,7 +58,6 @@ public class Inventory {
         }
     }
 
-    // Menyimpan inventaris ke dalam file
     public void saveInventoryToFile(String fileName) {
         try { 
             File file = new File(fileName); 
@@ -82,7 +76,6 @@ public class Inventory {
         }
     }
 
-    // Membaca inventaris dari file
     public void loadInventoryFromFile(String fileName) {
         try { 
             File file = new File(fileName); 
@@ -120,7 +113,7 @@ public class Inventory {
     public static void main(String[] args) {
         Inventory storeInventory = new Inventory();
 
-        storeInventory.loadInventoryFromFile("data.txt"); // Load inventory from file at startup
+        storeInventory.loadInventoryFromFile("data.txt");
 
         Scanner scanner = new Scanner(System.in);
         String command;
