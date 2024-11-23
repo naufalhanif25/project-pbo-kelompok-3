@@ -1,25 +1,16 @@
 public class Invoice {
-    Transaksi transaksi;
-    Pembayaran pembayaran;
+    private Keranjang keranjang;
+    private String pembayaran;
 
-    public Invoice(Transaksi transaksi, Pembayaran pembayaran) {
-        this.transaksi = transaksi;
+    public Invoice(Keranjang keranjang, String pembayaran) {
+        this.keranjang = keranjang;
         this.pembayaran = pembayaran;
     }
 
-    public Transaksi getTransaksi() {
-        return transaksi;
-    }
-
-    public void setTransaksi(Transaksi transaksi) {
-        this.transaksi = transaksi;
-    }
-
-    public Pembayaran getPembayaran() {
-        return pembayaran;
-    }
-
-    public void setPembayaran(Pembayaran pembayaran) {
-        this.pembayaran = pembayaran;
+    public void showInvoice() {
+        System.out.println("======= Invoice =======");
+        keranjang.showKeranjang();
+        System.out.println("Total Harga: Rp" + keranjang.calculateHarga());
+        System.out.println("Pembayaran: " + pembayaran);
     }
 }

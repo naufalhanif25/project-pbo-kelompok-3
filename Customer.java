@@ -1,57 +1,15 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Scanner;
 
 public class Customer {
     private String id;
-    private String password;
-    private List<Barang> cart;
-    private List<Barang> purchaseHistory;
+    private String pass;
+    private Keranjang keranjang;
+    private ListBarang listBarang = new ListBarang();
 
-    public Customer(String id, String password) {
+    public Customer(String id, String pass) {
         this.id = id;
-        this.password = password;
-        this.cart = new ArrayList<>();
-        this.purchaseHistory = new ArrayList<>();
-    }
-
-    public void addToCart(Barang barang) {
-        cart.add(barang);
-    }
-
-    public void checkout() {
-        if (cart.isEmpty()) {
-            System.out.println("Keranjang belanja kosong. Tambahkan produk terlebih dahulu.");
-            return;
-        }
-
-        System.out.print("\n");
-        System.out.println("=== Checkout ===");
-        int total = 0;
-
-        for (Barang barang : cart) {
-            System.out.println(barang);
-            total += barang.getHarga();
-        }
-        System.out.println("Total yang harus dibayar: Rp" + total);
-
-        purchaseHistory.addAll(cart);
-
-        cart.clear();
-
-        System.out.println("Checkout berhasil");
-    }
-
-    public void viewPurchaseHistory() {
-        if (purchaseHistory.isEmpty()) {
-            System.out.println("Belum ada riwayat pembelian.");
-        } else {
-            System.out.print("\n");
-            System.out.println("=== Riwayat Pembelian ===");
-
-            for (Barang barang : purchaseHistory) {
-                System.out.println(barang);
-            }
-        }
+        this.pass = pass;
+        this.keranjang = new Keranjang(id);
     }
 
     public String getId() {
@@ -59,6 +17,93 @@ public class Customer {
     }
 
     public String getPass() {
-        return password;
+        return pass;
+    }
+
+    public void addBarang(Barang barang) {
+        keranjang.addBarang(barang);
+    }
+
+    public void checkout(String pembayaran) {
+        Invoice invoice = new Invoice(keranjang, pembayaran);
+
+        invoice.showInvoice();
+    }
+
+    public void customerMenu(Scanner scanner) {
+        listBarang.loadBarang(); 
+
+        while (true) {
+            System.out.print("\n");
+            System.out.println("========== User ==========");
+            System.out.println("1. Lihat Barang");
+            System.out.println("2. Checkout");
+            System.out.println("3. History");
+            System.out.println("4. Keluar");
+            System.out.print("Opsi: ");
+
+            String option = scanner.nextLine();
+
+            switch (option) {
+                case "1":
+                    listBarang.showBarang();
+
+                    System.out.print("\n");
+                    System.out.println("======= Opsi =======");
+                    System.out.println("1. Masukkan ke Keranjang");
+                    System.out.println("2. checkout");
+                    System.out.println("3. Kembali");
+                    System.out.println("Opsi: ");
+                    option = scanner.nextLine();
+
+                    switch (option) {
+                        case "1":
+                            System.out.print("\n");
+                            System.out.println("Nama Barang: ");
+                            String nama = scanner.nextLine();
+
+                            Barang barang = new Barang(nama);
+                            
+                            keranjang.addKeranjang(barang);
+                            
+                            break;
+                        case "2":
+                            keranjang.showKeranjang();
+
+                            System.out.print("\n");
+                            System.out.println("ID Barang: ");
+                            String idBarang = scanner.nextLine();
+
+                            keranjang.checkoutBarang(idBarang);
+
+                            break;
+                        case "3":
+                            break;
+                        default:
+                            System.out.print("\n");
+                            System.out.println("Error: Opsi tidak valid");
+
+                            break;
+                    }
+
+                    System.out.print("\n");
+                    System.out.println("Barang dimasukkan ke keranjang");
+
+                    break;
+                case "2":
+                    keranjang.showKeranjang();
+
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    return;
+                default:
+                    System.out.print("\n");
+                    System.out.println("Error: Opsi tidak valid");
+
+                    break;
+            }
+        }
     }
 }

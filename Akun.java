@@ -8,9 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Akun {
-    Akun akun;
-    String id;
-    String pass;
+    protected Akun akun;
+    protected String id;
+    protected String pass;
 
     public boolean login(String id_input, String pass_input, String option) {
         akun = new Akun();
@@ -77,6 +77,8 @@ public class Akun {
                     }
                 }
             }
+
+            buffer.close();            
         } 
         catch (IOException e) {
             e.printStackTrace();
@@ -85,7 +87,7 @@ public class Akun {
         return information;
     }
 
-    public void setIdPass(String id_input, String new_pass_input, BufferedReader buffer) {
+    public void setIdPass(String id_input, String new_pass_input) {
         List<String> data = new ArrayList<>();
         boolean found = false;
 
@@ -102,6 +104,8 @@ public class Akun {
 
                 data.add(parts[0] + ", " + parts[1]);
             }
+
+            buffer_read.close();
         } 
         catch (IOException e) {
             e.printStackTrace();
@@ -122,13 +126,15 @@ public class Akun {
 
             System.out.print("\n");
             System.out.println("Password berhasil diubah");
+
+            buffer_write.close();
         } 
         catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void createAkun(String id_input, String pass_input, BufferedReader buffer) {
+    public void createAkun(String id_input, String pass_input) {
         List<String> data = new ArrayList<>();
         boolean exists = false;
 
@@ -149,20 +155,24 @@ public class Akun {
 
                 data.add(line);
             }
+
+            buffer_read.close();
         } 
         catch (IOException e) {
             e.printStackTrace();
         }
 
         if (!exists) {
-            data.add(id_input + ", " + pass_input);
+            data.add(id_input + ", " + pass_input + "\n");
 
             try (BufferedWriter buffer_write = new BufferedWriter(new FileWriter("users.txt", true))) {
-                buffer_write.write(id_input + ", " + pass_input);
+                buffer_write.write(id_input + ", " + pass_input + "\n");
                 buffer_write.newLine();
 
                 System.out.print("\n");
                 System.out.println("Akun berhasil dibuat");
+
+                buffer_write.close();
             } 
             catch (IOException e) {
                 e.printStackTrace();
@@ -187,6 +197,8 @@ public class Akun {
                     data.add(line);
                 }
             }
+
+            buffer_read.close();
         } 
         catch (IOException e) {
             e.printStackTrace();
@@ -207,6 +219,8 @@ public class Akun {
 
             System.out.print("\n");
             System.out.println("Akun berhasil dihapus");
+
+            buffer_write.close();
         } 
         catch (IOException e) {
             e.printStackTrace();

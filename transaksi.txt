@@ -1,2 +1,2 @@
-TRX002, Fadhil, Baju:15000.0;Baju:25000.0, 40000.0
-TRX001, Naufal, Baju:10000.0;Baju:20000.0, 30000.0
+TRX1, Naufal, Topi:20000.0, 20000.0
+TRX2, Hanif, Baju:50000.0, 50000.0

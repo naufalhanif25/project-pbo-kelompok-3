@@ -5,9 +5,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class AdminDriver extends Driver {
-    ListBarang listBarang = new ListBarang();
-    List<Transaksi> listTransaksi = new ArrayList<>();
-    Admin akun;
+    private ListBarang listBarang = new ListBarang();
+    private List<Transaksi> listTransaksi = new ArrayList<>();
 
     @Override
     public void addBarang(Barang barang) {
@@ -48,22 +47,18 @@ public class AdminDriver extends Driver {
                     
                     if (barangStr != null) {
                         Transaksi transaksi = new Transaksi(id, user);
-                        String[] temp_items = barangStr.split(";");
+                        String[] items = barangStr.split(":");
 
-                        for (String temp_item : temp_items) {
-                            String[] items = temp_item.split(":");
-
-                            if (items.length == 2) {
-                                String barang_nama = items[0];
-                                double barang_harga = Double.parseDouble(items[1]);
+                        if (items.length == 2) {
+                            String barang_nama = items[0];
+                            double barang_harga = Double.parseDouble(items[1]);
                                 
-                                Barang barang = new Barang(barang_nama, barang_harga);
+                            Barang barang = new Barang(barang_nama, barang_harga);
 
-                                transaksi.addBarang(barang);
-                            }
-                        }
+                            transaksi.addBarang(barang);
+                    }
                         
-                        listTransaksi.add(transaksi);
+                    listTransaksi.add(transaksi);
                     }
                 } 
             } 

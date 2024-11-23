@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ListBarang {
-    List<Barang> listBarang = new ArrayList<>();
+    private List<Barang> listBarang = new ArrayList<>();
+    private Barang barang;
 
     public void addBarang(Scanner scanner) {
         System.out.print("\n");
@@ -16,7 +17,11 @@ public class ListBarang {
         double harga = scanner.nextDouble();
         scanner.nextLine();
 
-        Barang barang_item = new Barang(nama, harga);
+        System.out.print("Stok: ");
+        int stok = scanner.nextInt();
+        scanner.nextLine();
+
+        Barang barang_item = new Barang(nama, harga, stok, barang.newId());
         
         listBarang.add(barang_item);
 
@@ -32,7 +37,7 @@ public class ListBarang {
         
         System.out.print("ID Barang: ");
         int index = scanner.nextInt();
-        scanner.nextLine(); // Konsumsi karakter newline
+        scanner.nextLine(); 
         
         if (index >= 0 && index < listBarang.size()) {
             Barang removedBarang = listBarang.remove(index);
@@ -63,11 +68,16 @@ public class ListBarang {
             System.out.print("Harga Barang baru: ");
             double harga = scanner.nextDouble();
             scanner.nextLine();
+
+            System.out.print("Stok Barang baru: ");
+            int stok = scanner.nextInt();
+            scanner.nextLine();
             
             Barang barang_item = listBarang.get(index);
             
             barang_item.setNama(nama);
             barang_item.setHarga(harga);
+            barang_item.setStok(stok);
             
             saveBarang();
             
@@ -85,7 +95,7 @@ public class ListBarang {
         for (int index = 0; index < listBarang.size(); index++) {
             Barang barang_item = listBarang.get(index);
             
-            System.out.println(index + ". " + barang_item.getNama() + " - Rp" + barang_item.getHarga());
+            System.out.println(barang_item.getId() + " - " + barang_item.getNama() + " - Rp" + barang_item.getHarga() + " - Stok: " + barang_item.getStok());
         }
     }
 
@@ -98,29 +108,33 @@ public class ListBarang {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",\\s*");
                 
-                if (parts.length == 2) {
-                    String nama = parts[0];
-                    double harga = Double.parseDouble(parts[1]);
+                if (parts.length == 4) {
+                    String id = parts[0];
+                    String nama = parts[1];
+                    double harga = Double.parseDouble(parts[2]);
+                    int stok = Integer.parseInt(parts[3]);
                     
-                    Barang barang = new Barang(nama, harga);
+                    Barang barang = new Barang(nama, harga, stok, id);
                     
                     listBarang.add(barang);
                 }
             }
+
+            reader.close();
         } 
         catch (IOException e) {
             e.printStackTrace();
         }
-
-        System.out.println("Barang berhasil dimuat dari file");
     }
 
     public void saveBarang() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("barang.txt"))) {
             for (Barang barang : listBarang) {
-                writer.write(barang.getNama() + ", " + barang.getHarga());
+                writer.write(barang.getId() + ", " + barang.getNama() + ", " + barang.getHarga() + ", " + barang.getStok());
                 writer.newLine();
             }
+
+            writer.close();
         } 
         catch (IOException e) {
             e.printStackTrace();

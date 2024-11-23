@@ -1,19 +1,16 @@
 import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.lang.NullPointerException;
 
 public class Main {
-    Akun akun;
-    String id;
-    String pass;
+    private Akun akun;
 
     public void admin_login(String option, Scanner scanner) {
         akun = new Akun();
 
         System.out.print("\n");
+        System.out.println("========== Login ==========");
+
         System.out.println("ID Akun:");
         String id_input = scanner.nextLine();
 
@@ -33,7 +30,7 @@ public class Main {
         akun = new Akun();
 
         System.out.print("\n");
-        System.out.println("========== User ==========");
+        System.out.println("========== Login ==========");
         System.out.println("1. Login");
         System.out.println("2. Ubah password");
         System.out.println("3. Buat akun");
@@ -46,6 +43,7 @@ public class Main {
         if (user_option.equals("1")) {
             System.out.print("\n");
             System.out.println("========== Login ==========");
+
             System.out.println("ID Akun:");
             String id_input = scanner.nextLine();
 
@@ -55,7 +53,9 @@ public class Main {
             boolean user_log = akun.login(id_input, pass_input, option);
 
             if (user_log == true) {
-                // Customer.java
+                Customer customer = new Customer(id_input, pass_input);
+
+                customer.customerMenu(scanner);
             }
         } 
         else if (user_option.equals("2")) {
@@ -68,14 +68,9 @@ public class Main {
             String new_pass_input = scanner.nextLine();
 
             try {
-                FileReader users_txt = new FileReader("users.txt");
-                BufferedReader buffer = new BufferedReader(users_txt);
-
-                akun.setIdPass(id_input, new_pass_input, buffer);
-
-                buffer.close();
+                akun.setIdPass(id_input, new_pass_input);
             }
-            catch (IOException | NullPointerException e) {
+            catch (NullPointerException e) {
                 e.printStackTrace();
             }
         }
@@ -89,14 +84,9 @@ public class Main {
             String pass_input = scanner.nextLine();
 
             try {
-                FileReader users_txt = new FileReader("users.txt");
-                BufferedReader buffer = new BufferedReader(users_txt);
-
-                akun.createAkun(id_input, pass_input, buffer);
-
-                buffer.close();
+                akun.createAkun(id_input, pass_input);
             }
-            catch (IOException | NullPointerException e) {
+            catch (NullPointerException e) {
                 e.printStackTrace();
             }
         }

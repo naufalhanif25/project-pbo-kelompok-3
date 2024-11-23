@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
 public class Admin extends Akun {
-    ListBarang listBarang = new ListBarang();
-    AdminDriver adminDriver = new AdminDriver();
-    String id;
-    String pass;
+    private ListBarang listBarang = new ListBarang();
+    private AdminDriver adminDriver = new AdminDriver();
+    private String id;
+    private String pass;
     
     public Admin(String id, String pass) {
         this.id = id;
