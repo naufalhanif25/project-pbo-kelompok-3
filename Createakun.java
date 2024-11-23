@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 
 public class Createakun extends JFrame {
@@ -10,11 +9,10 @@ public class Createakun extends JFrame {
       setSize(800, 600);
       setLocationRelativeTo(null);
     
-
       //ICON
       setIconImage(new ImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\IconRB.png").getImage());
 
-      // Menambahkan CreateakunPanel ke JFrame
+      // Menambahkan CreateakunPanel ke Creatakun
       add(new CreateakunPanel());
       setVisible(true);
     }

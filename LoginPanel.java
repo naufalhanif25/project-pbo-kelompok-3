@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.util.*;
 
 public class LoginPanel extends JPanel {
     private JTextField username;
@@ -10,8 +12,35 @@ public class LoginPanel extends JPanel {
 
     public LoginPanel() {
         setLayout(new GridBagLayout()); 
-        setOpaque(true); 
+        setOpaque(true);
         addComponents();
+    }
+
+    //Sytle Label
+    private void styleLabel(JLabel Label) {
+        Label.setFont(new Font("Arial", Font.BOLD, 16)); 
+        Label.setForeground(Color.DARK_GRAY); 
+    }
+    
+
+    //Sytle TextField
+    private void styleTextField(JTextField textField) {
+        textField.setFont(new Font("Arial", Font.BOLD, 14));
+        textField.setForeground(Color.BLACK);
+        textField.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        textField.setPreferredSize(new Dimension(300, 35));
+        textField.setMaximumSize(new Dimension(300, 35));
+      }
+
+
+    //Sytle Button
+    private void styleButton(JButton button) {
+        button.setFont(new Font("Arial", Font.PLAIN, 14));
+        button.setBackground(new Color(58, 123, 245));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        button.setPreferredSize(new Dimension(200, 40));
     }
 
     @Override
@@ -20,18 +49,19 @@ public class LoginPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
 
         // Latar belakang gradasi
-        GradientPaint gradient = new GradientPaint(0, 0, Color.BLACK, getWidth(), getHeight(), Color.DARK_GRAY);
+        GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 0, 139), 
+        0, getHeight(), new Color(0, 255, 255)); 
         g2d.setPaint(gradient);
         g2d.fillRect(0, 0, getWidth(), getHeight());
 
         // Panel utama dengan efek rounded
         g2d.setColor(new Color(255, 255, 255, 230)); 
-        int panelWidth = 400;
+        int panelWidth = 470;
         int panelHeight = 500;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
         g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
-        g2d.dispose();
+        g2d.dispose(); 
     }
 
     private void addComponents() {
@@ -40,7 +70,7 @@ public class LoginPanel extends JPanel {
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Title Label
-        JLabel titleLabel = new JLabel("Sign in");
+        JLabel titleLabel = new JLabel("Sign in", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
         titleLabel.setForeground(Color.DARK_GRAY);
         gbc.gridx = 0;
@@ -51,16 +81,15 @@ public class LoginPanel extends JPanel {
 
         // Role Label
         JLabel roleLabel = new JLabel("Pilih Role:");
-        roleLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        roleLabel.setForeground(Color.DARK_GRAY);
+        styleLabel(roleLabel);
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.gridwidth = 1; // Kembali ke 1 kolom
+        gbc.gridwidth = 1; 
         gbc.anchor = GridBagConstraints.LINE_END;
         add(roleLabel, gbc);
 
         // Role ComboBox
-        String[] roles = {"Admin", "User"};
+        String[] roles = {"Admin", "Pelanggan"};
         roleBox = new JComboBox<>(roles);
         gbc.gridx = 1;
         gbc.gridy = 1;
@@ -69,8 +98,7 @@ public class LoginPanel extends JPanel {
 
         // Username Label
         JLabel usernameLabel = new JLabel("Username:");
-        usernameLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        usernameLabel.setForeground(Color.DARK_GRAY);
+        styleLabel(usernameLabel);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -81,14 +109,12 @@ public class LoginPanel extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.LINE_START;
-        username.setPreferredSize(new Dimension(400, 35));
-        username.setMaximumSize(new Dimension(400, 35));
+        styleTextField(username);
         add(username, gbc);
 
         // Password Label
         JLabel passwordLabel = new JLabel("Password:");
-        passwordLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        passwordLabel.setForeground(Color.DARK_GRAY);
+        styleLabel(passwordLabel);
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -98,50 +124,36 @@ public class LoginPanel extends JPanel {
         password = new JPasswordField(20);
         gbc.gridx = 1;
         gbc.gridy = 3;
-        password.setPreferredSize(new Dimension(400, 35));
-        password.setMaximumSize(new Dimension(400, 35));
+        styleTextField(password);
         gbc.anchor = GridBagConstraints.LINE_START;
         add(password, gbc);
 
         // Login Button
         login = new JButton("Login");
-        login.setFont(new Font("Arial", Font.BOLD, 14));
-        login.setBackground(new Color(58, 123, 245));
-        login.setForeground(Color.WHITE);
-        login.setFocusPainted(false);
-        login.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        styleButton(login);
         login.addActionListener(e -> tombollogin());
         gbc.gridx = 0;
         gbc.gridy = 4;
-        gbc.gridwidth = 2; // Memanfaatkan 2 kolom
-        login.setPreferredSize(new Dimension(300, 35));
-        login.setMaximumSize(new Dimension(300, 35)); 
+        gbc.gridwidth = 2; 
         gbc.anchor = GridBagConstraints.CENTER;
         add(login, gbc);
 
         // Info Label
-        JLabel infoLabel = new JLabel("Belum Punya Akun? Daftar Disini!");
-        infoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        infoLabel.setForeground(Color.DARK_GRAY);
+        JLabel infoLabel = new JLabel("Belum Punya Akun? Daftar Disini!",SwingConstants.CENTER);
+        styleLabel(infoLabel);
         gbc.gridx = 0;
         gbc.gridy = 5;
-        gbc.gridwidth = 2; // Memanfaatkan 2 kolom
+        gbc.gridwidth = 2; 
         gbc.anchor = GridBagConstraints.CENTER;
         add(infoLabel, gbc);
 
         // Create Account Button
         buatakun = new JButton("Buat Akun Baru");
-        buatakun.setFont(new Font("Arial", Font.BOLD, 14));
-        buatakun.setBackground(new Color(255, 102, 102));
-        buatakun.setForeground(Color.WHITE);
-        buatakun.setFocusPainted(false);
-        buatakun.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        styleButton(buatakun);
         buatakun.addActionListener(e -> tombolcreateakun());
         gbc.gridx = 0;
         gbc.gridy = 6;
-        buatakun.setPreferredSize(new Dimension(300, 35));
-        buatakun.setMaximumSize(new Dimension(300, 35));
-        gbc.gridwidth = 2; // Memanfaatkan 2 kolom
+        gbc.gridwidth = 2; 
         gbc.anchor = GridBagConstraints.CENTER;
         add(buatakun, gbc);
     }
@@ -150,33 +162,49 @@ public class LoginPanel extends JPanel {
         String lusername = username.getText();
         String lpassword = new String(password.getPassword());
         String role = (String) roleBox.getSelectedItem();
-
-        // Validasi login
+    
+        // Validasi login berdasarkan file
         if (lusername.isEmpty() || lpassword.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Username dan Password harus diisi!", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if ("Admin".equals(role) && "admin".equals(lusername) && "adminpass".equals(lpassword)) {
-            JOptionPane.showMessageDialog(this, "Login berhasil sebagai Admin!", "Info", JOptionPane.INFORMATION_MESSAGE);
-            // TODO: Navigasi ke halaman Admin
-        } else if ("User".equals(role) && "user".equals(lusername) && "userpass".equals(lpassword)) {
-            JOptionPane.showMessageDialog(this, "Login berhasil sebagai User!", "Info", JOptionPane.INFORMATION_MESSAGE);
-            // TODO: Navigasi ke halaman User
         } else {
-            JOptionPane.showMessageDialog(this, "Username atau Password salah!", "Error", JOptionPane.ERROR_MESSAGE);
+            boolean loginValid = validateLogin(role, lusername, lpassword);
+            if (loginValid) {
+                JOptionPane.showMessageDialog(this, "Login berhasil sebagai " + role + "!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                // Navigasi ke Dashboard dengan role yang sesuai
+                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                if (parentFrame != null) {
+                    parentFrame.dispose(); // Tutup jendela login
+                    // Navigasi ke Dashboard sesuai role
+                    new Dashboard(role);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Username atau Password salah!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
-    private void tombolcreateakun() {
-        JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-        if (currentFrame != null) {
-            currentFrame.dispose();
+    private boolean validateLogin(String role, String username, String password) {
+        String fileName = (role.equals("Admin")) ? "Admin.txt" : "Pelanggan.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] credentials = line.split(","); 
+                if (credentials.length == 2 && credentials[0].equals(username) && credentials[1].equals(password)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat membaca file!", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    JFrame buatakun = new JFrame("CreateAkun");
-      buatakun.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      buatakun.setExtendedState(JFrame.MAXIMIZED_BOTH);
-      buatakun.setSize(800, 600);
-      buatakun.setLocationRelativeTo(null);
+        return false;
+    }
 
-      new Createakun();
-
+    private void tombolcreateakun() {
+        JFrame FrameBikinAkun = (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (FrameBikinAkun != null) {
+            FrameBikinAkun.dispose();
+            // Navigasi Tombol
+            FrameBikinAkun.setContentPane(new Createakun());
+        }
     }
 }

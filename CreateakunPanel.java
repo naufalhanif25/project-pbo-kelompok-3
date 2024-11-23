@@ -1,11 +1,14 @@
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.IOException;
 
 public class CreateakunPanel extends JPanel {
     private JComboBox<String> CroleBox;
     private JTextField Cusername;
-    private JPasswordField Cpassword;
+    private JPasswordField Cpassword; 
 
     public CreateakunPanel() {
         setLayout(new GridBagLayout()); 
@@ -19,19 +22,48 @@ public class CreateakunPanel extends JPanel {
         addComponents();
     }
 
+    //Sytle Label
+    private void styleLabel(JLabel Label) {
+        Label.setFont(new Font("Arial", Font.BOLD, 16)); 
+        Label.setForeground(Color.DARK_GRAY); 
+    }
+    
+
+    //Sytle TextField
+    private void styleTextField(JTextField textField) {
+        textField.setFont(new Font("Arial", Font.BOLD, 14));
+        textField.setForeground(Color.BLACK);
+        textField.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        textField.setPreferredSize(new Dimension(300, 35));
+        textField.setMaximumSize(new Dimension(300, 35));
+      }
+
+    //Sytle Buttom
+    private void styleButton(JButton button) {
+        button.setFont(new Font("Arial", Font.PLAIN, 14));
+        button.setBackground(new Color(58, 123, 245));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        button.setPreferredSize(new Dimension(200, 40));
+    }
+
+
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
 
         // Latar belakang gradasi
-        GradientPaint gradient = new GradientPaint(0, 0, Color.BLACK, getWidth(), getHeight(), Color.DARK_GRAY);
+        GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 0, 139), 
+        0, getHeight(), new Color(0, 255, 255)); 
         g2d.setPaint(gradient);
         g2d.fillRect(0, 0, getWidth(), getHeight());
 
         // Panel utama dengan efek rounded (opsional, hanya untuk referensi posisi komponen)
         g2d.setColor(new Color(255, 255, 255, 230));
-        int panelWidth = 400;
+        int panelWidth = 450;
         int panelHeight = 500;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
@@ -57,16 +89,14 @@ public class CreateakunPanel extends JPanel {
 
         // Role Label
         JLabel crole_id = new JLabel("Pilih Role:");
-        crole_id.setFont(new Font("Arial", Font.BOLD, 16));
-        crole_id.setForeground(Color.DARK_GRAY);
-
+        styleLabel(crole_id);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1;
         add(crole_id, gbc);
 
         // ComboBox Role
-        String[] roles = {"Admin", "User"};
+        String[] roles = {"Admin", "Pelanggan"};
         CroleBox = new JComboBox<>(roles);
         CroleBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
@@ -75,50 +105,36 @@ public class CreateakunPanel extends JPanel {
 
         // Username Label
         JLabel cusername_id = new JLabel("Username:");
-        cusername_id.setFont(new Font("Arial", Font.BOLD, 16));
-        cusername_id.setForeground(Color.DARK_GRAY);
-
+        styleLabel(cusername_id);
         gbc.gridx = 0;
         gbc.gridy = 2;
         add(cusername_id, gbc);
 
         // TextField Username
         Cusername = new JTextField(20);
-        Cusername.setFont(new Font("Arial", Font.PLAIN, 14));
-        Cusername.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
-        Cusername.setPreferredSize(new Dimension(400, 35));
-        Cusername.setMaximumSize(new Dimension(400, 35));
+        styleTextField(Cusername);
         gbc.gridx = 1;
         gbc.gridy = 2;
         add(Cusername, gbc);
 
         // Password Label
         JLabel cpassword_id = new JLabel("Password:");
-        cpassword_id.setFont(new Font("Arial", Font.BOLD, 16));
-        cpassword_id.setForeground(Color.DARK_GRAY);
-
+        styleLabel(cpassword_id);
         gbc.gridx = 0;
         gbc.gridy = 3;
         add(cpassword_id, gbc);
 
         // PasswordField Password
         Cpassword = new JPasswordField(20);
-        Cpassword.setFont(new Font("Arial", Font.PLAIN, 14));
-        Cpassword.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
-        Cpassword.setPreferredSize(new Dimension(400, 35));
-        Cpassword.setMaximumSize(new Dimension(400, 35));
+        styleTextField(Cpassword);
         gbc.gridx = 1;
         gbc.gridy = 3;
         add(Cpassword, gbc);
 
         // Create Account Button
         JButton cbutton = new JButton("Buat Akun");
-        cbutton.setFont(new Font("Arial", Font.BOLD, 14));
-        cbutton.setBackground(new Color(58, 123, 245));
-        cbutton.setForeground(Color.DARK_GRAY);
-        cbutton.addActionListener(e -> buatakun());
-        Cpassword.setPreferredSize(new Dimension(300, 35));
-        Cpassword.setMaximumSize(new Dimension(300, 35));
+        styleButton(cbutton);
+        cbutton.addActionListener(e -> createakun());
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridwidth = 2; 
@@ -127,9 +143,7 @@ public class CreateakunPanel extends JPanel {
 
         // Info Label
         JLabel info = new JLabel("Sudah punya akun? Login di sini!", SwingConstants.CENTER);
-        info.setFont(new Font("Arial", Font.BOLD, 16));
-        info.setForeground(Color.DARK_GRAY);
-
+        styleLabel(info);
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 2;
@@ -137,12 +151,8 @@ public class CreateakunPanel extends JPanel {
 
         // Back to Login Button
         JButton backButton = new JButton("Kembali Login");
-        backButton.setFont(new Font("Arial", Font.PLAIN, 14));
-        backButton.setBackground(new Color(255, 102, 102));
-        backButton.setForeground(Color.DARK_GRAY);
+        styleButton(backButton);
         backButton.addActionListener(e -> kembaliLogin());
-        backButton.setPreferredSize(new Dimension(300, 35));
-        backButton.setMaximumSize(new Dimension(300, 35));
         gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.gridwidth = 2;
@@ -152,12 +162,13 @@ public class CreateakunPanel extends JPanel {
     private void kembaliLogin() {
         JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (parentFrame != null) {
-            parentFrame.setContentPane(new LoginPanel());
+            //Navigasi Tombol
+            parentFrame.setContentPane(new Login());
             parentFrame.revalidate();
         }
     }
 
-    private void buatakun() {
+    private void createakun() {
         String username = Cusername.getText();
         String password = new String(Cpassword.getPassword());
         String role = (String) CroleBox.getSelectedItem();
@@ -165,8 +176,15 @@ public class CreateakunPanel extends JPanel {
         if (username.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Harap isi semua kolom untuk membuat akun.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Akun berhasil dibuat sebagai " + role + "!", "Info", JOptionPane.INFORMATION_MESSAGE);
-            kembaliLogin();
+            // Menulis ke file sesuai dengan role
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(role + ".txt", true))) {
+                writer.write(username + "," + password);
+                writer.newLine();
+                JOptionPane.showMessageDialog(this, "Akun berhasil dibuat sebagai " + role + "!", "Info", JOptionPane.INFORMATION_MESSAGE);
+                kembaliLogin();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat menyimpan akun.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }
