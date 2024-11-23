@@ -1,28 +1,45 @@
 public class Product {
-    private int id;
     private String name;
-    private int price; // Harga seharusnya int, bukan double
+    private double price;
+    private int stock;
 
-    public Product(int id, String name, int price) {
-        this.id = id;
+    // Constructor
+    public Product(String name, double price, int stock) {
         this.name = name;
         this.price = price;
+        this.stock = stock;
     }
 
-    public int getId() {
-        return id;
-    }
-
+    // Getter and Setter
     public String getName() {
         return name;
     }
 
-    public int getPrice() {
-        return price; // Pastikan pengembalian tipe adalah int
+    public void setName(String name) {
+        this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "ID: " + id + ", Nama: " + name + ", Harga: Rp" + price;
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    // Method to display product details
+    public void displayInfo() {
+        System.out.println("Product Name: " + name);
+        System.out.println("Price: Rp" + price);
+        System.out.println("Stock: " + stock + " units");
     }
 }
+
