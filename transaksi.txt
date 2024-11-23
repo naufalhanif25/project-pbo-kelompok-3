@@ -1,2 +1,2 @@
-TRX001, Naufal, item1:100.0;item2:200.0, 300.0
-TRX002, Fadhil, item3:150.0;item4:250.0, 400.0
+TRX002, Fadhil, Baju:15000.0;Baju:25000.0, 40000.0
+TRX001, Naufal, Baju:10000.0;Baju:20000.0, 30000.0

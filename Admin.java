@@ -3,7 +3,22 @@ import java.util.Scanner;
 public class Admin extends Akun {
     ListBarang listBarang = new ListBarang();
     AdminDriver adminDriver = new AdminDriver();
+    String id;
+    String pass;
     
+    public Admin(String id, String pass) {
+        this.id = id;
+        this.pass = pass;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
     public void manageBarang() {
         listBarang.loadBarang(); 
 
@@ -46,7 +61,10 @@ public class Admin extends Akun {
                 case "6":
                     return;
                 default:
+                    System.out.print("\n");
                     System.out.println("Error: Opsi tidak valid");
+
+                    break;
             }
         }
     }

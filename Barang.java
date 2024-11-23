@@ -22,4 +22,9 @@ public class Barang {
     public void setHarga(double harga) {
         this.harga = harga;
     }
+    
+    public String toString() {
+        return "barang = " + nama +
+               "; harga = " + harga;
+    }
 }

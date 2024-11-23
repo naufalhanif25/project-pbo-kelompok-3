@@ -40,4 +40,26 @@ public class Transaksi {
     public double getTotalHarga() {
         return totalHarga;
     }
+    
+    public String toString() {
+        StringBuilder sb = new StringBuilder(); 
+        
+        sb.append("Transaksi {") 
+          .append("idTransaksi = ").append(idTransaksi)
+          .append(", akun = ").append(akun.getId()) 
+          .append(", listBarang = ["); 
+        
+        for (Barang barang : listBarang) { 
+            sb.append(barang.toString()).append(", "); 
+        } 
+        
+        if (!listBarang.isEmpty()) { 
+            sb.setLength(sb.length() - 2); 
+        } 
+        
+        sb.append("], totalHarga = ").append(totalHarga) 
+          .append("}"); 
+        
+        return sb.toString();
+    }
 }

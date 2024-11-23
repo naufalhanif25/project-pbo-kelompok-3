@@ -7,8 +7,7 @@ import java.io.FileReader;
 public class AdminDriver extends Driver {
     ListBarang listBarang = new ListBarang();
     List<Transaksi> listTransaksi = new ArrayList<>();
-    List<Customer> listCustomer = new ArrayList<>();
-    Customer akun;
+    Admin akun;
 
     @Override
     public void addBarang(Barang barang) {
@@ -24,7 +23,7 @@ public class AdminDriver extends Driver {
         loadTransaksi();
 
         System.out.print("\n");
-        System.out.println("Daftar transaksi:");
+        System.out.println("=== Daftar transaksi ===");
 
         for (Transaksi transaksi : listTransaksi) {
             System.out.println(transaksi);
@@ -32,54 +31,51 @@ public class AdminDriver extends Driver {
     }
 
     public void loadTransaksi() { 
-        try (BufferedReader reader = new BufferedReader(new FileReader("transaksi.txt"))) { 
+        try (BufferedReader buffer_reader = new BufferedReader(new FileReader("transaksi.txt"))) { 
             String line; 
+
             listTransaksi.clear(); 
             
-            while ((line = reader.readLine()) != null) { 
+            while ((line = buffer_reader.readLine()) != null) { 
                 String[] parts = line.split(",\\s*"); 
                 
                 if (parts.length == 4) { 
                     String id = parts[0]; 
-                    String akunId = parts[1]; 
+                    String userId = parts[1];
                     String barangStr = parts[2]; 
-                    double total = Double.parseDouble(parts[3]); 
-                    Customer akun = null; 
 
-                    for (Customer customer : listCustomer) { 
-                        if (customer.getId().equals(akunId)) { 
-                            akun = customer; 
-
-                            break; 
-                        } 
-                    } 
+                    Customer user = new Customer(userId, null);
                     
-                    if (akun != null) { 
-                        Transaksi transaksi = new Transaksi(id, akun); 
+                    if (barangStr != null) {
+                        Transaksi transaksi = new Transaksi(id, user);
+                        String[] temp_items = barangStr.split(";");
 
-                        String[] barangArr = barangStr.split(";"); 
+                        for (String temp_item : temp_items) {
+                            String[] items = temp_item.split(":");
 
-                        for (String barangInfo : barangArr) {
-                            String[] barangParts = barangInfo.split(":");
-
-                            if (barangParts.length == 2) {
-                                String namaBarang = barangParts[0];
-                                double hargaBarang = Double.parseDouble(barangParts[1]);
-                                Barang barang = new Barang(namaBarang, hargaBarang);
+                            if (items.length == 2) {
+                                String barang_nama = items[0];
+                                double barang_harga = Double.parseDouble(items[1]);
                                 
+                                Barang barang = new Barang(barang_nama, barang_harga);
+
                                 transaksi.addBarang(barang);
                             }
                         }
                         
-                        listTransaksi.add(transaksi); 
-                    } 
+                        listTransaksi.add(transaksi);
+                    }
                 } 
             } 
             
+            System.out.print("\n");
             System.out.println("Transaksi berhasil dimuat dari file"); 
+
+            buffer_reader.close();
         } 
         catch (IOException e) { 
             e.printStackTrace(); 
+            System.out.print("\n");
             System.out.println("Error: Gagal membaca file transaksi"); 
         } 
     }

@@ -112,7 +112,7 @@ public class ListBarang {
             e.printStackTrace();
         }
 
-        System.out.println("Barang berhasil dimuat dari file.");
+        System.out.println("Barang berhasil dimuat dari file");
     }
 
     public void saveBarang() {
@@ -126,7 +126,7 @@ public class ListBarang {
             e.printStackTrace();
         }
         
-        System.out.println("Barang berhasil disimpan ke file.");
+        System.out.println("Barang berhasil disimpan ke file");
     }
 
     public List<Barang> getBarangList() {
