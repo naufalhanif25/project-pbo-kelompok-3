@@ -1,6 +1,6 @@
 public class COD implements Pembayaran {
     @Override
-    public void bayar(int jumlah) {
-        System.out.println("Pembayaran melalui COD sebesar Rp" + jumlah + " berhasil diproses");
+    public void bayar(double total) {
+        System.out.println("Pembayaran melalui COD sebesar Rp" + total + " berhasil diproses");
     }
 }

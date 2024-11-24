@@ -29,11 +29,19 @@ public class Barang {
                     String barangStr = parts[1];
                     double harga = Double.parseDouble(parts[2]);
                     int stok = Integer.parseInt(parts[3]);
-                        
-                    huruf = temp_idStr.replaceAll("[^A-Z]", "");
-                    angka = Integer.parseInt(temp_idStr.replaceAll("[^0-9]", ""));
-    
-                    idData.add(huruf + angka);
+                    
+                    if (temp_idStr != null) {
+                        huruf = temp_idStr.replaceAll("[^A-Z]", "");
+                        angka = Integer.parseInt(temp_idStr.replaceAll("[^0-9]", ""));
+        
+                        idData.add(huruf + angka);
+                    }
+                    else {
+                        huruf = "B";
+                        angka = 1;
+
+                        idData.add(huruf + angka);
+                    }
 
                     if (barangStr.equals(nama)) {
                         data.add(idData.get(index));
@@ -44,10 +52,10 @@ public class Barang {
                 }
             }
 
-            this.nama = data.get(0);
-            this.harga = Double.parseDouble(data.get(1));
-            this.stok = Integer.parseInt(data.get(2));
-            this.id = data.get(3);
+            this.id = data.get(0);
+            this.nama = data.get(1);
+            this.harga = Double.parseDouble(data.get(2));
+            this.stok = Integer.parseInt(data.get(3));
 
             reader.close();
         } 
@@ -68,10 +76,10 @@ public class Barang {
     }
 
     public Barang(String nama, double harga, int stok, String id) {
+        this.id = id;
         this.nama = nama;
         this.harga = harga;
         this.stok = stok;
-        this.id = id;
     }
 
     public String getBarang() {

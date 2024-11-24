@@ -45,10 +45,18 @@ public class CustomerDriver extends Driver {
                 if (parts.length == 4) { 
                     String id = parts[0]; 
                     
-                    huruf = id.replaceAll("[^A-Z]", "");
-                    angka = Integer.parseInt(id.replaceAll("[^0-9]", ""));
+                    if (id != null) {
+                        huruf = id.replaceAll("[^A-Z]", "");
+                        angka = Integer.parseInt(id.replaceAll("[^0-9]", ""));
+    
+                        data.add(huruf + (angka + 1));
+                    }
+                    else {
+                        huruf = "TRX";
+                        angka = 1;
 
-                    data.add(huruf + (angka + 1));
+                        data.add(huruf + angka);
+                    }
                 }
             }
 

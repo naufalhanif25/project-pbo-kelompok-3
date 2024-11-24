@@ -1,3 +1,5 @@
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Customer {
@@ -51,8 +53,7 @@ public class Customer {
                     System.out.print("\n");
                     System.out.println("======= Opsi =======");
                     System.out.println("1. Masukkan ke Keranjang");
-                    System.out.println("2. checkout");
-                    System.out.println("3. Kembali");
+                    System.out.println("2. Kembali");
                     System.out.println("Opsi: ");
                     option = scanner.nextLine();
 
@@ -68,16 +69,6 @@ public class Customer {
                             
                             break;
                         case "2":
-                            keranjang.showKeranjang();
-
-                            System.out.print("\n");
-                            System.out.println("ID Barang: ");
-                            String idBarang = scanner.nextLine();
-
-                            keranjang.checkoutBarang(idBarang);
-
-                            break;
-                        case "3":
                             break;
                         default:
                             System.out.print("\n");
@@ -93,8 +84,115 @@ public class Customer {
                 case "2":
                     keranjang.showKeranjang();
 
+                    System.out.print("\n");
+                    System.out.println("ID Keranjang: ");
+                    String idKeranjang = scanner.nextLine();
+
+                    Barang barang = new Barang(keranjang.getId(idKeranjang));
+
+                    double total = keranjang.getTotal(barang.getId());
+
+                    System.out.print("\n");
+                    System.out.println("======== Pembayaran ========");
+                    System.out.println("1. COD");
+                    System.out.println("2. Transfer Bank");
+                    System.out.println("3. QRIS");
+                    System.out.println("Opsi:");
+                    option = scanner.nextLine();
+
+                    String invoice_data;
+
+                    switch (option) {
+                        case "1":
+                            invoice_data = keranjang.checkoutBarang(barang.getId());
+
+                            Invoice invoice = new Invoice(keranjang, "COD");
+
+                            invoice.addInvoice(invoice_data, total);
+                            
+                            break;
+                        case "2":
+                            System.out.print("\n");
+                            System.out.println("========== Bank ==========");
+                            System.out.println("1. Bank Tamvan");
+                            System.out.println("2. Kembali");
+                            System.out.println("Opsi:");
+                            option = scanner.nextLine();
+
+                            switch (option) {
+                                case "1":
+                                    System.out.print("\n");
+                                    System.out.println("No. Rek: 1234567890");
+                                    System.out.println("Konfirmasi Pembayaran [Y/N]:");
+                                    option = scanner.nextLine();
+
+                                    switch (option) {
+                                        case "Y":
+                                            invoice_data = keranjang.checkoutBarang(barang.getId());
+
+                                            invoice = new Invoice(keranjang, "Bank");
+                                            
+                                            invoice.addInvoice(invoice_data, total);
+                                            
+                                            break;
+                                        case "N":
+                                            break;
+                                        default:
+                                            System.out.println("Error: Opsi tidak valid");
+
+                                            break;
+                                    }
+
+                                    break;
+                                case "2":
+                                    break;
+                                default:
+                                    System.out.println("Error: Opsi tidak valid");
+
+                                    break;
+                            }
+
+
+                            break;
+                        case "3":      
+                            System.out.print("\n");
+                            System.out.println("========== QRIS ==========");
+                            
+                            QRIS qris = new QRIS();
+                            
+                            qris.showQR();
+
+                            System.out.println("Konfirmasi Pembayaran [Y/N]:");
+                            option = scanner.nextLine();
+
+                            switch (option) {
+                                case "Y":
+                                    invoice_data = keranjang.checkoutBarang(barang.getId());
+
+                                    invoice = new Invoice(keranjang, "QRIS");
+        
+                                    invoice.addInvoice(invoice_data, total);
+                                    
+                                    break;
+                                case "N":
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            break;
+                        default:
+                            System.out.println("Error: Opsi tidak valid");
+
+                            break;
+                    }
+
                     break;
                 case "3":
+                    Invoice invoice = new Invoice(keranjang);
+
+                    invoice.showInvoice();
+
                     break;
                 case "4":
                     return;
