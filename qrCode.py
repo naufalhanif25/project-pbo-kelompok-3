@@ -2,8 +2,22 @@ import qrcode
 import numpy as np
 import sys
 import io
+import subprocess
+import sys
 
 sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8')
+
+def install_and_import(package):
+    try:
+        __import__(package)
+    except ImportError:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+        
+libraries = ['qrcode', 'numpy', 'sys', 'io', 'subprocess']
+
+for library in libraries:
+    install_and_import(library)
+
 
 def create_qr_code(link):
     qr = qrcode.QRCode(
