@@ -1,8 +1,7 @@
 import javax.swing.*;
 
-public class Keranjang extends JFrame{
-
-  public Keranjang(){
+public class Transaksi extends JFrame{
+  public  Transaksi(){
     // Membuat JFrame untuk Create Account
     setTitle("e-commerce");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -14,9 +13,8 @@ public class Keranjang extends JFrame{
     setIconImage(new ImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\IconRB.png").getImage());
 
     // Menambahkan Panel BeliBarang
-    add(new KeranjangPanel());
+    add(new TransaksiPanel());
     setVisible(true);
-    
   }
-}
   
+}

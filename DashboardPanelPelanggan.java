@@ -71,7 +71,7 @@ public class DashboardPanelPelanggan extends JPanel {
 
         // Label judul
         JLabel titleLabel = new JLabel("Pelanggan Dashboard", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        titleLabel.setFont(new Font("Consolas", Font.BOLD, 30));
         titleLabel.setForeground(new Color(44, 62, 80));
         gbc.gridx = 0;
         gbc.gridy = 1; 
@@ -88,6 +88,7 @@ public class DashboardPanelPelanggan extends JPanel {
         // Tombol Keranjang Barang
         JButton keranjangBarangButton = new JButton("Keranjang");
         styleButton(keranjangBarangButton);
+        keranjangBarangButton.addActionListener(e -> Keranjang());
         gbc.gridx = 0;
         gbc.gridy = 3; 
         add(keranjangBarangButton, gbc);
@@ -100,16 +101,18 @@ public class DashboardPanelPelanggan extends JPanel {
         kembaliloginButton.addActionListener(e -> kembali());
         add(kembaliloginButton, gbc);
 
-        // // Tombol Transaksi/Pembayaran
-        // JButton transaksiButton = new JButton("Transaksi/Pembayaran");
-        // styleButton(transaksiButton);
-        // gbc.gridx = 0;
-        // gbc.gridy = 4; 
-        // add(transaksiButton, gbc);
-
-        // // Action listener untuk Transaksi/Pembayaran
-        // transaksiButton.addActionListener(e -> showTransaksiDialog());
     }
+
+    //Navigasi Keranjang
+    private void Keranjang(){
+        JFrame keranjang = (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (keranjang != null) {
+            keranjang.dispose();
+            //Navigasi Tombol
+            keranjang.setContentPane(new Keranjang());
+        }
+    }
+
 
     private void BeliBarang(){
         JFrame belibarang = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -130,26 +133,6 @@ public class DashboardPanelPelanggan extends JPanel {
         }
     }
 
-    // Menampilkan dialog untuk memilih metode pembayaran dalam transaksi
-    // private void showTransaksiDialog() {
-    //     String[] options = {"QRIS", "BANK", "COD"};
-    //     int option = JOptionPane.showOptionDialog(this, "Pilih Metode Pembayaran", "Pembayaran",
-    //             JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-
-    //     if (option != JOptionPane.CLOSED_OPTION) {
-    //         switch (option) {
-    //             case 0:
-    //                 JOptionPane.showMessageDialog(this, "Anda memilih pembayaran melalui QRIS.");
-    //                 break;
-    //             case 1:
-    //                 JOptionPane.showMessageDialog(this, "Anda memilih pembayaran melalui Bank.");
-    //                 break;
-    //             case 2:
-    //                 JOptionPane.showMessageDialog(this, "Anda memilih pembayaran melalui COD.");
-    //                 break;
-    //         }
-    //     }
-    // }
 
     // Method untuk memuat logo dengan ukuran tertentu
     private ImageIcon loadImageIcon(String path, int width, int height) {

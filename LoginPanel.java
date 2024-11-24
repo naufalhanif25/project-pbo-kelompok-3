@@ -25,13 +25,12 @@ public class LoginPanel extends JPanel {
 
     //Sytle TextField
     private void styleTextField(JTextField textField) {
-        textField.setFont(new Font("Arial", Font.BOLD, 14));
+        textField.setFont(new Font("Arial", Font.PLAIN, 14));
         textField.setForeground(Color.BLACK);
         textField.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         textField.setPreferredSize(new Dimension(300, 35));
         textField.setMaximumSize(new Dimension(300, 35));
       }
-
 
     //Sytle Button
     private void styleButton(JButton button) {
@@ -41,6 +40,7 @@ public class LoginPanel extends JPanel {
         button.setFocusPainted(false);
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.setPreferredSize(new Dimension(200, 40));
+
     }
 
     @Override
@@ -71,7 +71,7 @@ public class LoginPanel extends JPanel {
 
         // Title Label
         JLabel titleLabel = new JLabel("Sign in", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        titleLabel.setFont(new Font("Consolas", Font.BOLD, 30));
         titleLabel.setForeground(Color.DARK_GRAY);
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -91,6 +91,7 @@ public class LoginPanel extends JPanel {
         // Role ComboBox
         String[] roles = {"Admin", "Pelanggan"};
         roleBox = new JComboBox<>(roles);
+        roleBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.LINE_START;
@@ -171,11 +172,11 @@ public class LoginPanel extends JPanel {
             if (loginValid) {
                 JOptionPane.showMessageDialog(this, "Login berhasil sebagai " + role + "!", "Info", JOptionPane.INFORMATION_MESSAGE);
                 // Navigasi ke Dashboard dengan role yang sesuai
-                JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-                if (parentFrame != null) {
-                    parentFrame.dispose(); // Tutup jendela login
-                    // Navigasi ke Dashboard sesuai role
-                    new Dashboard(role);
+                JFrame Dashboard = (JFrame) SwingUtilities.getWindowAncestor(this);
+                if (Dashboard != null) {
+                    Dashboard.dispose(); 
+                    // Navigasi 
+                    Dashboard.setContentPane(new Dashboard(role));
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Username atau Password salah!", "Error", JOptionPane.ERROR_MESSAGE);

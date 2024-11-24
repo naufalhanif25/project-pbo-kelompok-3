@@ -31,7 +31,7 @@ public class CreateakunPanel extends JPanel {
 
     //Sytle TextField
     private void styleTextField(JTextField textField) {
-        textField.setFont(new Font("Arial", Font.BOLD, 14));
+        textField.setFont(new Font("Arial", Font.PLAIN, 14));
         textField.setForeground(Color.BLACK);
         textField.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         textField.setPreferredSize(new Dimension(300, 35));
@@ -64,7 +64,7 @@ public class CreateakunPanel extends JPanel {
         // Panel utama dengan efek rounded (opsional, hanya untuk referensi posisi komponen)
         g2d.setColor(new Color(255, 255, 255, 230));
         int panelWidth = 450;
-        int panelHeight = 500;
+        int panelHeight = 550;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
         g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
@@ -76,14 +76,29 @@ public class CreateakunPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10); 
         gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        //Icon 
+        JLabel logoLabel = new JLabel();
+        logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        ImageIcon logoIcon = loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\CreateAkunIconRB.png", 100, 100); 
+        if (logoIcon != null) {
+            logoLabel.setIcon(logoIcon);
+        } else {
+            logoLabel.setText("LOGO"); 
+            logoLabel.setFont(new Font("Arial", Font.BOLD, 24));
+            logoLabel.setForeground(Color.WHITE);
+        }
+        gbc.gridx = 0;
+        gbc.gridy = 0; 
+        gbc.gridwidth = 2;
+        add(logoLabel, gbc);
+
         // Title Label
         JLabel titleLabel = new JLabel("Create Account", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        titleLabel.setFont(new Font("Consolas", Font.BOLD, 30));
         titleLabel.setForeground(Color.DARK_GRAY);
-        
-
         gbc.gridx = 0; 
-        gbc.gridy = 0; 
+        gbc.gridy = 1; 
         gbc.gridwidth = 2; 
         add(titleLabel, gbc);
 
@@ -91,7 +106,7 @@ public class CreateakunPanel extends JPanel {
         JLabel crole_id = new JLabel("Pilih Role:");
         styleLabel(crole_id);
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.gridwidth = 1;
         add(crole_id, gbc);
 
@@ -100,35 +115,37 @@ public class CreateakunPanel extends JPanel {
         CroleBox = new JComboBox<>(roles);
         CroleBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
         add(CroleBox, gbc);
 
         // Username Label
         JLabel cusername_id = new JLabel("Username:");
         styleLabel(cusername_id);
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
+        gbc.gridwidth = 1;
         add(cusername_id, gbc);
 
         // TextField Username
         Cusername = new JTextField(20);
         styleTextField(Cusername);
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         add(Cusername, gbc);
 
         // Password Label
         JLabel cpassword_id = new JLabel("Password:");
         styleLabel(cpassword_id);
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         add(cpassword_id, gbc);
 
         // PasswordField Password
         Cpassword = new JPasswordField(20);
         styleTextField(Cpassword);
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         add(Cpassword, gbc);
 
         // Create Account Button
@@ -136,7 +153,7 @@ public class CreateakunPanel extends JPanel {
         styleButton(cbutton);
         cbutton.addActionListener(e -> createakun());
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.gridwidth = 2; 
         gbc.anchor = GridBagConstraints.CENTER; 
         add(cbutton, gbc);
@@ -145,7 +162,7 @@ public class CreateakunPanel extends JPanel {
         JLabel info = new JLabel("Sudah punya akun? Login di sini!", SwingConstants.CENTER);
         styleLabel(info);
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.gridwidth = 2;
         add(info, gbc);
 
@@ -154,17 +171,29 @@ public class CreateakunPanel extends JPanel {
         styleButton(backButton);
         backButton.addActionListener(e -> kembaliLogin());
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 7;
         gbc.gridwidth = 2;
         add(backButton, gbc);
     }
 
+    //Icon
+    private ImageIcon loadImageIcon(String path, int width, int height) {
+        try {
+            Image image = new ImageIcon(path).getImage();
+            Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            return new ImageIcon(scaledImage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    //Navigasi buttom Ke Login
     private void kembaliLogin() {
-        JFrame parentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-        if (parentFrame != null) {
+        JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (kembali != null) {
             //Navigasi Tombol
-            parentFrame.setContentPane(new Login());
-            parentFrame.revalidate();
+            kembali.setContentPane(new Login());
+            kembali.revalidate();
         }
     }
 

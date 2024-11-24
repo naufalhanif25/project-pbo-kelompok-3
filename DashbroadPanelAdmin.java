@@ -62,7 +62,7 @@ public class DashbroadPanelAdmin extends JPanel {
 
         // Title Label
         JLabel titleLabel = new JLabel("Admin Dashboard", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
+        titleLabel.setFont(new Font("Consolas", Font.BOLD, 30));
         titleLabel.setForeground(Color.DARK_GRAY);
         gbc.gridx = 0;
         gbc.gridy = 1;

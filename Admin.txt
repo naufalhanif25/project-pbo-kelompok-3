@@ -1,2 +1,2 @@
-diki112233,diki123
-diki123,diki112233
+diki123,diki
+diki123,diki

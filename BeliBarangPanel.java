@@ -1,142 +1,340 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 
-public class BeliBarangPanel extends JPanel{
-  //Untuk private
-  private JComboBox<String> metodeBayarBox;
+public class BeliBarangPanel extends JPanel {
+    private JComboBox<String> metodeBayarBox;
+    private JTable barangTable;
+    private DefaultTableModel tableModel;
+    private ArrayList<String> keranjang; // Untuk menyimpan barang yang dipilih
 
-  public BeliBarangPanel(){
-    setLayout(new GridBagLayout());
-    setOpaque(true);
-    setBackground(Color.DARK_GRAY);
-    addComponents();
+    public BeliBarangPanel() {
+        keranjang = new ArrayList<>();
+        setLayout(new GridBagLayout());
+        setOpaque(true);
+        setBackground(Color.DARK_GRAY);
+        addComponents();
+        loadBarang();
+    }
 
-  }
-  //Style Label
-  private void styleLabel(JLabel Label) {
-    Label.setFont(new Font("Arial", Font.BOLD, 16)); 
-    Label.setForeground(Color.DARK_GRAY); 
-}
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g.create();
 
-  //Style Button
-  private void styleButton(JButton button) {
-    button.setFont(new Font("Arial", Font.BOLD, 14));
-    button.setBackground(new Color(58, 123, 245));
-    button.setForeground(Color.WHITE);
-    button.setFocusPainted(false);
-    button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    button.setPreferredSize(new Dimension(200, 40));
-  }
+        // Latar Belakang gradasi
+        GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 0, 139),
+                0, getHeight(), new Color(0, 255, 255));
+        g2d.setPaint(gradient);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
 
-  @Override
-  protected void paintComponent(Graphics g){
-    super.paintComponent(g);
-    Graphics2D g2d = (Graphics2D) g.create();
-    
-    //Latar Belakang gradasi
-    GradientPaint gradient = new GradientPaint (0,0, new Color(0,0,139),
-     0, getHeight(), new Color(0,255,255));
-     g2d.setPaint(gradient);
-     g2d.fillRect(0, 0, getWidth(), getHeight());
+        // Panel utama dengan efek rounded
+        g2d.setColor(new Color(255, 255, 255, 230));
+        int panelWidth = 900;
+        int panelHeight = 650;
+        int x = (getWidth() - panelWidth) / 2;
+        int y = (getHeight() - panelHeight) / 2;
+        g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
 
-     // Panel utama dengan efek rounded
-     g2d.setColor(new Color(255, 255, 255, 230)); 
-     int panelWidth = 400;
-     int panelHeight = 500;
-     int x = (getWidth() - panelWidth) / 2;
-     int y = (getHeight() - panelHeight) / 2;
-     g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
+        g2d.dispose();
+    }
 
-     g2d.dispose();
-     
-  }
-  private void addComponents(){
-    GridBagConstraints gbc = new GridBagConstraints();
-    gbc.insets = new Insets(10, 10, 10, 10); 
-    gbc.fill = GridBagConstraints.HORIZONTAL;
+    private void addComponents() {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
-    //Icon Logo
-    JLabel logoLabel = new JLabel();
+        // Icon Logo
+        JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100);
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
-        } 
+        }
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         add(logoLabel, gbc);
 
-      
-  //
-   JLabel metodeBayarLabel = new JLabel("Metode Pembayaran:");
-        styleLabel(metodeBayarLabel);
-        gbc.gridx = 0;
+        // Judul Panel
+        JLabel titleLabel = new JLabel("Beli Barang", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Consolas", Font.BOLD, 20));
+        titleLabel.setForeground(Color.DARK_GRAY);
         gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        gbc.anchor = GridBagConstraints.WEST;
-        add(metodeBayarLabel, gbc);
+        add(titleLabel, gbc);
 
-        // ComboBox untuk metode pembayaran
-        metodeBayarBox = new JComboBox<>(new String[]{"QRIS", "BANK", "COD"});
-        metodeBayarBox.setFont(new Font("Arial", Font.PLAIN, 14));
-        metodeBayarBox.setPreferredSize(new Dimension(200, 35));
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        gbc.gridwidth = 1;
-        gbc.anchor = GridBagConstraints.EAST;
-        add(metodeBayarBox, gbc);
+        // Tabel Barang
+        tableModel = new DefaultTableModel(new Object[]{"ID Barang", "Nama Barang", "Tipe Barang", "Stok", "Harga", "Jumlah", "Pilih"}, 0) {
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 5) return Integer.class; // Kolom Jumlah
+                if (columnIndex == 6) return Boolean.class; // Kolom Pilih (checkbox)
+                return String.class;
+            }
+        };
+        barangTable = new JTable(tableModel);
+        barangTable.setRowHeight(30);
 
-        // Tombol Bayar
-        JButton bayarButton = new JButton("Bayar");
-        styleButton(bayarButton);
-        bayarButton.addActionListener(e -> prosesPembayaran());
+        // Editor untuk kolom Jumlah 
+        barangTable.getColumnModel().getColumn(5).setCellEditor(new SpinnerEditor());
+
+        JScrollPane scrollPane = new JScrollPane(barangTable);
+        scrollPane.setPreferredSize(new Dimension(800, 300));
+
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
-        add(bayarButton, gbc);
+        add(scrollPane, gbc);
+        revalidate(); 
+        repaint();    
 
-        //Tombol Kembali KeLogin
-        JButton kembaliloginButton = new JButton("Back");
-        styleButton(kembaliloginButton);
+        // Panel Tombol (Keranjang & Bayar)
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
+        buttonPanel.setOpaque(false);
+
+        JButton keranjangButton = new JButton("Add Keranjang");
+        styleButton(keranjangButton);
+        keranjangButton.addActionListener(e -> tambahKeKeranjang());
+        buttonPanel.add(keranjangButton);
+
+        JButton bayarButton = new JButton("Bayar");
+        styleButton(bayarButton);
+        bayarButton.addActionListener(e -> prosesPembayaran());
+        buttonPanel.add(bayarButton);
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        add(buttonPanel, gbc);
+
+        // Tombol Kembali
+        JButton kembaliButton = new JButton("Back");
+        styleButton(kembaliButton);
+        kembaliButton.addActionListener(e -> kembali());
         gbc.gridx = 0;
         gbc.gridy = 4;
-        kembaliloginButton.addActionListener(e -> kembali());
-        add(kembaliloginButton, gbc);
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.insets = new Insets(20, 0, 10, 0);
+        add(kembaliButton, gbc);
     }
-    //
-    private void kembali(){
-      JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
-      if (kembali != null) {
-          kembali.dispose();
-          //Navigasi Tombol
-          kembali.setContentPane(new Dashboard("Pelanggan"));
-      }
-  }
 
-    // Logika untuk proses pembayaran
+    private void styleButton(JButton button) {
+        button.setFont(new Font("Arial", Font.BOLD, 14));
+        button.setBackground(new Color(58, 123, 245));
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        button.setPreferredSize(new Dimension(150, 40));
+    }
+
+    private void loadBarang() {
+        tableModel.setRowCount(0); // Reset tabel
+        try (BufferedReader reader = new BufferedReader(new FileReader("barang.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                if (data.length == 5) { // Validasi jumlah kolom
+                    try {
+                        String idBarang = data[0];
+                        String namaBarang = data[1];
+                        String tipeBarang = data[2];
+                        int stok = Integer.parseInt(data[3]);
+                        double harga = Double.parseDouble(data[4]);
+
+                        // Tambahkan data ke tabel
+                        tableModel.addRow(new Object[]{idBarang, namaBarang, tipeBarang, stok, harga, 1, false});
+                    } catch (NumberFormatException e) {
+                        System.err.println("Format data salah: " + line);
+                    }
+                } else {
+                    System.err.println("Baris tidak valid: " + line);
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Gagal memuat barang dari file!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void tambahKeKeranjang() {
+        keranjang.clear(); // Reset keranjang
+        StringBuilder dataKeranjang = new StringBuilder();
+
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            Boolean isSelected = (Boolean) tableModel.getValueAt(i, 6); 
+            if (isSelected != null && isSelected) {
+                String namaBarang = (String) tableModel.getValueAt(i, 1);
+                int jumlah = (int) tableModel.getValueAt(i, 5); 
+                keranjang.add(namaBarang + " (Jumlah: " + jumlah + ")");
+
+                // Tambahkan ke data keranjang (untuk ditulis ke file)
+                dataKeranjang.append(namaBarang).append(",").append(jumlah).append("\n");
+            }
+        }
+
+        
+
+        if (!keranjang.isEmpty()) {
+            // Tulis data keranjang ke file
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("Keranjang.txt", true))) {
+                writer.write(dataKeranjang.toString());
+                writer.flush();
+
+                // Tampilkan pesan konfirmasi
+                JOptionPane.showMessageDialog(this,
+                        "Barang berhasil ditambahkan ke keranjang!\n" +
+                                "Barang:\n" + String.join("\n", keranjang),
+                        "Keranjang",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this,
+                        "Gagal menulis ke file keranjang!",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Keranjang kosong! Pilih barang terlebih dahulu.",
+                    "Keranjang",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
     private void prosesPembayaran() {
-        String metode = (String) metodeBayarBox.getSelectedItem();
-        JOptionPane.showMessageDialog(this,
-                "Metode pembayaran yang dipilih: " + metode,
-                "Informasi Pembayaran",
-                JOptionPane.INFORMATION_MESSAGE);
-
-        // Reset pilihan setelah pembayaran
-        metodeBayarBox.setSelectedIndex(0);
+        StringBuilder selectedItems = new StringBuilder();
+        boolean pembayaranBerhasil = false;
+    
+        // Menyaring barang yang dipilih berdasarkan checkbox yang dicentang
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            Boolean isSelected = (Boolean) tableModel.getValueAt(i, 6); 
+            if (isSelected != null && isSelected) {
+                String namaBarang = (String) tableModel.getValueAt(i, 1); 
+                int jumlah = (int) tableModel.getValueAt(i, 5); 
+                int stok = (int) tableModel.getValueAt(i, 3); 
+    
+                if (jumlah <= stok) {
+                    // Update stok
+                    tableModel.setValueAt(stok - jumlah, i, 3); 
+    
+                    selectedItems.append(namaBarang).append(" (Jumlah: ").append(jumlah).append(")\n");
+                    pembayaranBerhasil = true;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Stok barang " + namaBarang + " tidak cukup.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+        }
+    
+        // Jika ada barang yang dipilih dan pembayaran berhasil
+        if (pembayaranBerhasil) {
+            // Simpan perubahan stok ke file barang.txt
+            saveBarangToFile();
+    
+            // Tampilkan konfirmasi pembayaran
+            JOptionPane.showMessageDialog(this,
+                    "Pembayaran berhasil untuk barang:\n" + selectedItems.toString(),
+                    "Pembayaran Sukses",
+                    JOptionPane.INFORMATION_MESSAGE);
+    
+            // Navigasi ke halaman transaksi
+            JFrame transaksi = (JFrame) SwingUtilities.getWindowAncestor(this);
+            if (transaksi != null) {
+                transaksi.setContentPane(new Transaksi());
+                transaksi.revalidate();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Tidak ada barang yang dipilih untuk pembayaran!",
+                    "Peringatan",
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }
 
-    // Untuk Icon Logo
+    //Private saveBarangToFile
+    private void saveBarangToFile() {
+        // Menyimpan perubahan stok kembali ke file barang.txt
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("barang.txt"))) {
+            for (int i = 0; i < tableModel.getRowCount(); i++) {
+                String idBarang = (String) tableModel.getValueAt(i, 0);
+                String namaBarang = (String) tableModel.getValueAt(i, 1);
+                String tipeBarang = (String) tableModel.getValueAt(i, 2);
+                int stok = (int) tableModel.getValueAt(i, 3); // Stok yang baru
+                double harga = (double) tableModel.getValueAt(i, 4);
+    
+                writer.write(idBarang + "," + namaBarang + "," + tipeBarang + "," + stok + "," + harga + "\n");
+            }
+            writer.flush(); // Menyimpan perubahan
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Gagal menyimpan perubahan stok!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void kembali() {
+        JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (kembali != null) {
+        kembali.dispose();
+        //Navigasi Tombol
+        kembali.setContentPane(new Dashboard("Pelanggan"));
+        kembali.revalidate();
+    }
+}
+
+    // Fungsi untuk memuat ikon gambar
     private ImageIcon loadImageIcon(String path, int width, int height) {
         try {
-            Image image = new ImageIcon(path).getImage();
-            Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            return new ImageIcon(scaledImage);
+            ImageIcon icon = new ImageIcon(path);
+            Image img = icon.getImage();
+            Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            return new ImageIcon(scaledImg);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    // Nulis Ke transaksi
+    private void simpanTransaksiKeFile(String namaPembeli, String barangDibeli, String metodePembayaran, double totalHarga) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi.txt", true))) {
+            // Generate ID transaksi berdasarkan timestamp (misalnya TRX + timestamp)
+            String idTransaksi = "TRX" + System.currentTimeMillis();
+            
+            // Ambil tanggal transaksi
+            String tanggalTransaksi = java.time.LocalDateTime.now().toString(); // Format: YYYY-MM-DDTHH:MM:SS
+            
+            // Format untuk mencatat transaksi
+            String transaksi = String.format("%s, %s, %s, %s, %s, %s, %.2f\n",
+                    idTransaksi, tanggalTransaksi, namaPembeli, barangDibeli, "", metodePembayaran, totalHarga);
+            
+            // Tulis transaksi ke file
+            writer.write(transaksi);
+            writer.flush();
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Gagal mencatat transaksi ke file!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // Editor untuk kolom Jumlah
+    class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
+        private JSpinner spinner;
+
+        public SpinnerEditor() {
+            spinner = new JSpinner(new SpinnerNumberModel(1, 1, 100, 1)); // Min: 1, Max: 100, Step: 1
+            spinner.setPreferredSize(new Dimension(50, 20));
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return spinner.getValue();
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            spinner.setValue(value); 
+            return spinner;
         }
     }
 }
