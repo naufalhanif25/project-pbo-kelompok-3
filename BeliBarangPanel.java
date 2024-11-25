@@ -26,10 +26,8 @@ public class BeliBarangPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
 
         // Latar Belakang gradasi
-        GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 0, 139),
-                0, getHeight(), new Color(0, 255, 255));
-        g2d.setPaint(gradient);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
+        BackGroundWarna.drawGradientBackground(g2d, getWidth(), getHeight(),
+        new Color(0, 0, 139), new Color(0, 255, 255));
 
         // Panel utama dengan efek rounded
         g2d.setColor(new Color(255, 255, 255, 230));
@@ -50,7 +48,7 @@ public class BeliBarangPanel extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100);
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100);
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         }
@@ -98,12 +96,12 @@ public class BeliBarangPanel extends JPanel {
         buttonPanel.setOpaque(false);
 
         JButton keranjangButton = new JButton("Add Keranjang");
-        styleButton(keranjangButton);
+        UIStyle.styleButton(keranjangButton);
         keranjangButton.addActionListener(e -> tambahKeKeranjang());
         buttonPanel.add(keranjangButton);
 
         JButton bayarButton = new JButton("Bayar");
-        styleButton(bayarButton);
+        UIStyle.styleButton(bayarButton);
         bayarButton.addActionListener(e -> prosesPembayaran());
         buttonPanel.add(bayarButton);
 
@@ -114,7 +112,7 @@ public class BeliBarangPanel extends JPanel {
 
         // Tombol Kembali
         JButton kembaliButton = new JButton("Back");
-        styleButton(kembaliButton);
+        UIStyle.styleButton(kembaliButton);
         kembaliButton.addActionListener(e -> kembali());
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -123,16 +121,6 @@ public class BeliBarangPanel extends JPanel {
         gbc.insets = new Insets(20, 0, 10, 0);
         add(kembaliButton, gbc);
     }
-
-    private void styleButton(JButton button) {
-        button.setFont(new Font("Arial", Font.BOLD, 14));
-        button.setBackground(new Color(58, 123, 245));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.setPreferredSize(new Dimension(150, 40));
-    }
-
     private void loadBarang() {
         tableModel.setRowCount(0); // Reset tabel
         try (BufferedReader reader = new BufferedReader(new FileReader("barang.txt"))) {
@@ -232,7 +220,6 @@ public class BeliBarangPanel extends JPanel {
     
         // Jika ada barang yang dipilih dan pembayaran berhasil
         if (pembayaranBerhasil) {
-            // Simpan perubahan stok ke file barang.txt
             saveBarangToFile();
     
             // Tampilkan konfirmasi pembayaran
@@ -283,19 +270,6 @@ public class BeliBarangPanel extends JPanel {
         kembali.revalidate();
     }
 }
-
-    // Fungsi untuk memuat ikon gambar
-    private ImageIcon loadImageIcon(String path, int width, int height) {
-        try {
-            ImageIcon icon = new ImageIcon(path);
-            Image img = icon.getImage();
-            Image scaledImg = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            return new ImageIcon(scaledImg);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
     // Nulis Ke transaksi
     private void simpanTransaksiKeFile(String namaPembeli, String barangDibeli, String metodePembayaran, double totalHarga) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi.txt", true))) {

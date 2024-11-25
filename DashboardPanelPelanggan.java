@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,18 +10,6 @@ public class DashboardPanelPelanggan extends JPanel {
 
         addComponents();
     }
-    //Sytle Label
-
-
-    //Sytle Buttom
-    private void styleButton(JButton button) {
-        button.setFont(new Font("Arial", Font.PLAIN, 16));
-        button.setBackground(new Color(52, 152, 219));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.setPreferredSize(new Dimension(200, 40));
-    }
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -28,10 +17,8 @@ public class DashboardPanelPelanggan extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
 
         // Latar belakang gradasi
-        GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 0, 139),
-                0, getHeight(), new Color(0, 255, 255));
-        g2d.setPaint(gradient);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
+        BackGroundWarna.drawGradientBackground(g2d, getWidth(), getHeight(),
+        new Color(0, 0, 139), new Color(0, 255, 255));
 
         // Panel utama
         g2d.setColor(new Color(255, 255, 255, 200));
@@ -57,7 +44,7 @@ public class DashboardPanelPelanggan extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100); 
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100); 
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } else {
@@ -79,7 +66,7 @@ public class DashboardPanelPelanggan extends JPanel {
 
         // Tombol Beli Barang
         JButton beliBarangButton = new JButton("Beli Barang");
-        styleButton(beliBarangButton);
+        UIStyle.styleButton(beliBarangButton);
         gbc.gridx = 0;
         gbc.gridy = 2; 
         beliBarangButton.addActionListener(e -> BeliBarang());
@@ -87,7 +74,7 @@ public class DashboardPanelPelanggan extends JPanel {
 
         // Tombol Keranjang Barang
         JButton keranjangBarangButton = new JButton("Keranjang");
-        styleButton(keranjangBarangButton);
+        UIStyle.styleButton(keranjangBarangButton);
         keranjangBarangButton.addActionListener(e -> Keranjang());
         gbc.gridx = 0;
         gbc.gridy = 3; 
@@ -95,7 +82,7 @@ public class DashboardPanelPelanggan extends JPanel {
 
         //Tombol Kembali KeLogin
         JButton kembaliloginButton = new JButton("Back");
-        styleButton(kembaliloginButton);
+        UIStyle.styleButton(kembaliloginButton);
         gbc.gridx = 0;
         gbc.gridy = 4;
         kembaliloginButton.addActionListener(e -> kembali());
@@ -130,19 +117,6 @@ public class DashboardPanelPelanggan extends JPanel {
             kembali.dispose();
             //Navigasi Tombol
             kembali.setContentPane(new Login());
-        }
-    }
-
-
-    // Method untuk memuat logo dengan ukuran tertentu
-    private ImageIcon loadImageIcon(String path, int width, int height) {
-        try {
-            ImageIcon icon = new ImageIcon(path);
-            Image image = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            return new ImageIcon(image);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 }

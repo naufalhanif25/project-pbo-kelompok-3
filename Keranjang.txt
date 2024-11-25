@@ -1,1 +1,3 @@
 baju,3
+baju,1
+baju,7

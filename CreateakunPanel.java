@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -22,33 +23,6 @@ public class CreateakunPanel extends JPanel {
         addComponents();
     }
 
-    //Sytle Label
-    private void styleLabel(JLabel Label) {
-        Label.setFont(new Font("Arial", Font.BOLD, 16)); 
-        Label.setForeground(Color.DARK_GRAY); 
-    }
-    
-
-    //Sytle TextField
-    private void styleTextField(JTextField textField) {
-        textField.setFont(new Font("Arial", Font.PLAIN, 14));
-        textField.setForeground(Color.BLACK);
-        textField.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        textField.setPreferredSize(new Dimension(300, 35));
-        textField.setMaximumSize(new Dimension(300, 35));
-      }
-
-    //Sytle Buttom
-    private void styleButton(JButton button) {
-        button.setFont(new Font("Arial", Font.PLAIN, 14));
-        button.setBackground(new Color(58, 123, 245));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.setPreferredSize(new Dimension(200, 40));
-    }
-
-
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -56,10 +30,8 @@ public class CreateakunPanel extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
 
         // Latar belakang gradasi
-        GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 0, 139), 
-        0, getHeight(), new Color(0, 255, 255)); 
-        g2d.setPaint(gradient);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
+        BackGroundWarna.drawGradientBackground(g2d, getWidth(), getHeight(),
+        new Color(0, 0, 139), new Color(0, 255, 255));
 
         // Panel utama dengan efek rounded (opsional, hanya untuk referensi posisi komponen)
         g2d.setColor(new Color(255, 255, 255, 230));
@@ -80,7 +52,7 @@ public class CreateakunPanel extends JPanel {
         //Icon 
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\CreateAkunIconRB.png", 100, 100); 
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\CreateAkunIconRB.png", 100, 100); 
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } else {
@@ -104,7 +76,7 @@ public class CreateakunPanel extends JPanel {
 
         // Role Label
         JLabel crole_id = new JLabel("Pilih Role:");
-        styleLabel(crole_id);
+        UIStyle.styleLabel(crole_id);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 1;
@@ -121,7 +93,7 @@ public class CreateakunPanel extends JPanel {
 
         // Username Label
         JLabel cusername_id = new JLabel("Username:");
-        styleLabel(cusername_id);
+        UIStyle.styleLabel(cusername_id);
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 1;
@@ -129,28 +101,28 @@ public class CreateakunPanel extends JPanel {
 
         // TextField Username
         Cusername = new JTextField(20);
-        styleTextField(Cusername);
+        UIStyle.styleTextField(Cusername);
         gbc.gridx = 1;
         gbc.gridy = 3;
         add(Cusername, gbc);
 
         // Password Label
         JLabel cpassword_id = new JLabel("Password:");
-        styleLabel(cpassword_id);
+        UIStyle.styleLabel(cpassword_id);
         gbc.gridx = 0;
         gbc.gridy = 4;
         add(cpassword_id, gbc);
 
         // PasswordField Password
         Cpassword = new JPasswordField(20);
-        styleTextField(Cpassword);
+        UIStyle.styleTextField(Cpassword);
         gbc.gridx = 1;
         gbc.gridy = 4;
         add(Cpassword, gbc);
 
         // Create Account Button
         JButton cbutton = new JButton("Buat Akun");
-        styleButton(cbutton);
+        UIStyle.styleButton(cbutton);
         cbutton.addActionListener(e -> createakun());
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -160,7 +132,7 @@ public class CreateakunPanel extends JPanel {
 
         // Info Label
         JLabel info = new JLabel("Sudah punya akun? Login di sini!", SwingConstants.CENTER);
-        styleLabel(info);
+        UIStyle.styleLabel(info);
         gbc.gridx = 0;
         gbc.gridy = 6;
         gbc.gridwidth = 2;
@@ -168,24 +140,12 @@ public class CreateakunPanel extends JPanel {
 
         // Back to Login Button
         JButton backButton = new JButton("Kembali Login");
-        styleButton(backButton);
+        UIStyle.styleButton(backButton);
         backButton.addActionListener(e -> kembaliLogin());
         gbc.gridx = 0;
         gbc.gridy = 7;
         gbc.gridwidth = 2;
         add(backButton, gbc);
-    }
-
-    //Icon
-    private ImageIcon loadImageIcon(String path, int width, int height) {
-        try {
-            Image image = new ImageIcon(path).getImage();
-            Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            return new ImageIcon(scaledImage);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
     //Navigasi buttom Ke Login
     private void kembaliLogin() {

@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -16,43 +17,14 @@ public class LoginPanel extends JPanel {
         addComponents();
     }
 
-    //Sytle Label
-    private void styleLabel(JLabel Label) {
-        Label.setFont(new Font("Arial", Font.BOLD, 16)); 
-        Label.setForeground(Color.DARK_GRAY); 
-    }
-    
-
-    //Sytle TextField
-    private void styleTextField(JTextField textField) {
-        textField.setFont(new Font("Arial", Font.PLAIN, 14));
-        textField.setForeground(Color.BLACK);
-        textField.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        textField.setPreferredSize(new Dimension(300, 35));
-        textField.setMaximumSize(new Dimension(300, 35));
-      }
-
-    //Sytle Button
-    private void styleButton(JButton button) {
-        button.setFont(new Font("Arial", Font.PLAIN, 14));
-        button.setBackground(new Color(58, 123, 245));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.setPreferredSize(new Dimension(200, 40));
-
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
 
         // Latar belakang gradasi
-        GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 0, 139), 
-        0, getHeight(), new Color(0, 255, 255)); 
-        g2d.setPaint(gradient);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
+        BackGroundWarna.drawGradientBackground(g2d, getWidth(), getHeight(),
+        new Color(0, 0, 139), new Color(0, 255, 255));
 
         // Panel utama dengan efek rounded
         g2d.setColor(new Color(255, 255, 255, 230)); 
@@ -81,7 +53,7 @@ public class LoginPanel extends JPanel {
 
         // Role Label
         JLabel roleLabel = new JLabel("Pilih Role:");
-        styleLabel(roleLabel);
+        UIStyle.styleLabel(roleLabel);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 1; 
@@ -99,7 +71,7 @@ public class LoginPanel extends JPanel {
 
         // Username Label
         JLabel usernameLabel = new JLabel("Username:");
-        styleLabel(usernameLabel);
+        UIStyle.styleLabel(usernameLabel);
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -110,12 +82,12 @@ public class LoginPanel extends JPanel {
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.LINE_START;
-        styleTextField(username);
+        UIStyle.styleTextField(username);
         add(username, gbc);
 
         // Password Label
         JLabel passwordLabel = new JLabel("Password:");
-        styleLabel(passwordLabel);
+        UIStyle.styleLabel(passwordLabel);
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.LINE_END;
@@ -125,13 +97,13 @@ public class LoginPanel extends JPanel {
         password = new JPasswordField(20);
         gbc.gridx = 1;
         gbc.gridy = 3;
-        styleTextField(password);
+        UIStyle.styleTextField(password);
         gbc.anchor = GridBagConstraints.LINE_START;
         add(password, gbc);
 
         // Login Button
         login = new JButton("Login");
-        styleButton(login);
+        UIStyle.styleButton(login);
         login.addActionListener(e -> tombollogin());
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -141,7 +113,7 @@ public class LoginPanel extends JPanel {
 
         // Info Label
         JLabel infoLabel = new JLabel("Belum Punya Akun? Daftar Disini!",SwingConstants.CENTER);
-        styleLabel(infoLabel);
+        UIStyle.styleLabel(infoLabel);
         gbc.gridx = 0;
         gbc.gridy = 5;
         gbc.gridwidth = 2; 
@@ -150,7 +122,7 @@ public class LoginPanel extends JPanel {
 
         // Create Account Button
         buatakun = new JButton("Buat Akun Baru");
-        styleButton(buatakun);
+        UIStyle.styleButton(buatakun);
         buatakun.addActionListener(e -> tombolcreateakun());
         gbc.gridx = 0;
         gbc.gridy = 6;

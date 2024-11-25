@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
@@ -21,31 +22,6 @@ public class TambahBarangPanel extends JPanel {
 
       addComponents();
   }
-  //Stle Label
-  private void styleLabel(JLabel Label) {
-    Label.setFont(new Font("Arial", Font.BOLD, 16)); 
-    Label.setForeground(Color.DARK_GRAY); 
-}
-
-
-  //Sytle TextField
-  private void styleTextField(JTextField textField) {
-    textField.setFont(new Font("Arial", Font.PLAIN, 14));
-    textField.setForeground(Color.BLACK);
-    textField.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    textField.setPreferredSize(new Dimension(300, 35));
-    textField.setMaximumSize(new Dimension(300, 35));
-  }
-
-  //Sytle Buttom
-  private void styleButton(JButton button) {
-    button.setFont(new Font("Arial", Font.PLAIN, 14));
-    button.setBackground(new Color(58, 123, 245));
-    button.setForeground(Color.WHITE);
-    button.setFocusPainted(false);
-    button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    button.setPreferredSize(new Dimension(200, 40));
-    }
 
   @Override
   protected void paintComponent(Graphics g) {
@@ -53,10 +29,8 @@ public class TambahBarangPanel extends JPanel {
       Graphics2D g2d = (Graphics2D) g.create();
 
       // Latar belakang gradasi
-      GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 0, 139),
-              0, getHeight(), new Color(0, 255, 255));
-      g2d.setPaint(gradient);
-      g2d.fillRect(0, 0, getWidth(), getHeight());
+      BackGroundWarna.drawGradientBackground(g2d, getWidth(), getHeight(),
+        new Color(0, 0, 139), new Color(0, 255, 255));
 
       // Panel utama dengan efek rounded
       g2d.setColor(new Color(255, 255, 255, 230));
@@ -77,7 +51,7 @@ public class TambahBarangPanel extends JPanel {
       //Icon Image
       JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\BasketIconRB.png", 100, 100); 
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\BasketIconRB.png", 100, 100); 
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } else {
@@ -99,14 +73,14 @@ public class TambahBarangPanel extends JPanel {
 
       //Id Barang
       JLabel idBarangLabel = new JLabel("Id Barang:");
-      styleLabel(idBarangLabel);
+       UIStyle.styleLabel(idBarangLabel);
       gbc.gridx = 0;
       gbc.gridy = 2;
       gbc.gridwidth = 1;
       add(idBarangLabel, gbc);
 
       idBarangField = new JTextField(20);
-      styleTextField(idBarangField);
+      UIStyle.styleTextField(idBarangField);
       gbc.gridx = 1;
       gbc.gridy = 2;
       add(idBarangField, gbc);
@@ -114,13 +88,13 @@ public class TambahBarangPanel extends JPanel {
 
       // Nama Barang
       JLabel namaBarangLabel = new JLabel("Nama Barang:");
-      styleLabel(namaBarangLabel);
+      UIStyle.styleLabel(namaBarangLabel);
       gbc.gridx = 0;
       gbc.gridy = 3;
       add(namaBarangLabel, gbc);
 
       namaBarangField = new JTextField(20);
-      styleTextField(namaBarangField);
+      UIStyle.styleTextField(namaBarangField);
       gbc.gridx = 1;
       gbc.gridy = 3;
       add(namaBarangField, gbc);
@@ -128,7 +102,7 @@ public class TambahBarangPanel extends JPanel {
       // Tipe Barang 
 
       JLabel tipeBarangLabel = new JLabel("Tipe Barang:");
-      styleLabel(tipeBarangLabel);
+      UIStyle.styleLabel(tipeBarangLabel);
       gbc.gridx = 0;
       gbc.gridy = 4;
       add(tipeBarangLabel, gbc);
@@ -142,33 +116,33 @@ public class TambahBarangPanel extends JPanel {
 
       // Stok Barang
       JLabel stokLabel = new JLabel("Stok:");
-      styleLabel(stokLabel);
+      UIStyle.styleLabel(stokLabel);
       gbc.gridx = 0;
       gbc.gridy = 5;
       add(stokLabel, gbc);
 
       stokField = new JTextField(20);
-      styleTextField(stokField);
+      UIStyle.styleTextField(stokField);
       gbc.gridx = 1;
       gbc.gridy = 5;
       add(stokField, gbc);
 
       // Harga Jual
       JLabel hargaLabel = new JLabel("Harga Jual:");
-      styleLabel(hargaLabel);
+      UIStyle.styleLabel(hargaLabel);
       gbc.gridx = 0;
       gbc.gridy = 6;
       add(hargaLabel, gbc);
 
       hargaField = new JTextField(20);
-      styleTextField(hargaField);
+      UIStyle.styleTextField(hargaField);
       gbc.gridx = 1;
       gbc.gridy = 6;
       add(hargaField, gbc);
 
       // Tombol Tambahkan Barang
       JButton tambahBarangButton = new JButton("Tambahkan Barang");
-      styleButton(tambahBarangButton);
+      UIStyle.styleButton(tambahBarangButton);
       tambahBarangButton.addActionListener(e -> tambahkanBarang());
       gbc.gridx = 0;
       gbc.gridy = 7;
@@ -177,24 +151,12 @@ public class TambahBarangPanel extends JPanel {
       add(tambahBarangButton, gbc);
 
       JButton kembaliloginButton = new JButton("Back");
-        styleButton(kembaliloginButton);
+      UIStyle.styleButton(kembaliloginButton);
         gbc.gridx = 0;
         gbc.gridy = 8;
         kembaliloginButton.addActionListener(e -> kembali());
         add(kembaliloginButton, gbc);
   }
-
-  // Login Icon
-  private ImageIcon loadImageIcon(String path, int width, int height) {
-    try {
-        Image image = new ImageIcon(path).getImage();
-        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledImage);
-    } catch (Exception e) {
-        e.printStackTrace();
-        return null;
-    }
-}
 
   //Navigasi 
   private void kembali(){

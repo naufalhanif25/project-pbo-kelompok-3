@@ -15,33 +15,14 @@ public class QrisPanel extends JPanel {
         setBackground(Color.DARK_GRAY);
         addComponents();
     }
-
-    // Style Label
-    private void styleLabel(JLabel label) {
-        label.setFont(new Font("Arial", Font.BOLD, 16));
-        label.setForeground(Color.DARK_GRAY);
-    }
-
-    // Style Button
-    private void styleButton(JButton button) {
-        button.setFont(new Font("Arial", Font.BOLD, 14));
-        button.setBackground(new Color(58, 123, 245));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.setPreferredSize(new Dimension(200, 40));
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
         
         // Latar Belakang gradasi
-        GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 0, 139),
-                0, getHeight(), new Color(0, 255, 255));
-        g2d.setPaint(gradient);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
+        BackGroundWarna.drawGradientBackground(g2d, getWidth(), getHeight(),
+        new Color(0, 0, 139), new Color(0, 255, 255));
 
         // Panel utama dengan efek rounded
         g2d.setColor(new Color(255, 255, 255, 230)); 
@@ -62,7 +43,7 @@ public class QrisPanel extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } 
@@ -74,7 +55,7 @@ public class QrisPanel extends JPanel {
 
         // Label untuk Informasi QRIS
         JLabel titleLabel = new JLabel("Pembayaran QRIS", SwingConstants.CENTER);
-        styleLabel(titleLabel);
+         UIStyle.styleLabel(titleLabel);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
@@ -82,7 +63,7 @@ public class QrisPanel extends JPanel {
 
         // Tombol Bayar QRIS
         JButton bayarButton = new JButton("Bayar Dengan QRIS");
-        styleButton(bayarButton);
+        UIStyle.styleButton(bayarButton);
         bayarButton.addActionListener(e -> bayarDenganQRIS());
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -90,7 +71,7 @@ public class QrisPanel extends JPanel {
 
         // Tombol Kembali
         JButton kembaliButton = new JButton("Kembali Ke Dashboard");
-        styleButton(kembaliButton);
+        UIStyle.styleButton(kembaliButton);
         kembaliButton.addActionListener(e -> kembali());
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -144,15 +125,4 @@ public class QrisPanel extends JPanel {
         }
     }
 
-    // Untuk Icon Logo
-    private ImageIcon loadImageIcon(String path, int width, int height) {
-        try {
-            Image image = new ImageIcon(path).getImage();
-            Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            return new ImageIcon(scaledImage);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }

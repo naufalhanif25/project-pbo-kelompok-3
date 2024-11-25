@@ -1,5 +1,5 @@
-import javax.swing.*;
 
+import javax.swing.*;
 public class Belibarang extends JFrame{
   public Belibarang() {
     // Membuat JFrame untuk Create Account

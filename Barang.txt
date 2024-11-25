@@ -1,2 +1,2 @@
-001,baju,Pakaian,6,10000.0
-001,baju,Pakaian,11,10000.0
+001,baju,Pakaian,2,10000.0
+001,baju,Pakaian,4,10000.0

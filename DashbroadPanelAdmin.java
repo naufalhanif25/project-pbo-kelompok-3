@@ -1,3 +1,4 @@
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,27 +9,14 @@ public class DashbroadPanelAdmin extends JPanel {
         addComponents();
     }
     
-
-    // Style Button
-    private void styleButton(JButton button) {
-        button.setFont(new Font("Arial", Font.PLAIN, 14));
-        button.setBackground(new Color(58, 123, 245));
-        button.setForeground(Color.WHITE);
-        button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.setPreferredSize(new Dimension(200, 40));
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
 
         // Latar belakang gradasi
-        GradientPaint gradient = new GradientPaint(0, 0, new Color(0, 0, 139), 
-        0, getHeight(), new Color(0, 255, 255)); 
-        g2d.setPaint(gradient);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
+        BackGroundWarna.drawGradientBackground(g2d, getWidth(), getHeight(),
+        new Color(0, 0, 139), new Color(0, 255, 255));
 
         // Panel utama dengan efek rounded
         g2d.setColor(new Color(255, 255, 255, 230)); 
@@ -49,7 +37,7 @@ public class DashbroadPanelAdmin extends JPanel {
         //Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } 
@@ -71,7 +59,7 @@ public class DashbroadPanelAdmin extends JPanel {
 
         // Tombol Tambahkan Barang
         JButton tambahBarangButton = new JButton("Tambahkan Barang");
-        styleButton(tambahBarangButton);
+        UIStyle.styleButton(tambahBarangButton);
         tambahBarangButton.addActionListener(e -> tambahkanBarangAction());
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -81,7 +69,7 @@ public class DashbroadPanelAdmin extends JPanel {
 
         // Tombol ListBarang
         JButton listBarangButton = new JButton("List Barang");
-        styleButton(listBarangButton);
+        UIStyle.styleButton(listBarangButton);
         listBarangButton.addActionListener(e -> listBarangAction());
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -91,7 +79,7 @@ public class DashbroadPanelAdmin extends JPanel {
 
         // Tombol List Transaksi
         JButton listTransaksiButton = new JButton("List Transaksi");
-        styleButton(listTransaksiButton);
+        UIStyle.styleButton(listTransaksiButton);
         listTransaksiButton.addActionListener(e -> listTransaksiAction());
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -102,7 +90,7 @@ public class DashbroadPanelAdmin extends JPanel {
         
         //Tombol Kembali Ke Laman Login
         JButton kembaliloginButton = new JButton("Back");
-        styleButton(kembaliloginButton);
+        UIStyle.styleButton(kembaliloginButton);
         gbc.gridx = 0;
         gbc.gridy = 5;
         kembaliloginButton.addActionListener(e -> kembali());
@@ -115,18 +103,6 @@ public class DashbroadPanelAdmin extends JPanel {
             kembali.dispose();
             //Navigasi Tombol
             kembali.setContentPane(new Login());
-        }
-    }
-
-    //Untuk mengatur Icon
-    private ImageIcon loadImageIcon(String path, int width, int height) {
-        try {
-            Image image = new ImageIcon(path).getImage();
-            Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            return new ImageIcon(scaledImage);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
 
@@ -153,7 +129,13 @@ public class DashbroadPanelAdmin extends JPanel {
 
     // Action untuk tombol List Transaksi 
     private void listTransaksiAction() {
-        JOptionPane.showMessageDialog(this, "Fitur List Transaksi belum diimplementasikan.", "Info", JOptionPane.INFORMATION_MESSAGE);
+        JFrame listransaksi = (JFrame)SwingUtilities.getWindowAncestor(this);
+        if (listransaksi != null) {
+            listransaksi.dispose();
+            //Navigasi Tombol
+            listransaksi.setContentPane(new ListTransaksi());
+        
+        }
     }
 }
 
