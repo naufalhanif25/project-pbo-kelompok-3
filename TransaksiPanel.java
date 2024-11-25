@@ -1,9 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class TransaksiPanel extends JPanel {
 
     private JComboBox<String> metodeComboBox;
+    private ArrayList<Barang> daftarBarang = new ArrayList<>();
 
     public TransaksiPanel() {
         setLayout(new GridBagLayout());
@@ -74,10 +76,28 @@ public class TransaksiPanel extends JPanel {
 
         // Mengambil nilai yang dipilih dari ComboBox di dalam lambda expression
         invoiceloginButton.addActionListener(e -> {
-            String metodePembayaranDipilih = (String) metodeComboBox.getSelectedItem();  // Menggunakan nama variabel yang berbeda
-            invoice(metodePembayaranDipilih);  // Mengirimkan nilai metode pembayaran ke metode invoice()
-        });
-        add(invoiceloginButton, gbc);
+            //Valid Login
+            System.out.println("Tombol Cetak Struk ditekan!");
+            // Mengambil metode pembayaran yang dipilih
+            String metodePembayaranDipilih = (String) metodeComboBox.getSelectedItem();
+
+        // Data Transaksi
+            String IdTransaksi = "T" + System.currentTimeMillis();  
+            String UserName = "Pelanggan";  
+            String Tanggal = java.time.LocalDate.now().toString();
+            String Keterangan = "Sukses";
+
+        // Hitung total harga
+            double totalHarga = hitungTotalHarga();
+            String Jumlah = String.format("%.2f", totalHarga);
+
+        // Menyimpan transaksi ke file
+        TulisTransaksi.tulisTransaksi(IdTransaksi, UserName, Tanggal, Keterangan, Jumlah, metodePembayaranDipilih);
+
+        // Navigasi ke halaman invoice setelah transaksi disimpan
+        invoice(metodePembayaranDipilih);
+    });
+    add(invoiceloginButton, gbc);
 
         // Tombol Kembali Ke Login
         JButton kembaliloginButton = new JButton("Back");
@@ -95,6 +115,19 @@ public class TransaksiPanel extends JPanel {
             transaksiFrame.dispose();
             new Invoice(metodePembayaran);  
         }
+    }
+
+    private double hitungTotalHarga() {
+        double total = 0.0;
+    
+        // 
+        for (Barang barang : daftarBarang) {
+            int jumlah = barang.getStok(); 
+            double hargaPerUnit = barang.getHarga(); 
+            total += jumlah * hargaPerUnit;
+        }
+    
+        return total;
     }
 
     private void kembali() {

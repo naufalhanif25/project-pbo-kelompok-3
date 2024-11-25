@@ -107,7 +107,7 @@ public class TambahBarangPanel extends JPanel {
       gbc.gridy = 4;
       add(tipeBarangLabel, gbc);
 
-      tipeBarangComboBox = new JComboBox<>(new String[]{"Elektronik", "Pakaian", "Makanan", "Peralatan"});
+      tipeBarangComboBox = new JComboBox<>(new String[]{"Elektronik", "Pakaian", "Makanan", "Peralatan","Perabotan","Mainan","Kosmetik","Buku","Aksesoris","Kendaraan"});
       tipeBarangComboBox.setFont(new Font("Arial", Font.PLAIN, 14));
       tipeBarangComboBox.setPreferredSize(new Dimension(300, 35));
       gbc.gridx = 1;

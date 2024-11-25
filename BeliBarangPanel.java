@@ -2,20 +2,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
 
 public class BeliBarangPanel extends JPanel {
-    private JComboBox<String> metodeBayarBox;
     private JTable barangTable;
     private DefaultTableModel tableModel;
-    private ArrayList<String> keranjang; // Untuk menyimpan barang yang dipilih
+    private ArrayList<String> keranjang;
+    private HashMap<String, List<String[]>> TipeBarang; 
+    private ArrayList<Barang> daftarBarang = new ArrayList<>();
 
     public BeliBarangPanel() {
         keranjang = new ArrayList<>();
         setLayout(new GridBagLayout());
         setOpaque(true);
         setBackground(Color.DARK_GRAY);
+        TipeBarang = new HashMap<>();
         addComponents();
         loadBarang();
     }
@@ -32,7 +36,7 @@ public class BeliBarangPanel extends JPanel {
         // Panel utama dengan efek rounded
         g2d.setColor(new Color(255, 255, 255, 230));
         int panelWidth = 900;
-        int panelHeight = 650;
+        int panelHeight = 700;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
         g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
@@ -91,22 +95,37 @@ public class BeliBarangPanel extends JPanel {
         revalidate(); 
         repaint();    
 
-        // Panel Tombol (Keranjang & Bayar)
+
+        // Label Search
+        JLabel searchLabel = new JLabel("Cari Berdasarkan Tipe:");
+        searchLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        gbc.gridy = 3;
+        gbc.gridwidth = 1;
+        gbc.gridx = 0;
+        add(searchLabel, gbc);
+
+        JPanel searchPanel = new Search(tableModel, TipeBarang);
+        gbc.gridx = 1;
+        gbc.gridwidth = 2;
+        add(searchPanel, gbc);
+
+        // Label (Keranjang & Bayar)
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
         buttonPanel.setOpaque(false);
 
+        //Tombol Add keranjang
         JButton keranjangButton = new JButton("Add Keranjang");
         UIStyle.styleButton(keranjangButton);
         keranjangButton.addActionListener(e -> tambahKeKeranjang());
         buttonPanel.add(keranjangButton);
 
+        //Tombol Bayar
         JButton bayarButton = new JButton("Bayar");
         UIStyle.styleButton(bayarButton);
         bayarButton.addActionListener(e -> prosesPembayaran());
         buttonPanel.add(bayarButton);
-
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.gridwidth = 2;
         add(buttonPanel, gbc);
 
@@ -115,28 +134,38 @@ public class BeliBarangPanel extends JPanel {
         UIStyle.styleButton(kembaliButton);
         kembaliButton.addActionListener(e -> kembali());
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(20, 0, 10, 0);
         add(kembaliButton, gbc);
+
     }
     private void loadBarang() {
-        tableModel.setRowCount(0); // Reset tabel
+        tableModel.setRowCount(0);  // Menghapus data lama dari tabel
+        daftarBarang.clear();       // Menghapus barang yang sudah ada di ArrayList
+    
         try (BufferedReader reader = new BufferedReader(new FileReader("barang.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
-                if (data.length == 5) { // Validasi jumlah kolom
+                if (data.length == 5) {
                     try {
                         String idBarang = data[0];
                         String namaBarang = data[1];
                         String tipeBarang = data[2];
                         int stok = Integer.parseInt(data[3]);
                         double harga = Double.parseDouble(data[4]);
-
-                        // Tambahkan data ke tabel
+    
+                        // Memanggil file Barang
+                        Barang barang = new Barang(idBarang, namaBarang, tipeBarang, harga, stok);
+                        daftarBarang.add(barang);  // Menambahkan barang ke ArrayList
+                        
+                        // Menambahkan data barang ke tabel
                         tableModel.addRow(new Object[]{idBarang, namaBarang, tipeBarang, stok, harga, 1, false});
+                        
+                        // Menambahkan data tipe barang ke HashMap
+                        TipeBarang.computeIfAbsent(tipeBarang, k -> new ArrayList<>()).add(data);
                     } catch (NumberFormatException e) {
                         System.err.println("Format data salah: " + line);
                     }
@@ -150,46 +179,38 @@ public class BeliBarangPanel extends JPanel {
     }
 
     private void tambahKeKeranjang() {
-        keranjang.clear(); // Reset keranjang
+        keranjang.clear();  // Reset keranjang
         StringBuilder dataKeranjang = new StringBuilder();
-
+    
+        // Loop untuk setiap row di tabel
         for (int i = 0; i < tableModel.getRowCount(); i++) {
-            Boolean isSelected = (Boolean) tableModel.getValueAt(i, 6); 
+            Boolean isSelected = (Boolean) tableModel.getValueAt(i, 6);  
             if (isSelected != null && isSelected) {
-                String namaBarang = (String) tableModel.getValueAt(i, 1);
-                int jumlah = (int) tableModel.getValueAt(i, 5); 
+                String namaBarang = (String) tableModel.getValueAt(i, 1);  
+                int jumlah = (int) tableModel.getValueAt(i, 5);            
+    
+                // Menambahkan nama barang dan jumlah ke keranjang
                 keranjang.add(namaBarang + " (Jumlah: " + jumlah + ")");
-
-                // Tambahkan ke data keranjang (untuk ditulis ke file)
+    
+                // Menambahkan barang ke data keranjang untuk ditulis ke file
                 dataKeranjang.append(namaBarang).append(",").append(jumlah).append("\n");
             }
         }
-
-        
-
+    
         if (!keranjang.isEmpty()) {
-            // Tulis data keranjang ke file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("Keranjang.txt", true))) {
                 writer.write(dataKeranjang.toString());
                 writer.flush();
-
+    
                 // Tampilkan pesan konfirmasi
                 JOptionPane.showMessageDialog(this,
-                        "Barang berhasil ditambahkan ke keranjang!\n" +
-                                "Barang:\n" + String.join("\n", keranjang),
-                        "Keranjang",
-                        JOptionPane.INFORMATION_MESSAGE);
+                        "Barang berhasil ditambahkan ke keranjang!\n" + String.join("\n", keranjang),
+                        "Keranjang", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(this,
-                        "Gagal menulis ke file keranjang!",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Gagal menulis ke file keranjang!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this,
-                    "Keranjang kosong! Pilih barang terlebih dahulu.",
-                    "Keranjang",
-                    JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Keranjang kosong! Pilih barang terlebih dahulu.", "Keranjang", JOptionPane.WARNING_MESSAGE);
         }
     }
 
@@ -197,18 +218,20 @@ public class BeliBarangPanel extends JPanel {
         StringBuilder selectedItems = new StringBuilder();
         boolean pembayaranBerhasil = false;
     
-        // Menyaring barang yang dipilih berdasarkan checkbox yang dicentang
+        // Menyaring barang yang dipilih berdasarkan checkbox
         for (int i = 0; i < tableModel.getRowCount(); i++) {
-            Boolean isSelected = (Boolean) tableModel.getValueAt(i, 6); 
+            Boolean isSelected = (Boolean) tableModel.getValueAt(i, 6);  
             if (isSelected != null && isSelected) {
-                String namaBarang = (String) tableModel.getValueAt(i, 1); 
-                int jumlah = (int) tableModel.getValueAt(i, 5); 
-                int stok = (int) tableModel.getValueAt(i, 3); 
+                String namaBarang = (String) tableModel.getValueAt(i, 1);  
+                int jumlah = (int) tableModel.getValueAt(i, 5);            
+                int stok = (int) tableModel.getValueAt(i, 3);              
     
+                // Memastikan jumlah yang diminta tidak melebihi stok
                 if (jumlah <= stok) {
-                    // Update stok
-                    tableModel.setValueAt(stok - jumlah, i, 3); 
-    
+                    // Update stok di tabel
+                    tableModel.setValueAt(stok - jumlah, i, 3);
+                    
+                    // Simpan barang yang dipilih untuk ditampilkan di dialog
                     selectedItems.append(namaBarang).append(" (Jumlah: ").append(jumlah).append(")\n");
                     pembayaranBerhasil = true;
                 } else {
@@ -218,15 +241,12 @@ public class BeliBarangPanel extends JPanel {
             }
         }
     
-        // Jika ada barang yang dipilih dan pembayaran berhasil
         if (pembayaranBerhasil) {
-            saveBarangToFile();
+            saveBarangToFile();  // Simpan perubahan stok barang ke file
     
             // Tampilkan konfirmasi pembayaran
-            JOptionPane.showMessageDialog(this,
-                    "Pembayaran berhasil untuk barang:\n" + selectedItems.toString(),
-                    "Pembayaran Sukses",
-                    JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Pembayaran berhasil untuk barang:\n" + selectedItems.toString(),
+                    "Pembayaran Sukses", JOptionPane.INFORMATION_MESSAGE);
     
             // Navigasi ke halaman transaksi
             JFrame transaksi = (JFrame) SwingUtilities.getWindowAncestor(this);
@@ -235,27 +255,23 @@ public class BeliBarangPanel extends JPanel {
                 transaksi.revalidate();
             }
         } else {
-            JOptionPane.showMessageDialog(this,
-                    "Tidak ada barang yang dipilih untuk pembayaran!",
-                    "Peringatan",
-                    JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Tidak ada barang yang dipilih untuk pembayaran!", "Peringatan", JOptionPane.WARNING_MESSAGE);
         }
     }
 
     //Private saveBarangToFile
     private void saveBarangToFile() {
-        // Menyimpan perubahan stok kembali ke file barang.txt
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("barang.txt"))) {
             for (int i = 0; i < tableModel.getRowCount(); i++) {
                 String idBarang = (String) tableModel.getValueAt(i, 0);
                 String namaBarang = (String) tableModel.getValueAt(i, 1);
                 String tipeBarang = (String) tableModel.getValueAt(i, 2);
-                int stok = (int) tableModel.getValueAt(i, 3); // Stok yang baru
+                int stok = (int) tableModel.getValueAt(i, 3);  // Update stok
                 double harga = (double) tableModel.getValueAt(i, 4);
     
                 writer.write(idBarang + "," + namaBarang + "," + tipeBarang + "," + stok + "," + harga + "\n");
             }
-            writer.flush(); // Menyimpan perubahan
+            writer.flush();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Gagal menyimpan perubahan stok!", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -270,27 +286,6 @@ public class BeliBarangPanel extends JPanel {
         kembali.revalidate();
     }
 }
-    // Nulis Ke transaksi
-    private void simpanTransaksiKeFile(String namaPembeli, String barangDibeli, String metodePembayaran, double totalHarga) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("transaksi.txt", true))) {
-            // Generate ID transaksi berdasarkan timestamp (misalnya TRX + timestamp)
-            String idTransaksi = "TRX" + System.currentTimeMillis();
-            
-            // Ambil tanggal transaksi
-            String tanggalTransaksi = java.time.LocalDateTime.now().toString(); // Format: YYYY-MM-DDTHH:MM:SS
-            
-            // Format untuk mencatat transaksi
-            String transaksi = String.format("%s, %s, %s, %s, %s, %s, %.2f\n",
-                    idTransaksi, tanggalTransaksi, namaPembeli, barangDibeli, "", metodePembayaran, totalHarga);
-            
-            // Tulis transaksi ke file
-            writer.write(transaksi);
-            writer.flush();
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Gagal mencatat transaksi ke file!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     // Editor untuk kolom Jumlah
     class SpinnerEditor extends AbstractCellEditor implements TableCellEditor {
         private JSpinner spinner;

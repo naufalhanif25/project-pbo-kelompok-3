@@ -29,7 +29,7 @@ public class LoginPanel extends JPanel {
         // Panel utama dengan efek rounded
         g2d.setColor(new Color(255, 255, 255, 230)); 
         int panelWidth = 470;
-        int panelHeight = 500;
+        int panelHeight = 600;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
         g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
@@ -41,13 +41,25 @@ public class LoginPanel extends JPanel {
         gbc.insets = new Insets(10, 10, 10, 10); 
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        //Icon
+        JLabel logoLabel = new JLabel();
+        logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\LoginRB.png", 100, 100);
+        if (logoIcon != null) {
+            logoLabel.setIcon(logoIcon);
+        }
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(logoLabel, gbc);
+
         // Title Label
         JLabel titleLabel = new JLabel("Sign in", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Consolas", Font.BOLD, 30));
         titleLabel.setForeground(Color.DARK_GRAY);
         gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.gridwidth = 2; // Memanfaatkan 2 kolom
+        gbc.gridy = 1; 
         gbc.anchor = GridBagConstraints.CENTER;
         add(titleLabel, gbc);
 
@@ -55,7 +67,7 @@ public class LoginPanel extends JPanel {
         JLabel roleLabel = new JLabel("Pilih Role:");
         UIStyle.styleLabel(roleLabel);
         gbc.gridx = 0;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.gridwidth = 1; 
         gbc.anchor = GridBagConstraints.LINE_END;
         add(roleLabel, gbc);
@@ -65,7 +77,7 @@ public class LoginPanel extends JPanel {
         roleBox = new JComboBox<>(roles);
         roleBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;
-        gbc.gridy = 1;
+        gbc.gridy = 2;
         gbc.anchor = GridBagConstraints.LINE_START;
         add(roleBox, gbc);
 
@@ -73,14 +85,14 @@ public class LoginPanel extends JPanel {
         JLabel usernameLabel = new JLabel("Username:");
         UIStyle.styleLabel(usernameLabel);
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.LINE_END;
         add(usernameLabel, gbc);
 
         // Username TextField
         username = new JTextField(20);
         gbc.gridx = 1;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         gbc.anchor = GridBagConstraints.LINE_START;
         UIStyle.styleTextField(username);
         add(username, gbc);
@@ -89,14 +101,14 @@ public class LoginPanel extends JPanel {
         JLabel passwordLabel = new JLabel("Password:");
         UIStyle.styleLabel(passwordLabel);
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         gbc.anchor = GridBagConstraints.LINE_END;
         add(passwordLabel, gbc);
 
         // Password Field
         password = new JPasswordField(20);
         gbc.gridx = 1;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         UIStyle.styleTextField(password);
         gbc.anchor = GridBagConstraints.LINE_START;
         add(password, gbc);
@@ -106,7 +118,7 @@ public class LoginPanel extends JPanel {
         UIStyle.styleButton(login);
         login.addActionListener(e -> tombollogin());
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.gridwidth = 2; 
         gbc.anchor = GridBagConstraints.CENTER;
         add(login, gbc);
@@ -115,7 +127,7 @@ public class LoginPanel extends JPanel {
         JLabel infoLabel = new JLabel("Belum Punya Akun? Daftar Disini!",SwingConstants.CENTER);
         UIStyle.styleLabel(infoLabel);
         gbc.gridx = 0;
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         gbc.gridwidth = 2; 
         gbc.anchor = GridBagConstraints.CENTER;
         add(infoLabel, gbc);
@@ -124,9 +136,7 @@ public class LoginPanel extends JPanel {
         buatakun = new JButton("Buat Akun Baru");
         UIStyle.styleButton(buatakun);
         buatakun.addActionListener(e -> tombolcreateakun());
-        gbc.gridx = 0;
-        gbc.gridy = 6;
-        gbc.gridwidth = 2; 
+        gbc.gridy = 7;
         gbc.anchor = GridBagConstraints.CENTER;
         add(buatakun, gbc);
     }

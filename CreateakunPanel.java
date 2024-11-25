@@ -151,6 +151,7 @@ public class CreateakunPanel extends JPanel {
     private void kembaliLogin() {
         JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (kembali != null) {
+            kembali.dispose();
             //Navigasi Tombol
             kembali.setContentPane(new Login());
             kembali.revalidate();

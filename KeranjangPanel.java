@@ -70,9 +70,20 @@ public class KeranjangPanel extends JPanel {
         keranjangTable = new JTable(tableModel);
         keranjangTable.setRowHeight(30);
 
-        // Menambahkan checkbox untuk kolom "Pilih"
+        // Menambahkan checkbox  
         keranjangTable.getColumnModel().getColumn(0).setCellEditor(keranjangTable.getDefaultEditor(Boolean.class));
         keranjangTable.getColumnModel().getColumn(0).setCellRenderer(keranjangTable.getDefaultRenderer(Boolean.class));
+
+        //Jumlah Edit Editor
+        // barangTable.getColumnModel().getColumn(5).setCellEditor(new JumlahEdit());
+        // JScrollPane scrollPane = new JScrollPane(barangTable);
+        // scrollPane.setPreferredSize(new Dimension(800, 300));
+        // gbc.gridy = 2;
+        // gbc.gridwidth = 2;
+        // gbc.anchor = GridBagConstraints.CENTER;
+        // add(scrollPane, gbc);
+        // revalidate(); 
+        // repaint();
 
         JScrollPane scrollPane = new JScrollPane(keranjangTable);
         scrollPane.setPreferredSize(new Dimension(350, 300));
@@ -112,7 +123,7 @@ public class KeranjangPanel extends JPanel {
                 if (data.length == 2) {
                     String namaBarang = data[0].trim();
                     String jumlah = data[1].trim();
-                    tableModel.addRow(new Object[]{false, namaBarang, jumlah}); // Kolom pertama untuk checkbox
+                    tableModel.addRow(new Object[]{false, namaBarang, jumlah}); 
                 }
             }
         } catch (IOException e) {
@@ -145,6 +156,7 @@ public class KeranjangPanel extends JPanel {
             // Navigasi ke panel transaksi tanpa menutup jendela
             JFrame transaksi = (JFrame) SwingUtilities.getWindowAncestor(this); 
             if (transaksi != null) {
+                transaksi.dispose();
                 transaksi.setContentPane(new Transaksi());  
                 transaksi.revalidate(); 
             }
