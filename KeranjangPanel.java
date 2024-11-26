@@ -2,9 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableCellEditor;
 
 public class KeranjangPanel extends JPanel {
     private JTable keranjangTable;

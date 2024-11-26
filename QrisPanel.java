@@ -3,7 +3,6 @@ import java.awt.*;
 import java.io.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import java.net.URL;
 
 public class QrisPanel extends JPanel {
 

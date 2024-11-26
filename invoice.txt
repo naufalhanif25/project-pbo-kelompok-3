@@ -1,5 +1,0 @@
-INV1, Naufal, Baju:50000.0, 50000.0, Bank
-INV2, Naufal, Baju:50000.0, 50000.0, COD
-INV3, Naufal, Baju:50000.0, 50000.0, COD
-INV4, Naufal, Topi:20000.0, 20000.0, COD
-INV5, Naufal, Topi:20000.0, 20000.0, QRIS

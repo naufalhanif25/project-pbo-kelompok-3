@@ -1,2 +1,0 @@
-TRX1, Naufal, Topi:20000.0, 20000.0
-TRX2, Hanif, Baju:50000.0, 50000.0
