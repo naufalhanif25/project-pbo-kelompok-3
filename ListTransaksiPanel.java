@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.util.Arrays;
 import javax.swing.table.DefaultTableModel;
 
 public class ListTransaksiPanel extends JPanel {

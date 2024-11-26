@@ -51,15 +51,30 @@ public class CodPanel extends JPanel {
         // Pesan Pembayaran
         JLabel messageLabel1 = new JLabel("Pembayaran melalui COD sebesar Rp");
         UIStyle.styleLabel(messageLabel1);
-        gbc.gridy = 1; // Posisi di bawah logo
-        gbc.gridwidth = 2; // Memperluas label
+        gbc.gridy = 1; 
+        gbc.gridwidth = 2; 
         add(messageLabel1, gbc);
 
         JLabel messageLabel2 = new JLabel("Pembayaran berhasil dilakukan menggunakan metode COD.");
         UIStyle.styleLabel(messageLabel2);
-        gbc.gridy = 2; // Posisi di bawah pesan pertama
+        gbc.gridy = 2; 
         add(messageLabel2, gbc);
+
+        //Tombol Kembali
+        JButton kembaliButton = new JButton("Kembali Ke Dashboard");
+        UIStyle.styleButton(kembaliButton);
+        kembaliButton.addActionListener(e -> kembali());
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        add(kembaliButton, gbc);
     }
 
-    
+    private void kembali() {
+        JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (kembali != null) {
+            kembali.dispose(); // Menutup Laman
+            kembali.setContentPane(new Dashboard("Pelanggan")); //Navigasi Tombol
+            kembali.revalidate();
+        }
+    }
 }

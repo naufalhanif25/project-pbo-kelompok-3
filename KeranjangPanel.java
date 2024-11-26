@@ -74,17 +74,6 @@ public class KeranjangPanel extends JPanel {
         keranjangTable.getColumnModel().getColumn(0).setCellEditor(keranjangTable.getDefaultEditor(Boolean.class));
         keranjangTable.getColumnModel().getColumn(0).setCellRenderer(keranjangTable.getDefaultRenderer(Boolean.class));
 
-        //Jumlah Edit Editor
-        // barangTable.getColumnModel().getColumn(5).setCellEditor(new JumlahEdit());
-        // JScrollPane scrollPane = new JScrollPane(barangTable);
-        // scrollPane.setPreferredSize(new Dimension(800, 300));
-        // gbc.gridy = 2;
-        // gbc.gridwidth = 2;
-        // gbc.anchor = GridBagConstraints.CENTER;
-        // add(scrollPane, gbc);
-        // revalidate(); 
-        // repaint();
-
         JScrollPane scrollPane = new JScrollPane(keranjangTable);
         scrollPane.setPreferredSize(new Dimension(350, 300));
         gbc.gridx = 0;

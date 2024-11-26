@@ -119,8 +119,8 @@ public class QrisPanel extends JPanel {
     private void kembali() {
         JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (kembali != null) {
-            kembali.dispose();
-            kembali.setContentPane(new Dashboard("Pelanggan"));
+            kembali.dispose(); // Menutup Laman
+            kembali.setContentPane(new Dashboard("Pelanggan")); //Navigasi Tombol
             kembali.revalidate();
         }
     }

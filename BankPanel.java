@@ -60,6 +60,25 @@ public class BankPanel extends JPanel {
         UIStyle.styleLabel(messageLabel2);
         gbc.gridy = 2; // Posisi di bawah pesan pertama
         add(messageLabel2, gbc);
+
+        //Tombol Kembali
+        JButton kembaliButton = new JButton("Kembali");
+        UIStyle.styleButton(kembaliButton);
+        kembaliButton.addActionListener(e -> kembali());
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(kembaliButton, gbc);
     }
 
+    // 
+    private void kembali() {
+        JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (kembali != null) {
+            kembali.dispose(); //untuk Menutup laman
+            kembali.setContentPane(new Dashboard("Pelanggan")); //Navigasi Tombol
+            kembali.revalidate();
+        }
+    }
 }

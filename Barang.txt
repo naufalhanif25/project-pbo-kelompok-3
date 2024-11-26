@@ -1,5 +1,5 @@
-001,baju,Pakaian,1,10000.0
-002,celana,Pakaian,1,15000.0
+001,baju,Pakaian,2,10000.0
+002,celana,Pakaian,3,15000.0
 003,kaos,Pakaian,5,12000.0
 004,kemeja,Pakaian,4,20000.0
 005,rok,Pakaian,2,18000.0
@@ -18,7 +18,7 @@
 018,scanner,Elektronik,2,70000.0
 019,speaker,Elektronik,4,45000.0
 020,headset,Elektronik,3,30000.0
-021,nasi goreng,Makanan,7,15000.0
+021,nasi goreng,Makanan,10,15000.0
 022,sate ayam,Makanan,8,20000.0
 023,bakso,Makanan,6,10000.0
 024,mie goreng,Makanan,7,12000.0
@@ -133,4 +133,4 @@
 133,sofa,Perabotan,1,250000.0
 134,kasur,Perabotan,2,300000.0
 135,kursi,Perabotan,4,50000.0
-136,karpet,Perabotan,3,70000.0
+136,karpet,Perabotan,3,70000.
