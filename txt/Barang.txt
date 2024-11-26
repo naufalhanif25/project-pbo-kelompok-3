@@ -1,0 +1,11 @@
+001,baju,Pakaian,1,10000.0
+002,celana,Pakaian,1,15000.0
+003,kaos,Pakaian,4,12000.0
+004,kemeja,Pakaian,3,20000.0
+005,rok,Pakaian,2,18000.0
+006,jaket,Pakaian,1,25000.0
+007,sepatu,Pakaian,2,30000.0
+008,topi,Pakaian,4,8000.0
+009,sarung tangan,Pakaian,2,9000.0
+010,sandal,Pakaian,3,7000.0
+011,televisi,Elektronik,2,300000.0
