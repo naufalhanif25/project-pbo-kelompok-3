@@ -1,0 +1,3 @@
+K1, B1, Naufal, Baju:50000.0, 50000.0
+K2, B3, Naufal, Topi:20000.0, 20000.0
+K3, B1, Naufal, Baju:50000.0, 50000.0
