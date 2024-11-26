@@ -106,7 +106,7 @@ public class ListBarangPanel extends JPanel {
     private void loadBarang() {
         tableModel.setRowCount(0); // Reset tabel
         TipeBarang.clear(); // Kosongkan HashMap
-        try (BufferedReader reader = new BufferedReader(new FileReader("txt\\barang.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Barang.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");

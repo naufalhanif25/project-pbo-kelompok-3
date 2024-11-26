@@ -22,8 +22,8 @@ public class BankPanel extends JPanel {
 
         // Panel utama dengan efek rounded
         g2d.setColor(new Color(255, 255, 255, 230));
-        int panelWidth = 500;
-        int panelHeight = 500;
+        int panelWidth = 320;
+        int panelHeight = 360;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
         g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
@@ -35,39 +35,52 @@ public class BankPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.CENTER;
 
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 120, 120); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         }
-        gbc.gridx = 0;
+        gbc.gridx = 4;
         gbc.gridy = 0;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 7;
         gbc.anchor = GridBagConstraints.CENTER;
         add(logoLabel, gbc);
 
+        whiteSpace(1, 0);
+
+        gbc = new GridBagConstraints();
+
         // Pesan Pembayaran
-        JLabel messageLabel1 = new JLabel("Pembayaran melalui BANK sebesar Rp");
+        JLabel messageLabel1 = new JLabel("Pembayaran melalui BANK");
         UIStyle.styleLabel(messageLabel1);
-        gbc.gridy = 1; // Posisi di bawah logo
-        gbc.gridwidth = 2; // Memperluas label
+        gbc.gridx = 4;
+        gbc.gridy = 2; // Posisi di bawah logo
+        gbc.ipady = 8;
+        gbc.gridwidth = 7;
         gbc.anchor = GridBagConstraints.CENTER;
         add(messageLabel1, gbc);
 
-        JLabel messageLabel2 = new JLabel("Pembayaran berhasil dilakukan menggunakan metode BANK.");
+        JLabel messageLabel2 = new JLabel("sebesar Rp50000" + " berhasil");
         UIStyle.styleLabel(messageLabel2);
-        gbc.gridy = 2; // Posisi di bawah pesan pertama
-        gbc.gridwidth = 2; // Memperluas label
+        gbc.gridy = 3; // Posisi di bawah pesan pertama
+        gbc.ipady = 8;
         gbc.anchor = GridBagConstraints.CENTER;
         add(messageLabel2, gbc);
 
+        gbc = new GridBagConstraints();
+        
+        whiteSpace(4, 20);
+
         JButton menuUtamaButton = new JButton("Menu Utama");
         UIStyle.styleButton(menuUtamaButton);
-        gbc.gridy = 3;
-        gbc.gridwidth = 2;
+        gbc.gridx = 4;
+        gbc.gridy = 5;
+        gbc.gridwidth = 7;
+        gbc.ipadx = -50;
         gbc.anchor = GridBagConstraints.CENTER; 
         menuUtamaButton.addActionListener(e -> pelanggan());
         add(menuUtamaButton, gbc);
@@ -80,6 +93,18 @@ public class BankPanel extends JPanel {
             pelanggan.setContentPane(new Dashboard("Pelanggan"));
             pelanggan.revalidate();
         }
+    }
+
+    private void whiteSpace(int gridy, int ipady) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        JLabel whiteSpace = new JLabel(" ");
+
+        UIStyle.styleLabel(whiteSpace);
+        gbc.gridx = 4;
+        gbc.gridy = gridy;
+        gbc.ipady = ipady;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(whiteSpace, gbc);
     }
 }
 

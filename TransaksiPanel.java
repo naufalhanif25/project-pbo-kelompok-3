@@ -1,11 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TransaksiPanel extends JPanel {
-
     private JComboBox<String> metodeComboBox;
-    private ArrayList<Barang> daftarBarang = new ArrayList<>();
+    private List<Barang> daftarBarang = new ArrayList<>();
 
     public TransaksiPanel() {
         setLayout(new GridBagLayout());
@@ -89,7 +89,6 @@ public class TransaksiPanel extends JPanel {
 
         // Hitung total harga
             double totalHarga = hitungTotalHarga();
-            System.out.println(totalHarga);
             String Jumlah = String.format("%.2f", totalHarga);
 
         // Menyimpan transaksi ke file
@@ -121,13 +120,12 @@ public class TransaksiPanel extends JPanel {
     private double hitungTotalHarga() {
         double total = 0.0;
 
-        System.out.println(daftarBarang);
         for (Barang barang : daftarBarang) {
-            System.out.println("Ini barang: " + barang);
             int jumlah = barang.getStok(); 
             double hargaPerUnit = barang.getHarga(); 
             total += jumlah * hargaPerUnit;
         }
+
     
         return total;
     }
