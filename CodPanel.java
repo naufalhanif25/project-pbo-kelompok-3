@@ -2,8 +2,18 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CodPanel extends JPanel {
+    private double totalHarga;
 
     public CodPanel() {
+        setLayout(new GridBagLayout());
+        setOpaque(true);
+        setBackground(Color.DARK_GRAY);
+        addComponents();
+    }
+
+    public CodPanel(double totalHarga) {
+        this.totalHarga = totalHarga;
+
         setLayout(new GridBagLayout());
         setOpaque(true);
         setBackground(Color.DARK_GRAY);
@@ -38,7 +48,7 @@ public class CodPanel extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 120, 120); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\CodRB.png", 120, 120); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         }
@@ -62,7 +72,7 @@ public class CodPanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         add(messageLabel1, gbc);
 
-        JLabel messageLabel2 = new JLabel("sebesar Rp50000" + " berhasil");
+        JLabel messageLabel2 = new JLabel("sebesar Rp" + this.totalHarga + " berhasil");
         UIStyle.styleLabel(messageLabel2);
         gbc.gridy = 3; // Posisi di bawah pesan pertama
         gbc.ipady = 8;
@@ -90,6 +100,7 @@ public class CodPanel extends JPanel {
             pelanggan.dispose();
             pelanggan.setContentPane(new Dashboard("Pelanggan"));
             pelanggan.revalidate();
+            pelanggan.dispose();
         }
     }
 

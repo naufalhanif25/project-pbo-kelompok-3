@@ -16,7 +16,6 @@ public class ListBarang extends JFrame{
     // Menambahkan Panel BeliBarang
     add(new ListBarangPanel());
     setVisible(true);
-    
   }
 }
   

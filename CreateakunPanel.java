@@ -154,6 +154,7 @@ public class CreateakunPanel extends JPanel {
             //Navigasi Tombol
             kembali.setContentPane(new Login());
             kembali.revalidate();
+            kembali.dispose();
         }
     }
 
@@ -171,6 +172,7 @@ public class CreateakunPanel extends JPanel {
                 writer.newLine();
                 JOptionPane.showMessageDialog(this, "Akun berhasil dibuat sebagai " + role + "!", "Info", JOptionPane.INFORMATION_MESSAGE);
                 kembaliLogin();
+                writer.close();
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat menyimpan akun.", "Error", JOptionPane.ERROR_MESSAGE);
             }

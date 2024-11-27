@@ -16,6 +16,5 @@ public class ListTransaksi extends JFrame{
     // Menambahkan Panel BeliBarang
     add(new ListTransaksiPanel());
     setVisible(true);
-    
   }
 }

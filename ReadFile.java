@@ -9,7 +9,7 @@ public class ReadFile {
     // Method untuk membaca barang dari file barang.txt 
     public static void BacaBarang(DefaultTableModel tableModel) {
         tableModel.setRowCount(0); // Reset tabel
-        try (BufferedReader reader = new BufferedReader(new FileReader("txt\\barang.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Barang.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
@@ -30,6 +30,8 @@ public class ReadFile {
                     System.err.println("Baris tidak valid: " + line);
                 }
             }
+
+            reader.close();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Gagal memuat barang dari file!", "Error", JOptionPane.ERROR_MESSAGE);
         }

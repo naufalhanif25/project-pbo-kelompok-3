@@ -52,7 +52,7 @@ public class BeliBarangPanel extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 100, 100);
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\BeliBarangRB.png", 100, 100);
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         }
@@ -145,7 +145,7 @@ public class BeliBarangPanel extends JPanel {
         tableModel.setRowCount(0);  // Menghapus data lama dari tabel
         daftarBarang.clear();       // Menghapus barang yang sudah ada di ArrayList
     
-        try (BufferedReader reader = new BufferedReader(new FileReader("txt\\barang.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Barang.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
@@ -173,6 +173,8 @@ public class BeliBarangPanel extends JPanel {
                     System.err.println("Baris tidak valid: " + line);
                 }
             }
+
+            reader.close();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Gagal memuat barang dari file!", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -186,14 +188,18 @@ public class BeliBarangPanel extends JPanel {
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             Boolean isSelected = (Boolean) tableModel.getValueAt(i, 6);  
             if (isSelected != null && isSelected) {
+                Double totalHarga = 0.0;
                 String namaBarang = (String) tableModel.getValueAt(i, 1);  
-                int jumlah = (int) tableModel.getValueAt(i, 5);            
+                int jumlah = (int) tableModel.getValueAt(i, 5);   
+                Double hargaBarang = (Double) tableModel.getValueAt(i, 4); 
+                
+                totalHarga = hargaBarang * jumlah;
     
                 // Menambahkan nama barang dan jumlah ke keranjang
                 keranjang.add(namaBarang + " (Jumlah: " + jumlah + ")");
     
                 // Menambahkan barang ke data keranjang untuk ditulis ke file
-                dataKeranjang.append(namaBarang).append(",").append(jumlah).append("\n");
+                dataKeranjang.append(namaBarang).append(",").append(jumlah).append(",").append(totalHarga).append("\n");
             }
         }
     
@@ -217,14 +223,19 @@ public class BeliBarangPanel extends JPanel {
     private void prosesPembayaran() {
         StringBuilder selectedItems = new StringBuilder();
         boolean pembayaranBerhasil = false;
+        ArrayList<Double> dataHarga = new ArrayList<>();
     
         // Menyaring barang yang dipilih berdasarkan checkbox
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             Boolean isSelected = (Boolean) tableModel.getValueAt(i, 6);  
+            Double total = 0.0;
             if (isSelected != null && isSelected) {
-                String namaBarang = (String) tableModel.getValueAt(i, 1);  
+                String namaBarang = (String) tableModel.getValueAt(i, 1); 
+                Double hargaBarang = (Double) tableModel.getValueAt(i, 4);
                 int jumlah = (int) tableModel.getValueAt(i, 5);            
-                int stok = (int) tableModel.getValueAt(i, 3);              
+                int stok = (int) tableModel.getValueAt(i, 3);  
+                
+                total += hargaBarang * jumlah;
     
                 // Memastikan jumlah yang diminta tidak melebihi stok
                 if (jumlah <= stok) {
@@ -239,6 +250,8 @@ public class BeliBarangPanel extends JPanel {
                     return;
                 }
             }
+            
+            dataHarga.add(total);
         }
     
         if (pembayaranBerhasil) {
@@ -247,12 +260,20 @@ public class BeliBarangPanel extends JPanel {
             // Tampilkan konfirmasi pembayaran
             JOptionPane.showMessageDialog(this, "Pembayaran berhasil untuk barang:\n" + selectedItems.toString(),
                     "Pembayaran Sukses", JOptionPane.INFORMATION_MESSAGE);
+
+            double totalHarga = 0.0;
+
+            for (double tempHarga : dataHarga) {
+                totalHarga += tempHarga;
+            }
     
             // Navigasi ke halaman transaksi
             JFrame transaksi = (JFrame) SwingUtilities.getWindowAncestor(this);
             if (transaksi != null) {
-                transaksi.setContentPane(new Transaksi());
+                transaksi.dispose();
+                transaksi.setContentPane(new Transaksi(totalHarga));
                 transaksi.revalidate();
+                transaksi.dispose();
             }
         } else {
             JOptionPane.showMessageDialog(this, "Tidak ada barang yang dipilih untuk pembayaran!", "Peringatan", JOptionPane.WARNING_MESSAGE);
@@ -261,7 +282,7 @@ public class BeliBarangPanel extends JPanel {
 
     //Private saveBarangToFile
     private void saveBarangToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\barang.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\Barang.txt"))) {
             for (int i = 0; i < tableModel.getRowCount(); i++) {
                 String idBarang = (String) tableModel.getValueAt(i, 0);
                 String namaBarang = (String) tableModel.getValueAt(i, 1);
@@ -272,6 +293,7 @@ public class BeliBarangPanel extends JPanel {
                 writer.write(idBarang + "," + namaBarang + "," + tipeBarang + "," + stok + "," + harga + "\n");
             }
             writer.flush();
+            writer.close();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Gagal menyimpan perubahan stok!", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -284,6 +306,7 @@ public class BeliBarangPanel extends JPanel {
         //Navigasi Tombol
         kembali.setContentPane(new Dashboard("Pelanggan"));
         kembali.revalidate();
+        kembali.dispose();
     }
 }
     // Editor untuk kolom Jumlah

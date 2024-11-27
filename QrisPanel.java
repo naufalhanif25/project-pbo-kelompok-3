@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 public class QrisPanel extends JPanel {
 
     private JLabel qrCodeLabel; // Label untuk menampilkan QR Code
+    private double totalHarga;
 
     public QrisPanel() {
         setLayout(new GridBagLayout());
@@ -14,6 +15,16 @@ public class QrisPanel extends JPanel {
         setBackground(Color.DARK_GRAY);
         addComponents();
     }
+
+    public QrisPanel(double totalHarga) {
+        this.totalHarga = totalHarga;
+        
+        setLayout(new GridBagLayout());
+        setOpaque(true);
+        setBackground(Color.DARK_GRAY);
+        addComponents();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -42,7 +53,7 @@ public class QrisPanel extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\QRISRB.png", 100, 100); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } 
@@ -53,19 +64,26 @@ public class QrisPanel extends JPanel {
         add(logoLabel, gbc);
 
         // Label untuk Informasi QRIS
-        JLabel titleLabel = new JLabel("Pembayaran QRIS", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Pembayaran melalui QRIS", SwingConstants.CENTER);
         UIStyle.styleLabel(titleLabel);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
         add(titleLabel, gbc);
 
+        JLabel hargaLabel = new JLabel("Sebesar Rp" + totalHarga, SwingConstants.CENTER);
+        UIStyle.styleLabel(hargaLabel);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        add(hargaLabel, gbc);
+
         // Tombol Bayar QRIS
         JButton bayarButton = new JButton("Bayar Dengan QRIS");
         UIStyle.styleButton(bayarButton);
         bayarButton.addActionListener(e -> bayarDenganQRIS());
         gbc.gridx = 0;
-        gbc.gridy = 2;
+        gbc.gridy = 3;
         add(bayarButton, gbc);
 
         // Tombol Kembali
@@ -73,7 +91,7 @@ public class QrisPanel extends JPanel {
         UIStyle.styleButton(kembaliButton);
         kembaliButton.addActionListener(e -> kembali());
         gbc.gridx = 0;
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         add(kembaliButton, gbc);
 
         // Label untuk menampilkan QR Code
@@ -81,7 +99,7 @@ public class QrisPanel extends JPanel {
         qrCodeLabel.setHorizontalAlignment(SwingConstants.CENTER);
         qrCodeLabel.setPreferredSize(new Dimension(300, 300)); 
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.gridwidth = 2;
         add(qrCodeLabel, gbc);
     }
@@ -121,6 +139,7 @@ public class QrisPanel extends JPanel {
             kembali.dispose();
             kembali.setContentPane(new Dashboard("Pelanggan"));
             kembali.revalidate();
+            kembali.dispose();
         }
     }
 

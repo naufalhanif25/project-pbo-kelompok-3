@@ -115,6 +115,8 @@ public class ListBarangPanel extends JPanel {
                 // Masukkan data ke HashMap berdasarkan tipe barang
                 TipeBarang.computeIfAbsent(data[2], k -> new ArrayList<>()).add(data);
             }
+
+            reader.close();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Gagal memuat barang dari file!", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -126,6 +128,7 @@ public class ListBarangPanel extends JPanel {
         if (kembali != null) {
             kembali.dispose();
             kembali.setContentPane(new Dashboard("Admin"));
+            kembali.dispose();
         }
     }
 }

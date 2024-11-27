@@ -37,7 +37,7 @@ public class DashbroadPanelAdmin extends JPanel {
         //Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\ICONADMINRB.png", 100, 100); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } 
@@ -103,6 +103,7 @@ public class DashbroadPanelAdmin extends JPanel {
             kembali.dispose();
             //Navigasi Tombol
             kembali.setContentPane(new Login());
+            kembali.dispose();
         }
     }
 
@@ -113,6 +114,7 @@ public class DashbroadPanelAdmin extends JPanel {
             tambahbarang.dispose();
             //Navigasi Tombol
             tambahbarang.setContentPane(new TambahBarang());
+            tambahbarang.dispose();
         }
         //JOptionPane.showMessageDialog(this, "Fitur Tambahkan Barang belum diimplementasikan.", "Info", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -124,6 +126,7 @@ public class DashbroadPanelAdmin extends JPanel {
             listbarang.dispose();
             //Navigasi Tombol
             listbarang.setContentPane(new ListBarang());
+            listbarang.dispose();
     }
     }
 
@@ -134,6 +137,7 @@ public class DashbroadPanelAdmin extends JPanel {
             listransaksi.dispose();
             //Navigasi Tombol
             listransaksi.setContentPane(new ListTransaksi());
+            listransaksi.dispose();
         
         }
     }

@@ -56,7 +56,7 @@ public class InvoicePanel extends JPanel{
     //Icon Logo
     JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = loadImageIcon("pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = loadImageIcon("pict\\TransaksiRB.png", 100, 100); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } 
