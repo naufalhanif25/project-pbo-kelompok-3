@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -92,7 +91,7 @@ public class DashbroadPanelAdmin extends JPanel {
 
         
         //Tombol Kembali Ke Laman Login
-        JButton kembaliloginButton = new JButton("Back");
+        JButton kembaliloginButton = new JButton("Keluar");
         UIStyle.styleButton(kembaliloginButton);
         gbc.gridx = 0;
         gbc.gridy = 5;

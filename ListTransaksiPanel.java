@@ -69,7 +69,7 @@ public class ListTransaksiPanel extends JPanel {
         add(reloadButton, gbc);
 
         // Tombol Keluar
-        JButton backButton = new JButton("Back");
+        JButton backButton = new JButton("Kembali");
         backButton.addActionListener(e -> kembali());
         UIStyle.styleButton(backButton);
         gbc.gridy = 4;
@@ -79,21 +79,44 @@ public class ListTransaksiPanel extends JPanel {
     }
 
     private void loadTransaksi() {
-        tableModel.setRowCount(0);
-        try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Transaksi.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(",");
-                if (data.length == 6) {
-                    tableModel.addRow(data);
-                } else {
-                    System.out.println("Baris Data Tidak Valid: " + line);
-                }
-            }
+        ReadLog log = new ReadLog();
+        String username = log.readFile();
 
-            reader.close();
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Gagal memuat transaksi dari file!", "Error", JOptionPane.ERROR_MESSAGE);
+        tableModel.setRowCount(0);
+
+        if (username.equals("admin")) {
+            try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Transaksi.txt"))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] data = line.split(",");
+                    if (data.length == 6) {
+                        tableModel.addRow(data);
+                    } else {
+                        System.out.println("Baris Data Tidak Valid: " + line);
+                    }
+                }
+    
+                reader.close();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Gagal memuat transaksi dari file!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else {
+            try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Transaksi.txt"))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] data = line.split(",");
+                    if (data.length == 6 && data[1].equals(log.readFile())) {
+                        tableModel.addRow(data);
+                    } else {
+                        System.out.println("Baris Data Tidak Valid: " + line);
+                    }
+                }
+    
+                reader.close();
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Gagal memuat transaksi dari file!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
         transaksiTable.revalidate();
         transaksiTable.repaint();
@@ -101,9 +124,17 @@ public class ListTransaksiPanel extends JPanel {
 
     private void kembali() {
         JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
+        ReadLog log = new ReadLog();
+        String username = log.readFile();
         if (kembali != null) {
             kembali.dispose();
-            kembali.setContentPane(new Dashboard("Admin"));
+
+            if (username.equals("admin")) {
+                kembali.setContentPane(new Dashboard("Admin"));
+            }
+            else {
+                kembali.setContentPane(new Dashboard("Pelanggan"));
+            }
             kembali.revalidate();
             kembali.dispose();
         }

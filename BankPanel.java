@@ -1,7 +1,6 @@
-
 import javax.swing.*;
 import java.awt.*;
-
+    
 public class BankPanel extends JPanel {
     private double totalHarga;
 
@@ -89,7 +88,7 @@ public class BankPanel extends JPanel {
         whiteSpace(4, 20);
 
         //Button 
-        JButton menuUtamaButton = new JButton("Menu Utama");
+        JButton menuUtamaButton = new JButton("Kembali Ke Dashboard");
         UIStyle.styleButton(menuUtamaButton);
         gbc.gridx = 4;
         gbc.gridy = 5;

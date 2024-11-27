@@ -88,9 +88,11 @@ public class TransaksiPanel extends JPanel {
             // Mengambil metode pembayaran yang dipilih
             String metodePembayaranDipilih = (String) metodeComboBox.getSelectedItem();
 
+            ReadLog log = new ReadLog();
+
         // Data Transaksi
             String IdTransaksi = "T" + System.currentTimeMillis();  
-            String UserName = "Pelanggan";  
+            String UserName = log.readFile();  
             String Tanggal = java.time.LocalDate.now().toString();
             String Keterangan = "Sukses";
 
@@ -106,7 +108,7 @@ public class TransaksiPanel extends JPanel {
     add(invoiceloginButton, gbc);
 
         // Tombol Kembali Ke Login
-        JButton kembaliloginButton = new JButton("Back");
+        JButton kembaliloginButton = new JButton("Kembali");
         UIStyle.styleButton(kembaliloginButton);
         gbc.gridx = 0;
         gbc.gridy = 4;
