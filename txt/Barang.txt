@@ -134,5 +134,5 @@
 134,kasur,Perabotan,2,300000.0
 135,kursi,Perabotan,4,50000.0
 136,karpet,Perabotan,3,70000.0
-300,Samyang,Makanan,9,13000.0
-111,Gacoan,Makanan,100,10000.0
+137,Gacoan,Makanan,100,10000.0
+138,Samyang,Makanan,9,13000.0

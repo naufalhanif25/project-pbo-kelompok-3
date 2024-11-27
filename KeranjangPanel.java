@@ -150,16 +150,18 @@ public class KeranjangPanel extends JPanel {
         // Menyaring barang yang dipilih berdasarkan checkbox yang dicentang
         StringBuilder selectedItems = new StringBuilder();
         ArrayList<String> items = new ArrayList<>();
+        ReadLog log = new ReadLog();
         Double totalHarga = 0.0;
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             Boolean isSelected = (Boolean) tableModel.getValueAt(i, 0); // Kolom 0 adalah checkbox
             if (isSelected != null && isSelected) {
+                String username = log.readFile();
                 String namaBarang = (String) tableModel.getValueAt(i, 1);
                 int jumlah = (int) tableModel.getValueAt(i, 2);
                 double harga = (double) tableModel.getValueAt(i, 3);
                 totalHarga += harga;
                 selectedItems.append(namaBarang).append(",").append(jumlah).append(",").append(harga).append("\n");
-                String tempKeranjang = namaBarang + "," + jumlah + "," + harga;
+                String tempKeranjang = username + "," + namaBarang + "," + jumlah + "," + harga;
                 
                 items.add(tempKeranjang);
             }
