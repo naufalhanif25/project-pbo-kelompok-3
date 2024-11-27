@@ -82,7 +82,7 @@ public class CreateakunPanel extends JPanel {
         add(crole_id, gbc);
 
         // ComboBox Role
-        String[] roles = {"Admin", "Pelanggan"};
+        String[] roles = {"Pelanggan"};
         CroleBox = new JComboBox<>(roles);
         CroleBox.setFont(new Font("Arial", Font.PLAIN, 14));
         gbc.gridx = 1;

@@ -122,7 +122,7 @@
 122,palu,Peralatan,3,15000.0
 123,gergaji,Peralatan,2,25000.0
 124,tang,Peralatan,5,12000.0
-125,pisau,Peralatan,6,8000.0
+125,pisau,Peralatan,5,8000.0
 126,gunting,Peralatan,7,6000.0
 127,bor,Peralatan,1,50000.0
 128,mesin cuci,Peralatan,1,200000.0
@@ -136,3 +136,4 @@
 136,karpet,Perabotan,3,70000.0
 300,Samyang,Makanan,9,13000.0
 111,Gacoan,Makanan,100,10000.0
+200,Sendok,Peralatan,8,10000.0
