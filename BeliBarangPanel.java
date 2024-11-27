@@ -14,6 +14,7 @@ public class BeliBarangPanel extends JPanel {
     private HashMap<String, List<String[]>> TipeBarang; 
     private ArrayList<Barang> daftarBarang = new ArrayList<>();
 
+    //class belibarangpanel
     public BeliBarangPanel() {
         keranjang = new ArrayList<>();
         setLayout(new GridBagLayout());
@@ -39,12 +40,15 @@ public class BeliBarangPanel extends JPanel {
         int panelHeight = 700;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
+        //Agar Kotak Tidak Lancip
         g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
 
+        //Untuk Menutup
         g2d.dispose();
     }
 
     private void addComponents() {
+        //Installasi Gridbagconstraints
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -92,6 +96,7 @@ public class BeliBarangPanel extends JPanel {
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         add(scrollPane, gbc);
+        //layout manager
         revalidate(); 
         repaint();    
 
@@ -103,7 +108,7 @@ public class BeliBarangPanel extends JPanel {
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         add(searchLabel, gbc);
-
+        // Panel search
         JPanel searchPanel = new Search(tableModel, TipeBarang);
         gbc.gridx = 1;
         gbc.gridwidth = 2;
@@ -122,6 +127,7 @@ public class BeliBarangPanel extends JPanel {
         //Tombol Bayar
         JButton bayarButton = new JButton("Bayar");
         UIStyle.styleButton(bayarButton);
+        //Membuat Private Void prosesPembayaranz
         bayarButton.addActionListener(e -> prosesPembayaran());
         buttonPanel.add(bayarButton);
         gbc.gridx = 0;
@@ -132,6 +138,7 @@ public class BeliBarangPanel extends JPanel {
         // Tombol Kembali
         JButton kembaliButton = new JButton("Back");
         UIStyle.styleButton(kembaliButton);
+        //Membuat Private Void Kembali
         kembaliButton.addActionListener(e -> kembali());
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -273,6 +280,7 @@ public class BeliBarangPanel extends JPanel {
                 transaksi.dispose();
                 transaksi.setContentPane(new Transaksi(totalHarga));
                 transaksi.revalidate();
+                //Untuk Menutup
                 transaksi.dispose();
             }
         } else {
@@ -306,6 +314,7 @@ public class BeliBarangPanel extends JPanel {
         //Navigasi Tombol
         kembali.setContentPane(new Dashboard("Pelanggan"));
         kembali.revalidate();
+        //Untuk Menutup
         kembali.dispose();
     }
 }

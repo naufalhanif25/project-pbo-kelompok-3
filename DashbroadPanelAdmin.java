@@ -60,6 +60,7 @@ public class DashbroadPanelAdmin extends JPanel {
         // Tombol Tambahkan Barang
         JButton tambahBarangButton = new JButton("Tambahkan Barang");
         UIStyle.styleButton(tambahBarangButton);
+        //private void untuk tambahkanBarang
         tambahBarangButton.addActionListener(e -> tambahkanBarangAction());
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -70,6 +71,7 @@ public class DashbroadPanelAdmin extends JPanel {
         // Tombol ListBarang
         JButton listBarangButton = new JButton("List Barang");
         UIStyle.styleButton(listBarangButton);
+        //private void untuk listbarangAction
         listBarangButton.addActionListener(e -> listBarangAction());
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -80,6 +82,7 @@ public class DashbroadPanelAdmin extends JPanel {
         // Tombol List Transaksi
         JButton listTransaksiButton = new JButton("List Transaksi");
         UIStyle.styleButton(listTransaksiButton);
+        //private void untuk listTransaksiAction
         listTransaksiButton.addActionListener(e -> listTransaksiAction());
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -93,6 +96,7 @@ public class DashbroadPanelAdmin extends JPanel {
         UIStyle.styleButton(kembaliloginButton);
         gbc.gridx = 0;
         gbc.gridy = 5;
+        //private void kembali
         kembaliloginButton.addActionListener(e -> kembali());
         add(kembaliloginButton, gbc);
     }

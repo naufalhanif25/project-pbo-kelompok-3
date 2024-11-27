@@ -115,6 +115,7 @@ public class LoginPanel extends JPanel {
         // Login Button
         login = new JButton("Login");
         UIStyle.styleButton(login);
+        //private tombolLogin
         login.addActionListener(e -> tombollogin());
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -134,6 +135,7 @@ public class LoginPanel extends JPanel {
         // Create Account Button
         buatakun = new JButton("Buat Akun Baru");
         UIStyle.styleButton(buatakun);
+        //private void tombolcreateakun
         buatakun.addActionListener(e -> tombolcreateakun());
         gbc.gridy = 7;
         gbc.anchor = GridBagConstraints.CENTER;
@@ -184,6 +186,7 @@ public class LoginPanel extends JPanel {
         return false;
     }
 
+    //Navigasi createakun
     private void tombolcreateakun() {
         JFrame FrameBikinAkun = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (FrameBikinAkun != null) {

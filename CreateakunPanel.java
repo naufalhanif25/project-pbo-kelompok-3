@@ -122,6 +122,7 @@ public class CreateakunPanel extends JPanel {
         // Create Account Button
         JButton cbutton = new JButton("Buat Akun");
         UIStyle.styleButton(cbutton);
+        //private untuk CreateAkun
         cbutton.addActionListener(e -> createakun());
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -158,6 +159,7 @@ public class CreateakunPanel extends JPanel {
         }
     }
 
+    //Valid Pembuatan CreateAkun
     private void createakun() {
         String username = Cusername.getText();
         String password = new String(Cpassword.getPassword());
