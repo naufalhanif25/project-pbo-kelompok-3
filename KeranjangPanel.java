@@ -2,9 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableCellEditor;
 
 public class KeranjangPanel extends JPanel {
     private JTable keranjangTable;
@@ -45,7 +42,7 @@ public class KeranjangPanel extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         }
@@ -73,6 +70,17 @@ public class KeranjangPanel extends JPanel {
         // Menambahkan checkbox  
         keranjangTable.getColumnModel().getColumn(0).setCellEditor(keranjangTable.getDefaultEditor(Boolean.class));
         keranjangTable.getColumnModel().getColumn(0).setCellRenderer(keranjangTable.getDefaultRenderer(Boolean.class));
+
+        //Jumlah Edit Editor
+        // barangTable.getColumnModel().getColumn(5).setCellEditor(new JumlahEdit());
+        // JScrollPane scrollPane = new JScrollPane(barangTable);
+        // scrollPane.setPreferredSize(new Dimension(800, 300));
+        // gbc.gridy = 2;
+        // gbc.gridwidth = 2;
+        // gbc.anchor = GridBagConstraints.CENTER;
+        // add(scrollPane, gbc);
+        // revalidate(); 
+        // repaint();
 
         JScrollPane scrollPane = new JScrollPane(keranjangTable);
         scrollPane.setPreferredSize(new Dimension(350, 300));
@@ -105,7 +113,7 @@ public class KeranjangPanel extends JPanel {
 
     private void loadKeranjang() {
         // Membaca file Keranjang.txt dan mengisi tabel
-        try (BufferedReader reader = new BufferedReader(new FileReader("Keranjang.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Keranjang.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");

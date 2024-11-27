@@ -1,6 +1,5 @@
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -51,7 +50,7 @@ public class TambahBarangPanel extends JPanel {
       //Icon Image
       JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\BasketIconRB.png", 100, 100); 
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\BasketIconRB.png", 100, 100); 
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } else {
@@ -188,7 +187,7 @@ private void tambahkanBarang() {
       double hargaDouble = Double.parseDouble(harga);
 
       // Menulis data ke file
-      try (BufferedWriter writer = new BufferedWriter(new FileWriter("Barang.txt", true))) {
+      try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\Barang.txt", true))) {
           writer.write(idBarang + "," + namaBarang + "," + tipeBarang + "," + stokInt + "," + hargaDouble);
           writer.newLine();
       }
@@ -207,4 +206,4 @@ private void tambahkanBarang() {
       JOptionPane.showMessageDialog(this, "Gagal menulis ke file!", "Error", JOptionPane.ERROR_MESSAGE);
   }
   }
-}
+}   

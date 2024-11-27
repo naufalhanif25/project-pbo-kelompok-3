@@ -11,13 +11,13 @@ public class InvoicePanel extends JPanel{
 
   }
   //Style Label
-  private void styleLabel(JLabel Label) {
+  protected void styleLabel(JLabel Label) {
     Label.setFont(new Font("Arial", Font.BOLD, 16)); 
     Label.setForeground(Color.DARK_GRAY); 
 }
 
   //Style Button
-  private void styleButton(JButton button) {
+  protected void styleButton(JButton button) {
     button.setFont(new Font("Arial", Font.BOLD, 14));
     button.setBackground(new Color(58, 123, 245));
     button.setForeground(Color.WHITE);
@@ -56,7 +56,7 @@ public class InvoicePanel extends JPanel{
     //Icon Logo
     JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = loadImageIcon("pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } 

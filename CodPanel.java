@@ -21,8 +21,8 @@ public class CodPanel extends JPanel {
 
         // Panel utama dengan efek rounded
         g2d.setColor(new Color(255, 255, 255, 230));
-        int panelWidth = 400;
-        int panelHeight = 500;
+        int panelWidth = 320;
+        int panelHeight = 360;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
         g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
@@ -38,43 +38,70 @@ public class CodPanel extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 120, 120); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         }
-        gbc.gridx = 0;
+        gbc.gridx = 4;
         gbc.gridy = 0;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 7;
         gbc.anchor = GridBagConstraints.CENTER;
         add(logoLabel, gbc);
 
+        whiteSpace(1, 0);
+
+        gbc = new GridBagConstraints();
+
         // Pesan Pembayaran
-        JLabel messageLabel1 = new JLabel("Pembayaran melalui COD sebesar Rp");
+        JLabel messageLabel1 = new JLabel("Pembayaran melalui COD");
         UIStyle.styleLabel(messageLabel1);
-        gbc.gridy = 1; 
-        gbc.gridwidth = 2; 
+        gbc.gridx = 4;
+        gbc.gridy = 2; // Posisi di bawah logo
+        gbc.ipady = 8;
+        gbc.gridwidth = 7;
+        gbc.anchor = GridBagConstraints.CENTER;
         add(messageLabel1, gbc);
 
-        JLabel messageLabel2 = new JLabel("Pembayaran berhasil dilakukan menggunakan metode COD.");
+        JLabel messageLabel2 = new JLabel("sebesar Rp50000" + " berhasil");
         UIStyle.styleLabel(messageLabel2);
-        gbc.gridy = 2; 
+        gbc.gridy = 3; // Posisi di bawah pesan pertama
+        gbc.ipady = 8;
+        gbc.anchor = GridBagConstraints.CENTER;
         add(messageLabel2, gbc);
 
-        //Tombol Kembali
-        JButton kembaliButton = new JButton("Kembali Ke Dashboard");
-        UIStyle.styleButton(kembaliButton);
-        kembaliButton.addActionListener(e -> kembali());
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        add(kembaliButton, gbc);
+        gbc = new GridBagConstraints();
+        
+        whiteSpace(4, 20);
+
+        JButton menuUtamaButton = new JButton("Menu Utama");
+        UIStyle.styleButton(menuUtamaButton);
+        gbc.gridx = 4;
+        gbc.gridy = 5;
+        gbc.gridwidth = 7;
+        gbc.ipadx = -50;
+        gbc.anchor = GridBagConstraints.CENTER; 
+        menuUtamaButton.addActionListener(e -> pelanggan());
+        add(menuUtamaButton, gbc);
     }
 
-    private void kembali() {
-        JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
-        if (kembali != null) {
-            kembali.dispose(); // Menutup Laman
-            kembali.setContentPane(new Dashboard("Pelanggan")); //Navigasi Tombol
-            kembali.revalidate();
+    private void pelanggan() {
+        JFrame pelanggan= (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (pelanggan != null) {
+            pelanggan.dispose();
+            pelanggan.setContentPane(new Dashboard("Pelanggan"));
+            pelanggan.revalidate();
         }
+    }
+
+    private void whiteSpace(int gridy, int ipady) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        JLabel whiteSpace = new JLabel(" ");
+
+        UIStyle.styleLabel(whiteSpace);
+        gbc.gridx = 4;
+        gbc.gridy = gridy;
+        gbc.ipady = ipady;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(whiteSpace, gbc);
     }
 }

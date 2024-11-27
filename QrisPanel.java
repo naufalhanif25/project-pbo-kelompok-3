@@ -3,7 +3,6 @@ import java.awt.*;
 import java.io.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import java.net.URL;
 
 public class QrisPanel extends JPanel {
 
@@ -43,7 +42,7 @@ public class QrisPanel extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } 
@@ -55,7 +54,7 @@ public class QrisPanel extends JPanel {
 
         // Label untuk Informasi QRIS
         JLabel titleLabel = new JLabel("Pembayaran QRIS", SwingConstants.CENTER);
-         UIStyle.styleLabel(titleLabel);
+        UIStyle.styleLabel(titleLabel);
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
@@ -89,7 +88,7 @@ public class QrisPanel extends JPanel {
 
     private void bayarDenganQRIS() {
         // Menampilkan QR code dari Python
-        String pythonFilePath = "D:\\PBO\\UAS\\project-pbo-kelompok-3\\QR\\qrCode.py"; 
+        String pythonFilePath = "qr\\qrCode.py"; 
         String command = "python \"" + pythonFilePath + "\""; 
 
         try {
@@ -98,7 +97,7 @@ public class QrisPanel extends JPanel {
             process.waitFor();
 
             // Ambil gambar QR Code hasil dari Python (disimpan sebagai file gambar sementara)
-            File qrImageFile = new File("D:\\PBO\\UAS\\project-pbo-kelompok-3\\QR\\qr_image.png"); // Path file gambar QR code
+            File qrImageFile = new File("qr\\qr_image.png"); // Path file gambar QR code
             if (qrImageFile.exists()) {
                 BufferedImage qrImage = ImageIO.read(qrImageFile);
 
@@ -119,8 +118,8 @@ public class QrisPanel extends JPanel {
     private void kembali() {
         JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (kembali != null) {
-            kembali.dispose(); // Menutup Laman
-            kembali.setContentPane(new Dashboard("Pelanggan")); //Navigasi Tombol
+            kembali.dispose();
+            kembali.setContentPane(new Dashboard("Pelanggan"));
             kembali.revalidate();
         }
     }

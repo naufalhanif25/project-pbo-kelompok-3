@@ -1,6 +1,5 @@
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
@@ -52,7 +51,7 @@ public class CreateakunPanel extends JPanel {
         //Icon 
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\CreateAkunIconRB.png", 100, 100); 
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\CreateAkunIconRB.png", 100, 100); 
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } else {
@@ -167,7 +166,7 @@ public class CreateakunPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Harap isi semua kolom untuk membuat akun.", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             // Menulis ke file sesuai dengan role
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(role + ".txt", true))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\" + role + ".txt", true))) {
                 writer.write(username + "," + password);
                 writer.newLine();
                 JOptionPane.showMessageDialog(this, "Akun berhasil dibuat sebagai " + role + "!", "Info", JOptionPane.INFORMATION_MESSAGE);

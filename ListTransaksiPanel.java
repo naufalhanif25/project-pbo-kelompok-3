@@ -37,7 +37,7 @@ public class ListTransaksiPanel extends JPanel {
         // Icon
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\ListTransaksiRB.png", 100, 100);
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\ListTransaksiRB.png", 100, 100);
         logoLabel.setIcon(logoIcon != null ? logoIcon : new ImageIcon());
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -80,7 +80,7 @@ public class ListTransaksiPanel extends JPanel {
 
     private void loadTransaksi() {
         tableModel.setRowCount(0);
-        try (BufferedReader reader = new BufferedReader(new FileReader("Transaksi.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Transaksi.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");

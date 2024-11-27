@@ -7,7 +7,7 @@ public class TulisTransaksi {
   public static void tulisTransaksi(String IdTransaksi, String UserName,String Tanggal,String Keterangan, String Jumlah, String MetodePembayaran){
     String data = String.join(",", IdTransaksi, UserName, Tanggal, Keterangan, Jumlah, MetodePembayaran);
 
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter("Transaksi.txt"))){
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\Transaksi.txt", true))){
       writer.write(data);
       writer.newLine();
       JOptionPane.showMessageDialog(null, "Transaksi Berhasil Disimpan!", "Sukses", JOptionPane.INFORMATION_MESSAGE);

@@ -14,15 +14,15 @@ public class Invoice extends JFrame {
         setLocationRelativeTo(null);
 
         //Icon
-        setIconImage(new ImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\IconRB.png").getImage());
+        setIconImage(new ImageIcon("pict\\IconRB.png").getImage());
 
         // Memanggil panel berdasarkan metode pembayaran yang dipilih
         JPanel paymentPanel = null;
-        if (metodePembayaran.equals("QRIS")) {
+        if (this.metodePembayaran.equals("QRIS")) {
             paymentPanel = new QrisPanel();  
-        } else if (metodePembayaran.equals("BANK")) {
+        } else if (this.metodePembayaran.equals("BANK")) {
             paymentPanel = new BankPanel();  
-        } else if (metodePembayaran.equals("COD")) {
+        } else if (this.metodePembayaran.equals("COD")) {
             paymentPanel = new CodPanel();  
         }
 

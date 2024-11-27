@@ -2,7 +2,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.util.*;
 
 public class LoginPanel extends JPanel {
     private JTextField username;
@@ -44,7 +43,7 @@ public class LoginPanel extends JPanel {
         //Icon
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\LoginRB.png", 100, 100);
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\LoginRB.png", 100, 100);
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         }
@@ -167,7 +166,7 @@ public class LoginPanel extends JPanel {
     }
 
     private boolean validateLogin(String role, String username, String password) {
-        String fileName = (role.equals("Admin")) ? "Admin.txt" : "Pelanggan.txt";
+        String fileName = (role.equals("Admin")) ? "txt\\Admin.txt" : "txt\\Pelanggan.txt";
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {

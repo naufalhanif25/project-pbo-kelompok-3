@@ -23,6 +23,6 @@ public class Dashboard extends JFrame {
 
         setVisible(true);
         //Icon
-        setIconImage(new ImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\IconRB.png").getImage());
+        setIconImage(new ImageIcon("pict\\IconRB.png").getImage());
     }
 }

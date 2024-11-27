@@ -49,7 +49,7 @@ public class ListBarangPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
-        ImageIcon logoIcon = new ImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\ListBarangRB.png");
+        ImageIcon logoIcon = new ImageIcon("pict\\ListBarangRB.png");
         if (logoIcon.getIconWidth() > 0) {
             logoLabel.setIcon(new ImageIcon(logoIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
         } else {
@@ -106,7 +106,7 @@ public class ListBarangPanel extends JPanel {
     private void loadBarang() {
         tableModel.setRowCount(0); // Reset tabel
         TipeBarang.clear(); // Kosongkan HashMap
-        try (BufferedReader reader = new BufferedReader(new FileReader("barang.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Barang.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");

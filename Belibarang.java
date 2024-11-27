@@ -10,7 +10,7 @@ public class Belibarang extends JFrame{
     setLocationRelativeTo(null);
   
     //ICON
-    setIconImage(new ImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\IconRB.png").getImage());
+    setIconImage(new ImageIcon("pict\\IconRB.png").getImage());
 
     // Menambahkan Panel BeliBarang
     add(new BeliBarangPanel());

@@ -52,7 +52,7 @@ public class BeliBarangPanel extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("D:\\PBO\\UAS\\project-pbo-kelompok-3\\pict\\iconRB.png", 100, 100);
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 100, 100);
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         }
@@ -145,7 +145,7 @@ public class BeliBarangPanel extends JPanel {
         tableModel.setRowCount(0);  // Menghapus data lama dari tabel
         daftarBarang.clear();       // Menghapus barang yang sudah ada di ArrayList
     
-        try (BufferedReader reader = new BufferedReader(new FileReader("barang.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("txt\\barang.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
@@ -198,7 +198,7 @@ public class BeliBarangPanel extends JPanel {
         }
     
         if (!keranjang.isEmpty()) {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("Keranjang.txt", true))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\Keranjang.txt", true))) {
                 writer.write(dataKeranjang.toString());
                 writer.flush();
     
@@ -261,7 +261,7 @@ public class BeliBarangPanel extends JPanel {
 
     //Private saveBarangToFile
     private void saveBarangToFile() {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("barang.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\barang.txt"))) {
             for (int i = 0; i < tableModel.getRowCount(); i++) {
                 String idBarang = (String) tableModel.getValueAt(i, 0);
                 String namaBarang = (String) tableModel.getValueAt(i, 1);
