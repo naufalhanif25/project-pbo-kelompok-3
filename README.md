@@ -6,6 +6,7 @@
 3. Mulia Andiki (2308107010013)
 
 **Deskripsi:**
+
 Program E-Commerce menggunakan UI yang dibangun dengan komponen-komponen dari Java Swing, seperti JFrame, JPanel, JButton, JLabel, dll. JFrame dikhususkan untuk menjadi wadah bagi JPanel.Sederhananya JFrame bertugas untuk mengatur ukuran dari suatu laman yang akan ditempati oleh JPanell. JPanel bertugas sebagai desainer yang mengatur sytle, warna, button, label, icon, navigasi, layout, alur fungsi untuk menuliskan nilai ke dalam file text (.txt), dll.
 
 **Bahasa:**
