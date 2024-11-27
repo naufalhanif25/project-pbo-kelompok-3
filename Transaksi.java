@@ -1,27 +1,38 @@
-import java.util.ArrayList;
 
-public class Transaksi {
-    private ArrayList<Barang> daftarBarang;
+import javax.swing.*;
 
-    public Transaksi(ArrayList<Barang> daftarBarang) {
-        this.daftarBarang = new ArrayList<>(daftarBarang);
-    }
+public class Transaksi extends JFrame{
+  public  Transaksi(){
+    // Membuat JFrame untuk Create Account
+    setTitle("e-commerce");
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setExtendedState(JFrame.MAXIMIZED_BOTH);
+    setSize(800, 600);
+    setLocationRelativeTo(null);
+  
+    //ICON
+    setIconImage(new ImageIcon("pict\\IconRB.png").getImage());
 
-    // Menambahkan metode getTotal untuk menghitung total harga barang
-    public int getTotal() {
-        int total = 0;
-        for (Barang barang : daftarBarang) {
-            total += barang.getHarga();  // Mengambil harga dari masing-masing barang
-        }
-        return total;
-    }
+    // Menambahkan Panel BeliBarang
+    add(new TransaksiPanel());
+    setVisible(true);
+  }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder("Transaksi:\n");
-        for (Barang barang : daftarBarang) {
-            sb.append(barang).append("\n");
-        }
-        return sb.toString();
-    }
+  public Transaksi(double totalHarga) {
+    // Membuat JFrame untuk Create Account
+    setTitle("e-commerce");
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setExtendedState(JFrame.MAXIMIZED_BOTH);
+    setSize(800, 600);
+    setLocationRelativeTo(null);
+  
+    //ICON
+    setIconImage(new ImageIcon("pict\\IconRB.png").getImage());
+
+    // Menambahkan Panel BeliBarang
+    add(new TransaksiPanel(totalHarga));
+    System.out.println("Transaksi: " + totalHarga);
+    setVisible(true);
+  }
+  
 }
