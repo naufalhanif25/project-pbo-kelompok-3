@@ -48,6 +48,7 @@ public class BeliBarangPanel extends JPanel {
     }
 
     private void addComponents() {
+        //Installasi Gridbagconstraints
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
