@@ -206,4 +206,4 @@ private void tambahkanBarang() {
       JOptionPane.showMessageDialog(this, "Gagal menulis ke file!", "Error", JOptionPane.ERROR_MESSAGE);
   }
   }
-}   
+}
