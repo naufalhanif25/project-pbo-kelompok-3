@@ -1,17 +1,17 @@
-
 import javax.swing.*;
 import java.awt.*;
-
+    
 public class BankPanel extends JPanel {
     private double totalHarga;
 
+    //LAYOUT Dasar
     public BankPanel() {
         setLayout(new GridBagLayout());
         setOpaque(true);
         setBackground(Color.DARK_GRAY);
         addComponents();
     }
-
+    // class panel
     public BankPanel(double totalHarga) {
         this.totalHarga = totalHarga;
 
@@ -41,6 +41,7 @@ public class BankPanel extends JPanel {
         g2d.dispose();
     }
 
+    //Tambah Komponent
     private void addComponents() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -68,12 +69,13 @@ public class BankPanel extends JPanel {
         JLabel messageLabel1 = new JLabel("Pembayaran melalui BANK");
         UIStyle.styleLabel(messageLabel1);
         gbc.gridx = 4;
-        gbc.gridy = 2; // Posisi di bawah logo
+        gbc.gridy = 2;  
         gbc.ipady = 8;
         gbc.gridwidth = 7;
         gbc.anchor = GridBagConstraints.CENTER;
         add(messageLabel1, gbc);
 
+        // Label
         JLabel messageLabel2 = new JLabel("sebesar Rp" + this.totalHarga + " berhasil");
         UIStyle.styleLabel(messageLabel2);
         gbc.gridy = 3; // Posisi di bawah pesan pertama
@@ -85,6 +87,7 @@ public class BankPanel extends JPanel {
         
         whiteSpace(4, 20);
 
+        //Button 
         JButton menuUtamaButton = new JButton("Menu Utama");
         UIStyle.styleButton(menuUtamaButton);
         gbc.gridx = 4;
@@ -95,7 +98,7 @@ public class BankPanel extends JPanel {
         menuUtamaButton.addActionListener(e -> pelanggan());
         add(menuUtamaButton, gbc);
     }
-
+    //Navigasi ke Dasboard Pelanggan
     private void pelanggan() {
         JFrame pelanggan= (JFrame) SwingUtilities.getWindowAncestor(this);
         if (pelanggan != null) {

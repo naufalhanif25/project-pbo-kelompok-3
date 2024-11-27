@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedWriter;
@@ -157,7 +156,7 @@ public class TambahBarangPanel extends JPanel {
         add(kembaliloginButton, gbc);
   }
 
-  //Navigasi 
+  //Navigasi Kembali
   private void kembali(){
     JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
     if (kembali != null) {

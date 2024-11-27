@@ -1,13 +1,10 @@
-
 import javax.swing.*;
 import java.awt.*;
 
 public class DashboardPanelPelanggan extends JPanel {
-
     public DashboardPanelPelanggan() {
         setLayout(new GridBagLayout());
         setOpaque(true);
-
         addComponents();
     }
 
@@ -23,7 +20,7 @@ public class DashboardPanelPelanggan extends JPanel {
         // Panel utama
         g2d.setColor(new Color(255, 255, 255, 200));
         int panelWidth = 400;
-        int panelHeight = 400;
+        int panelHeight = 450;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
         g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
@@ -80,11 +77,19 @@ public class DashboardPanelPelanggan extends JPanel {
         gbc.gridy = 3; 
         add(keranjangBarangButton, gbc);
 
+        // Tombol Riwayat Transaksi
+        JButton riwayatTransaksiButton = new JButton("Riwayat Transaksi");
+        UIStyle.styleButton(riwayatTransaksiButton);
+        riwayatTransaksiButton.addActionListener(e -> listTransaksiAction());
+        gbc.gridx = 0;
+        gbc.gridy = 4; 
+        add(riwayatTransaksiButton, gbc);
+
         //Tombol Kembali KeLogin
-        JButton kembaliloginButton = new JButton("Back");
+        JButton kembaliloginButton = new JButton("Kembali");
         UIStyle.styleButton(kembaliloginButton);
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         kembaliloginButton.addActionListener(e -> kembali());
         add(kembaliloginButton, gbc);
 
@@ -101,7 +106,7 @@ public class DashboardPanelPelanggan extends JPanel {
         }
     }
 
-
+    //Navigasi BeliBarang
     private void BeliBarang(){
         JFrame belibarang = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (belibarang != null) {
@@ -111,7 +116,18 @@ public class DashboardPanelPelanggan extends JPanel {
             belibarang.dispose();
         }
     }
-    
+
+    // Action untuk tombol List Transaksi 
+    private void listTransaksiAction() {
+        JFrame listransaksi = (JFrame)SwingUtilities.getWindowAncestor(this);
+        if (listransaksi != null) {
+            listransaksi.dispose();
+            //Navigasi Tombol
+            listransaksi.setContentPane(new ListTransaksi());
+            listransaksi.dispose();
+        
+        }
+    }
 
     private void kembali(){
         JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);

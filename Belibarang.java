@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 public class Belibarang extends JFrame{
   public Belibarang() {

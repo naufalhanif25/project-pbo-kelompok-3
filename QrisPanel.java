@@ -133,6 +133,7 @@ public class QrisPanel extends JPanel {
         }
     }
 
+    //Navigasi Kembali
     private void kembali() {
         JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (kembali != null) {

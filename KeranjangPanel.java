@@ -28,7 +28,7 @@ public class KeranjangPanel extends JPanel {
         // Panel utama dengan efek rounded
         g2d.setColor(new Color(255, 255, 255, 230));
         int panelWidth = 400;
-        int panelHeight = 600;
+        int panelHeight = 650;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
         g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
@@ -73,19 +73,8 @@ public class KeranjangPanel extends JPanel {
         keranjangTable.getColumnModel().getColumn(0).setCellEditor(keranjangTable.getDefaultEditor(Boolean.class));
         keranjangTable.getColumnModel().getColumn(0).setCellRenderer(keranjangTable.getDefaultRenderer(Boolean.class));
 
-        //Jumlah Edit Editor
-        // barangTable.getColumnModel().getColumn(5).setCellEditor(new JumlahEdit());
-        // JScrollPane scrollPane = new JScrollPane(barangTable);
-        // scrollPane.setPreferredSize(new Dimension(800, 300));
-        // gbc.gridy = 2;
-        // gbc.gridwidth = 2;
-        // gbc.anchor = GridBagConstraints.CENTER;
-        // add(scrollPane, gbc);
-        // revalidate(); 
-        // repaint();
-
         JScrollPane scrollPane = new JScrollPane(keranjangTable);
-        scrollPane.setPreferredSize(new Dimension(350, 300));
+        scrollPane.setPreferredSize(new Dimension(350, 200));
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
@@ -93,8 +82,9 @@ public class KeranjangPanel extends JPanel {
         add(scrollPane, gbc);
 
         // Tombol Bayar
-        JButton bayarButton = new JButton("Bayar");
+        JButton bayarButton = new JButton("Checkout");
         UIStyle.styleButton(bayarButton);
+        //private void prosesBayar
         bayarButton.addActionListener(e -> prosesBayar());
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -102,18 +92,33 @@ public class KeranjangPanel extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         add(bayarButton, gbc);
 
+        // Tombol Hapus keranjang
+        JButton hapusButton = new JButton("Hapus Keranjang");
+        UIStyle.styleButton(hapusButton);
+        //public void hapusBarang
+        hapusButton.addActionListener(e -> hapusBarang());
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(hapusButton, gbc);
+
         // Tombol Kembali
         JButton kembaliButton = new JButton("Kembali");
         UIStyle.styleButton(kembaliButton);
+        //private void Kembali
         kembaliButton.addActionListener(e -> kembali());
         gbc.gridx = 0;
-        gbc.gridy = 4;
+        gbc.gridy = 5;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
         add(kembaliButton, gbc);
     }
 
     private void loadKeranjang() {
+        if (tableModel != null) {
+            tableModel.setRowCount(0);
+        }
         // Membaca file Keranjang.txt dan mengisi tabel
         try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Keranjang.txt"))) {
             String line;
@@ -173,7 +178,7 @@ public class KeranjangPanel extends JPanel {
                     while ((line = reader.readLine()) != null) {
                         data.add(line);
                     }
-
+                    
                     hapusList(items, data);
 
                     reader.close();
@@ -181,13 +186,14 @@ public class KeranjangPanel extends JPanel {
                 catch (IOException e) {
                     e.printStackTrace();
                 }
-
+                //Navigasi Transaksi
                 transaksi.dispose();
                 transaksi.setContentPane(new Transaksi(totalHarga));  
                 transaksi.revalidate(); 
                 transaksi.dispose();
             }
-        } else {
+        } 
+        else {
             JOptionPane.showMessageDialog(this,
                     "Pilih barang terlebih dahulu!",
                     "Peringatan",
@@ -195,7 +201,53 @@ public class KeranjangPanel extends JPanel {
         }
     }
 
-    private void hapusList(ArrayList<String> listDomain, ArrayList<String> listTarget) {
+    public void hapusBarang() {
+        ArrayList<String> items = new ArrayList<>();
+        Double totalHarga = 0.0;
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            Boolean isSelected = (Boolean) tableModel.getValueAt(i, 0); // Kolom 0 adalah checkbox
+            if (isSelected != null && isSelected) {
+                String namaBarang = (String) tableModel.getValueAt(i, 1);
+                int jumlah = (int) tableModel.getValueAt(i, 2);
+                double harga = (double) tableModel.getValueAt(i, 3);
+                totalHarga += harga;
+                String tempKeranjang = namaBarang + "," + jumlah + "," + harga;
+                
+                items.add(tempKeranjang);
+            }
+        }
+    
+        if (items.size() > 0) {    
+            // Navigasi ke panel transaksi tanpa menutup jendela
+            JFrame transaksi = (JFrame) SwingUtilities.getWindowAncestor(this); 
+            if (transaksi != null) {
+                ArrayList<String> data = new ArrayList<>();
+
+                try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Keranjang.txt"))) {
+                    String line;
+        
+                    while ((line = reader.readLine()) != null) {
+                        data.add(line);
+                    }
+                    
+                    hapusList(items, data);
+
+                    reader.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        } 
+        else {
+            JOptionPane.showMessageDialog(this,
+                    "Pilih barang terlebih dahulu!",
+                    "Peringatan",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    public void hapusList(ArrayList<String> listDomain, ArrayList<String> listTarget) {
         ArrayList<String> newItems = new ArrayList<>();
         Iterator<String> iterator = listDomain.iterator();
 
@@ -219,7 +271,7 @@ public class KeranjangPanel extends JPanel {
         hapusKeranjang(newItems);
     }
 
-    private void hapusKeranjang(ArrayList<String> items) {
+    public void hapusKeranjang(ArrayList<String> items) {
         ArrayList<String> data = new ArrayList<>(items);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\Keranjang.txt"))) {
@@ -233,8 +285,10 @@ public class KeranjangPanel extends JPanel {
         catch (IOException e) {
             e.printStackTrace();
         }
+        //
+        loadKeranjang();
     }
-
+    //Navigasi Kembali
     private void kembali() {
         JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (kembali != null) {
@@ -244,5 +298,4 @@ public class KeranjangPanel extends JPanel {
             kembali.dispose();
         }
     }
-
 }

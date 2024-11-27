@@ -1,6 +1,4 @@
-
 import javax.swing.*;
-
 
 public class Dashboard extends JFrame {
 
@@ -11,7 +9,7 @@ public class Dashboard extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
 
-        // Mengatur panel berdasarkan peran
+        // Mengatur panel berdasarkan peran sebagai admin atau pelanggan
         if (role.equalsIgnoreCase("Admin")) {
             setContentPane(new DashbroadPanelAdmin());
         } else if (role.equalsIgnoreCase("Pelanggan")) {

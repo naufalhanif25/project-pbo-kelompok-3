@@ -35,12 +35,14 @@ public class CodPanel extends JPanel {
         int panelHeight = 360;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
+        //agar kotak tidak lancip
         g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
 
         g2d.dispose();
     }
 
     private void addComponents() {
+        //Installasi Gridbagconstraints
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -94,12 +96,14 @@ public class CodPanel extends JPanel {
         add(menuUtamaButton, gbc);
     }
 
+    //void Navigasi ke Dashboard Pelangga
     private void pelanggan() {
         JFrame pelanggan= (JFrame) SwingUtilities.getWindowAncestor(this);
         if (pelanggan != null) {
             pelanggan.dispose();
             pelanggan.setContentPane(new Dashboard("Pelanggan"));
             pelanggan.revalidate();
+            //agar menutup saat menekan menu utama
             pelanggan.dispose();
         }
     }
