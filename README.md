@@ -40,11 +40,12 @@ Program E-Commerce menggunakan UI yang dibangun dengan komponen-komponen dari Ja
 24. Main.java                    --> Kelas Main
 25. QrisPanel.java               --> Panel halaman QRIS
 26. ReadFile.java                --> Kelas untuk membaca file Barang
-27. Search.java                  --> Kelas untuk mencari barang
-28. TambahBarang.java            --> Frame halaman tambah barang
-29. TambahBarangPanel.java       --> Panel halaman tambah barang
-30. Transaksi.java               --> Frame halaman transaksi
-31. TransaksiPanel.java          --> Panel halaman transaksi
-32. TulisTransaksi.java          --> Logika menulis transaksi ke file text
-33. UIStyle.java                 --> Konfigurasi UI
-34. qrCode.py                    --> Program untuk membuat kode QR
+27. ReadLog.java                 --> Kelas untuk membaca file log
+28. Search.java                  --> Kelas untuk mencari barang
+29. TambahBarang.java            --> Frame halaman tambah barang
+30. TambahBarangPanel.java       --> Panel halaman tambah barang
+31. Transaksi.java               --> Frame halaman transaksi
+32. TransaksiPanel.java          --> Panel halaman transaksi
+33. TulisTransaksi.java          --> Logika menulis transaksi ke file text
+34. UIStyle.java                 --> Konfigurasi UI
+35. qrCode.py                    --> Program untuk membuat kode QR
