@@ -101,7 +101,7 @@ public class DashboardPanelPelanggan extends JPanel {
         }
     }
 
-
+    //Navigasi BeliBarang
     private void BeliBarang(){
         JFrame belibarang = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (belibarang != null) {
