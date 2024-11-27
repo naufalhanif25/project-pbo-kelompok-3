@@ -12,7 +12,7 @@ public class BankPanel extends JPanel {
         setBackground(Color.DARK_GRAY);
         addComponents();
     }
-    //
+    // class panel
     public BankPanel(double totalHarga) {
         this.totalHarga = totalHarga;
 
