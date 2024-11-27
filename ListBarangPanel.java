@@ -9,14 +9,12 @@ public class ListBarangPanel extends JPanel {
     private JTable barangTable;
     private DefaultTableModel tableModel;
     private HashMap<String, List<String[]>> TipeBarang;
-    private KeranjangPanel keranjangPanel;
 
     public ListBarangPanel() {
         setLayout(new GridBagLayout());
         setOpaque(true);
         setBackground(Color.DARK_GRAY);
         TipeBarang = new HashMap<>();
-        keranjangPanel = new KeranjangPanel(); 
         addComponents(); 
         loadBarang(); 
     }
@@ -33,7 +31,7 @@ public class ListBarangPanel extends JPanel {
         // Panel utama dengan efek rounded
         g2d.setColor(new Color(255, 255, 255, 230));
         int panelWidth = 600;
-        int panelHeight = 750;
+        int panelHeight = 670;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
         g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
@@ -69,7 +67,7 @@ public class ListBarangPanel extends JPanel {
         tableModel = new DefaultTableModel(new Object[]{"ID Barang", "Nama Barang", "Tipe Barang", "Stok", "Harga"}, 0);
         barangTable = new JTable(tableModel);
         JScrollPane scrollPane = new JScrollPane(barangTable);
-        scrollPane.setPreferredSize(new Dimension(550, 300));
+        scrollPane.setPreferredSize(new Dimension(550, 200));
         gbc.gridy = 2;
         add(scrollPane, gbc);
 
@@ -95,8 +93,8 @@ public class ListBarangPanel extends JPanel {
         gbc.gridx = 0;
         add(deleteButton, gbc);
         // Tombol Muat Ulang
+
         JButton reloadButton = new JButton("Muat Ulang");
-        
         reloadButton.addActionListener(e -> loadBarang());
         UIStyle.styleButton(reloadButton);
         gbc.gridy = 4;
@@ -106,7 +104,7 @@ public class ListBarangPanel extends JPanel {
         add(reloadButton, gbc);
 
         // Tombol Keluar
-        JButton backButton = new JButton("Back");
+        JButton backButton = new JButton("Kembali");
         UIStyle.styleButton(backButton);
         backButton.addActionListener(e -> kembali());
         gbc.gridy = 6;
@@ -136,54 +134,60 @@ public class ListBarangPanel extends JPanel {
     // Hapus Barang
     private void hapusBarang() {
         int selectedRow = barangTable.getSelectedRow();
+        ArrayList<String> data = new ArrayList<>();
+
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Pilih barang yang ingin dihapus!", "Peringatan", JOptionPane.WARNING_MESSAGE);
             return;
         }
     
         // Ambil data dari baris yang dipilih
-        String idBarang = tableModel.getValueAt(selectedRow, 0).toString();
+        String idBarangTable = tableModel.getValueAt(selectedRow, 0).toString();
     
         // Konfirmasi penghapusan
         int confirm = JOptionPane.showConfirmDialog(this, 
-            "Apakah Anda yakin ingin menghapus barang dengan ID " + idBarang + "?", 
+            "Apakah Anda yakin ingin menghapus barang dengan ID " + idBarangTable + "?", 
             "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
         if (confirm != JOptionPane.YES_OPTION) return;
     
-        // Memuat data dari file ke dalam ArrayList
-        ArrayList<String> listDomain = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Barang.txt"))) {
             String line;
-            while ((line = reader.readLine()) != null) {
-                listDomain.add(line);
-            }
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Gagal memuat data dari file!", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-    
-        // Membuat daftar target yang akan dihapus
-        ArrayList<String> listTarget = new ArrayList<>();
-        for (String item : listDomain) {
-            if (item.startsWith(idBarang + ",")) {
-                listTarget.add(item);
-            }
-        }
-    
-        // Menghapus item menggunakan metode hapusList
-        keranjangPanel.hapusList(listDomain, listTarget);
+        
+            for (int index = 0; (line = reader.readLine()) != null; index++) {
+                String[] parts = line.split(",");
+                String idBarang = parts[0];
 
+                data.add(line);
 
-        // Menulis ulang daftar yang sudah dihapus ke file
+                if (idBarang.equals(idBarangTable)) {
+                    data.remove(index);
+                }
+            }
+
+            tulisBarang(data);
+            loadBarang();
+
+            reader.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Tulis Barang
+    public void tulisBarang(ArrayList<String> items) {
+        ArrayList<String> data = new ArrayList<>(items);
+
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\Barang.txt"))) {
-            for (String item : listDomain) {
+            for (String item : data) {
                 writer.write(item);
                 writer.newLine();
             }
-            JOptionPane.showMessageDialog(this, "Barang berhasil dihapus!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
-            loadBarang(); // Memperbarui tabel
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Gagal menulis ulang data ke file!", "Error", JOptionPane.ERROR_MESSAGE);
+
+            writer.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
         

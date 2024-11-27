@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 
 public class ListTransaksi extends JFrame{

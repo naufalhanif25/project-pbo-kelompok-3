@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -140,6 +139,13 @@ public class LoginPanel extends JPanel {
         gbc.gridy = 7;
         gbc.anchor = GridBagConstraints.CENTER;
         add(buatakun, gbc);
+
+        JButton keluaButton = new JButton("Keluar");
+        UIStyle.styleButton(keluaButton);
+        keluaButton.addActionListener(e -> System.exit(0));
+        gbc.gridy = 8;
+        gbc.anchor = GridBagConstraints.CENTER;
+        add(keluaButton, gbc);
     }
 
     private void tombollogin() {
@@ -168,6 +174,17 @@ public class LoginPanel extends JPanel {
         }
     }
 
+    private void writeLog(String username) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\Log.txt"))) {
+            writer.write(username);
+            writer.newLine();
+            writer.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private boolean validateLogin(String role, String username, String password) {
         String fileName = (role.equals("Admin")) ? "txt\\Admin.txt" : "txt\\Pelanggan.txt";
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
@@ -175,6 +192,8 @@ public class LoginPanel extends JPanel {
             while ((line = reader.readLine()) != null) {
                 String[] credentials = line.split(","); 
                 if (credentials.length == 2 && credentials[0].equals(username) && credentials[1].equals(password)) {
+                    writeLog(username);
+
                     return true;
                 }
             }

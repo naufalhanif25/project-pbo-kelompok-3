@@ -1,4 +1,3 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.io.FileWriter;
@@ -139,7 +138,7 @@ public class CreateakunPanel extends JPanel {
         add(info, gbc);
 
         // Back to Login Button
-        JButton backButton = new JButton("Kembali Login");
+        JButton backButton = new JButton("Login");
         UIStyle.styleButton(backButton);
         backButton.addActionListener(e -> kembaliLogin());
         gbc.gridx = 0;

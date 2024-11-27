@@ -45,7 +45,7 @@
 045,kursi,Perabotan,4,50000.0
 046,karpet,Perabotan,3,70000.0
 047,cermin,Perabotan,2,20000.0
-048,lampu,Perabotan,5,15000.0
+048,lampu,Perabotan,4,15000.0
 049,rak buku,Perabotan,2,90000.0
 050,lemari es,Elektronik,1,400000.0
 051,robot mainan,Mainan,4,50000.0
@@ -136,4 +136,3 @@
 136,karpet,Perabotan,3,70000.0
 300,Samyang,Makanan,9,13000.0
 111,Gacoan,Makanan,100,10000.0
-200,Sendok,Peralatan,8,10000.0
