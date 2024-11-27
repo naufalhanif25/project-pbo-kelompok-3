@@ -14,6 +14,6 @@ public class Login extends JFrame {
         
         // Panggil Panellogin
         add(new LoginPanel());
-       setVisible(true);
+        setVisible(true);
     }
 }

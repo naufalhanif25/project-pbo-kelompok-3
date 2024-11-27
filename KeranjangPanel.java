@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 public class KeranjangPanel extends JPanel {
     private JTable keranjangTable;
@@ -42,7 +44,7 @@ public class KeranjangPanel extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\BeliBarangRB.png", 100, 100); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         }
@@ -62,7 +64,7 @@ public class KeranjangPanel extends JPanel {
         add(titleLabel, gbc);
 
         // Tabel Keranjang dengan checkbox
-        String[] columnNames = {"Pilih", "Nama Barang", "Jumlah"};
+        String[] columnNames = {"Pilih", "Nama Barang", "Jumlah", "Total Harga"};
         tableModel = new DefaultTableModel(columnNames, 0);
         keranjangTable = new JTable(tableModel);
         keranjangTable.setRowHeight(30);
@@ -117,12 +119,15 @@ public class KeranjangPanel extends JPanel {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
-                if (data.length == 2) {
+                if (data.length == 3) {
                     String namaBarang = data[0].trim();
-                    String jumlah = data[1].trim();
-                    tableModel.addRow(new Object[]{false, namaBarang, jumlah}); 
+                    int jumlah = Integer.parseInt(data[1].trim());
+                    double totalHarga = Double.parseDouble(data[2].trim());
+                    tableModel.addRow(new Object[]{false, namaBarang, jumlah, totalHarga}); 
                 }
             }
+
+            reader.close();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this,
                     "Gagal memuat data keranjang!",
@@ -134,16 +139,23 @@ public class KeranjangPanel extends JPanel {
     private void prosesBayar() {
         // Menyaring barang yang dipilih berdasarkan checkbox yang dicentang
         StringBuilder selectedItems = new StringBuilder();
+        ArrayList<String> items = new ArrayList<>();
+        Double totalHarga = 0.0;
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             Boolean isSelected = (Boolean) tableModel.getValueAt(i, 0); // Kolom 0 adalah checkbox
             if (isSelected != null && isSelected) {
                 String namaBarang = (String) tableModel.getValueAt(i, 1);
-                String jumlah = (String) tableModel.getValueAt(i, 2);
-                selectedItems.append(namaBarang).append(" (Jumlah: ").append(jumlah).append(")\n");
+                int jumlah = (int) tableModel.getValueAt(i, 2);
+                double harga = (double) tableModel.getValueAt(i, 3);
+                totalHarga += harga;
+                selectedItems.append(namaBarang).append(",").append(jumlah).append(",").append(harga).append("\n");
+                String tempKeranjang = namaBarang + "," + jumlah + "," + harga;
+                
+                items.add(tempKeranjang);
             }
         }
     
-        if (selectedItems.length() > 0) {
+        if (items.size() > 0) {
             // Tampilkan konfirmasi pembayaran
             JOptionPane.showMessageDialog(this,
                     "Pembayaran untuk barang yang dipilih:\n" + selectedItems.toString(),
@@ -153,9 +165,27 @@ public class KeranjangPanel extends JPanel {
             // Navigasi ke panel transaksi tanpa menutup jendela
             JFrame transaksi = (JFrame) SwingUtilities.getWindowAncestor(this); 
             if (transaksi != null) {
+                ArrayList<String> data = new ArrayList<>();
+
+                try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Keranjang.txt"))) {
+                    String line;
+        
+                    while ((line = reader.readLine()) != null) {
+                        data.add(line);
+                    }
+
+                    hapusList(items, data);
+
+                    reader.close();
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 transaksi.dispose();
-                transaksi.setContentPane(new Transaksi());  
+                transaksi.setContentPane(new Transaksi(totalHarga));  
                 transaksi.revalidate(); 
+                transaksi.dispose();
             }
         } else {
             JOptionPane.showMessageDialog(this,
@@ -165,12 +195,53 @@ public class KeranjangPanel extends JPanel {
         }
     }
 
+    private void hapusList(ArrayList<String> listDomain, ArrayList<String> listTarget) {
+        ArrayList<String> newItems = new ArrayList<>();
+        Iterator<String> iterator = listDomain.iterator();
+
+        while (iterator.hasNext()) {
+            String line = iterator.next();
+
+            if (listTarget.contains(line)) {
+                listTarget.remove(line);
+                iterator.remove();
+                
+                if (newItems.size() > 0) {
+                    newItems.clear();
+                }
+
+                for (String item : listTarget) {
+                    newItems.add(item);
+                }
+            }
+        }
+
+        hapusKeranjang(newItems);
+    }
+
+    private void hapusKeranjang(ArrayList<String> items) {
+        ArrayList<String> data = new ArrayList<>(items);
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\Keranjang.txt"))) {
+            for (String item : data) {
+                writer.write(item);
+                writer.newLine();
+            }
+
+            writer.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void kembali() {
         JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (kembali != null) {
             kembali.dispose();
             kembali.setContentPane(new Dashboard("Pelanggan"));
             kembali.revalidate();
+            kembali.dispose();
         }
     }
 

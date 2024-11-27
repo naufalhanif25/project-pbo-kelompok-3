@@ -15,7 +15,5 @@ public class Belibarang extends JFrame{
     // Menambahkan Panel BeliBarang
     add(new BeliBarangPanel());
     setVisible(true);
-    
   }
-  
 }

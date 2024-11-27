@@ -50,7 +50,7 @@ public class TambahBarangPanel extends JPanel {
       //Icon Image
       JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\BasketIconRB.png", 100, 100); 
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\AddBarangRB.png", 100, 100); 
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } else {
@@ -165,6 +165,7 @@ public class TambahBarangPanel extends JPanel {
         //Navigasi Tombol
         kembali.setContentPane(new Dashboard("Admin"));
         kembali.revalidate();
+        kembali.dispose();
     }
 }
 
@@ -206,4 +207,4 @@ private void tambahkanBarang() {
       JOptionPane.showMessageDialog(this, "Gagal menulis ke file!", "Error", JOptionPane.ERROR_MESSAGE);
   }
   }
-}   
+}

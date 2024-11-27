@@ -18,7 +18,6 @@ public class Keranjang extends JFrame{
     // Menambahkan Panel BeliBarang
     add(new KeranjangPanel());
     setVisible(true);
-    
   }
 }
   

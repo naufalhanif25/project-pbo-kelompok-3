@@ -37,7 +37,7 @@ public class ListTransaksiPanel extends JPanel {
         // Icon
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\ListTransaksiRB.png", 100, 100);
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\TransaksiRB.png", 100, 100);
         logoLabel.setIcon(logoIcon != null ? logoIcon : new ImageIcon());
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -90,6 +90,8 @@ public class ListTransaksiPanel extends JPanel {
                     System.out.println("Baris Data Tidak Valid: " + line);
                 }
             }
+
+            reader.close();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Gagal memuat transaksi dari file!", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -103,6 +105,7 @@ public class ListTransaksiPanel extends JPanel {
             kembali.dispose();
             kembali.setContentPane(new Dashboard("Admin"));
             kembali.revalidate();
+            kembali.dispose();
         }
     }
 }

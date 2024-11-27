@@ -4,7 +4,7 @@ import javax.swing.*;
 public class Invoice extends JFrame {
     private String metodePembayaran;
 
-    public Invoice(String metodePembayaran) {
+    public Invoice(String metodePembayaran, double totalHarga) {
         this.metodePembayaran = metodePembayaran;  // Menyimpan metode pembayaran yang dipilih
 
         setTitle("e-commerce");
@@ -19,11 +19,11 @@ public class Invoice extends JFrame {
         // Memanggil panel berdasarkan metode pembayaran yang dipilih
         JPanel paymentPanel = null;
         if (this.metodePembayaran.equals("QRIS")) {
-            paymentPanel = new QrisPanel();  
+            paymentPanel = new QrisPanel(totalHarga);  
         } else if (this.metodePembayaran.equals("BANK")) {
-            paymentPanel = new BankPanel();  
+            paymentPanel = new BankPanel(totalHarga);  
         } else if (this.metodePembayaran.equals("COD")) {
-            paymentPanel = new CodPanel();  
+            paymentPanel = new CodPanel(totalHarga);  
         }
 
         if (paymentPanel != null) {

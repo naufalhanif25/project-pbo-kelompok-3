@@ -11,6 +11,8 @@ public class TulisTransaksi {
       writer.write(data);
       writer.newLine();
       JOptionPane.showMessageDialog(null, "Transaksi Berhasil Disimpan!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+
+      writer.close();
     } catch (IOException e){
       JOptionPane.showMessageDialog(null, "Gagal menyimpan transaksi!", "Error", JOptionPane.ERROR_MESSAGE);
     }

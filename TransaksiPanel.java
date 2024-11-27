@@ -1,13 +1,20 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TransaksiPanel extends JPanel {
     private JComboBox<String> metodeComboBox;
-    private List<Barang> daftarBarang = new ArrayList<>();
+    private double totalHarga;
 
     public TransaksiPanel() {
+        setLayout(new GridBagLayout());
+        setOpaque(true);
+        setBackground(Color.DARK_GRAY);
+        addComponents();
+    }
+
+    public TransaksiPanel(double totalHarga) {
+        this.totalHarga = totalHarga;
+
         setLayout(new GridBagLayout());
         setOpaque(true);
         setBackground(Color.DARK_GRAY);
@@ -42,7 +49,7 @@ public class TransaksiPanel extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 100, 100); // Ganti path dengan logo Anda
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\MetodePembayaranRB.png", 100, 100); // Ganti path dengan logo Anda
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         }
@@ -88,7 +95,6 @@ public class TransaksiPanel extends JPanel {
             String Keterangan = "Sukses";
 
         // Hitung total harga
-            double totalHarga = hitungTotalHarga();
             String Jumlah = String.format("%.2f", totalHarga);
 
         // Menyimpan transaksi ke file
@@ -113,21 +119,9 @@ public class TransaksiPanel extends JPanel {
         JFrame transaksiFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (transaksiFrame != null) {
             transaksiFrame.dispose();
-            new Invoice(metodePembayaran);  
+            transaksiFrame.setContentPane(new Invoice(metodePembayaran, totalHarga)); 
+            transaksiFrame.dispose(); 
         }
-    }
-
-    private double hitungTotalHarga() {
-        double total = 0.0;
-
-        for (Barang barang : daftarBarang) {
-            int jumlah = barang.getStok(); 
-            double hargaPerUnit = barang.getHarga(); 
-            total += jumlah * hargaPerUnit;
-        }
-
-    
-        return total;
     }
 
     private void kembali() {
@@ -137,6 +131,7 @@ public class TransaksiPanel extends JPanel {
             // Navigasi Tombol
             kembali.setContentPane(new Keranjang());
             kembali.revalidate();
+            kembali.dispose();
         }
     }
 

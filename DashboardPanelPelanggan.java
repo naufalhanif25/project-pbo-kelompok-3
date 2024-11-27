@@ -44,7 +44,7 @@ public class DashboardPanelPelanggan extends JPanel {
         // Icon Logo
         JLabel logoLabel = new JLabel();
         logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\iconRB.png", 100, 100); 
+        ImageIcon logoIcon = ImageUtils.loadImageIcon("pict\\ICONPELANGGANRB.png", 100, 100); 
         if (logoIcon != null) {
             logoLabel.setIcon(logoIcon);
         } else {
@@ -97,6 +97,7 @@ public class DashboardPanelPelanggan extends JPanel {
             keranjang.dispose();
             //Navigasi Tombol
             keranjang.setContentPane(new Keranjang());
+            keranjang.dispose();
         }
     }
 
@@ -107,6 +108,7 @@ public class DashboardPanelPelanggan extends JPanel {
             belibarang.dispose();
             //Navigasi Tombol
             belibarang.setContentPane(new Belibarang());
+            belibarang.dispose();
         }
     }
     
@@ -117,6 +119,7 @@ public class DashboardPanelPelanggan extends JPanel {
             kembali.dispose();
             //Navigasi Tombol
             kembali.setContentPane(new Login());
+            kembali.dispose();
         }
     }
 }

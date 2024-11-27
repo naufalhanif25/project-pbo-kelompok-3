@@ -16,9 +16,5 @@ public class TambahBarang extends JFrame{
     //PanggilPanel
     add(new TambahBarangPanel());
     setVisible(true);
-
-
   }
-
-  
 }

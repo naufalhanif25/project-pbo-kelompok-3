@@ -158,6 +158,7 @@ public class LoginPanel extends JPanel {
                     Dashboard.dispose(); 
                     // Navigasi 
                     Dashboard.setContentPane(new Dashboard(role));
+                    Dashboard.dispose();
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Username atau Password salah!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -175,6 +176,8 @@ public class LoginPanel extends JPanel {
                     return true;
                 }
             }
+
+            reader.close();
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Terjadi kesalahan saat membaca file!", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -187,6 +190,7 @@ public class LoginPanel extends JPanel {
             FrameBikinAkun.dispose();
             // Navigasi Tombol
             FrameBikinAkun.setContentPane(new Createakun());
+            FrameBikinAkun.dispose();
         }
     }
 }
