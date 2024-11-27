@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 public class TulisTransaksi {
   public static void tulisTransaksi(String IdTransaksi, String UserName,String Tanggal,String Keterangan, String Jumlah, String MetodePembayaran){
     String data = String.join(",", IdTransaksi, UserName, Tanggal, Keterangan, Jumlah, MetodePembayaran);
-
+    //Menulis KeTransaksi.txt
     try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\Transaksi.txt", true))){
       writer.write(data);
       writer.newLine();

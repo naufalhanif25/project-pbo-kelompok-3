@@ -9,6 +9,7 @@ public class Search extends JPanel{
     private DefaultTableModel tableModel;
     private HashMap<String, List<String[]>> tipeBarang;
 
+    // Method Mencari Barang Dengan Tipe Data 
     public Search(DefaultTableModel tableModel, HashMap<String, List<String[]>> tipeBarang) {
       this.tableModel = tableModel;
       this.tipeBarang = tipeBarang;
