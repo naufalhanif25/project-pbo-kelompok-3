@@ -2,5 +2,3 @@ baju,3,30000.0
 baju,1,10000.0
 baju,7,70000.0
 kemeja,1,20000.0
-nasi goreng,1,15000.0
-nasi goreng,1,15000.0
