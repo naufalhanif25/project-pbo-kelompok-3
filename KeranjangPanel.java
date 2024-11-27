@@ -28,7 +28,7 @@ public class KeranjangPanel extends JPanel {
         // Panel utama dengan efek rounded
         g2d.setColor(new Color(255, 255, 255, 230));
         int panelWidth = 400;
-        int panelHeight = 600;
+        int panelHeight = 650;
         int x = (getWidth() - panelWidth) / 2;
         int y = (getHeight() - panelHeight) / 2;
         g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
@@ -72,17 +72,6 @@ public class KeranjangPanel extends JPanel {
         // Menambahkan checkbox  
         keranjangTable.getColumnModel().getColumn(0).setCellEditor(keranjangTable.getDefaultEditor(Boolean.class));
         keranjangTable.getColumnModel().getColumn(0).setCellRenderer(keranjangTable.getDefaultRenderer(Boolean.class));
-
-        //Jumlah Edit Editor
-        // barangTable.getColumnModel().getColumn(5).setCellEditor(new JumlahEdit());
-        // JScrollPane scrollPane = new JScrollPane(barangTable);
-        // scrollPane.setPreferredSize(new Dimension(800, 300));
-        // gbc.gridy = 2;
-        // gbc.gridwidth = 2;
-        // gbc.anchor = GridBagConstraints.CENTER;
-        // add(scrollPane, gbc);
-        // revalidate(); 
-        // repaint();
 
         JScrollPane scrollPane = new JScrollPane(keranjangTable);
         scrollPane.setPreferredSize(new Dimension(350, 300));
@@ -175,7 +164,7 @@ public class KeranjangPanel extends JPanel {
                     while ((line = reader.readLine()) != null) {
                         data.add(line);
                     }
-
+                    
                     hapusList(items, data);
 
                     reader.close();
@@ -197,7 +186,7 @@ public class KeranjangPanel extends JPanel {
         }
     }
 
-    private void hapusList(ArrayList<String> listDomain, ArrayList<String> listTarget) {
+    public void hapusList(ArrayList<String> listDomain, ArrayList<String> listTarget) {
         ArrayList<String> newItems = new ArrayList<>();
         Iterator<String> iterator = listDomain.iterator();
 
@@ -235,6 +224,8 @@ public class KeranjangPanel extends JPanel {
         catch (IOException e) {
             e.printStackTrace();
         }
+        //
+        loadKeranjang();
     }
     //Navigasi Kembali
     private void kembali() {

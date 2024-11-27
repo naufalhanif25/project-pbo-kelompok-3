@@ -1,7 +1,7 @@
 
 import javax.swing.*;
 import java.awt.*;
-
+    
 public class BankPanel extends JPanel {
     private double totalHarga;
 

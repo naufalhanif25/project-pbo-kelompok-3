@@ -8,13 +8,15 @@ import javax.swing.table.DefaultTableModel;
 public class ListBarangPanel extends JPanel {
     private JTable barangTable;
     private DefaultTableModel tableModel;
-    private HashMap<String, List<String[]>> TipeBarang; 
+    private HashMap<String, List<String[]>> TipeBarang;
+    private KeranjangPanel keranjangPanel;
 
     public ListBarangPanel() {
         setLayout(new GridBagLayout());
         setOpaque(true);
         setBackground(Color.DARK_GRAY);
-        TipeBarang = new HashMap<>(); 
+        TipeBarang = new HashMap<>();
+        keranjangPanel = new KeranjangPanel(); 
         addComponents(); 
         loadBarang(); 
     }
@@ -83,6 +85,15 @@ public class ListBarangPanel extends JPanel {
         gbc.gridx = 1;
         gbc.gridwidth = 2;
         add(searchPanel, gbc);
+
+        //Delete Barang
+        JButton deleteButton = new JButton("Hapus Barang");
+        UIStyle.styleButton(deleteButton);
+        deleteButton.addActionListener(e -> hapusBarang());
+        gbc.gridy = 5;
+        gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        add(deleteButton, gbc);
         // Tombol Muat Ulang
         JButton reloadButton = new JButton("Muat Ulang");
         
@@ -98,7 +109,7 @@ public class ListBarangPanel extends JPanel {
         JButton backButton = new JButton("Back");
         UIStyle.styleButton(backButton);
         backButton.addActionListener(e -> kembali());
-        gbc.gridy = 5;
+        gbc.gridy = 6;
         add(backButton, gbc);
     }
 
@@ -122,6 +133,60 @@ public class ListBarangPanel extends JPanel {
         }
     }
 
+    // Hapus Barang
+    private void hapusBarang() {
+        int selectedRow = barangTable.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Pilih barang yang ingin dihapus!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+    
+        // Ambil data dari baris yang dipilih
+        String idBarang = tableModel.getValueAt(selectedRow, 0).toString();
+    
+        // Konfirmasi penghapusan
+        int confirm = JOptionPane.showConfirmDialog(this, 
+            "Apakah Anda yakin ingin menghapus barang dengan ID " + idBarang + "?", 
+            "Konfirmasi Hapus", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) return;
+    
+        // Memuat data dari file ke dalam ArrayList
+        ArrayList<String> listDomain = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Barang.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                listDomain.add(line);
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Gagal memuat data dari file!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    
+        // Membuat daftar target yang akan dihapus
+        ArrayList<String> listTarget = new ArrayList<>();
+        for (String item : listDomain) {
+            if (item.startsWith(idBarang + ",")) {
+                listTarget.add(item);
+            }
+        }
+    
+        // Menghapus item menggunakan metode hapusList
+        keranjangPanel.hapusList(listDomain, listTarget);
+
+
+        // Menulis ulang daftar yang sudah dihapus ke file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\Barang.txt"))) {
+            for (String item : listDomain) {
+                writer.write(item);
+                writer.newLine();
+            }
+            JOptionPane.showMessageDialog(this, "Barang berhasil dihapus!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
+            loadBarang(); // Memperbarui tabel
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Gagal menulis ulang data ke file!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+        
     // Fungsi untuk kembali ke dashboard
     private void kembali() {
         JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
