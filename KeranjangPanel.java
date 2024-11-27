@@ -95,6 +95,7 @@ public class KeranjangPanel extends JPanel {
         // Tombol Bayar
         JButton bayarButton = new JButton("Bayar");
         UIStyle.styleButton(bayarButton);
+        //private void prosesBayar
         bayarButton.addActionListener(e -> prosesBayar());
         gbc.gridx = 0;
         gbc.gridy = 3;
@@ -105,6 +106,7 @@ public class KeranjangPanel extends JPanel {
         // Tombol Kembali
         JButton kembaliButton = new JButton("Kembali");
         UIStyle.styleButton(kembaliButton);
+        //private void Kembali
         kembaliButton.addActionListener(e -> kembali());
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -181,7 +183,7 @@ public class KeranjangPanel extends JPanel {
                 catch (IOException e) {
                     e.printStackTrace();
                 }
-
+                //Navigasi Transaksi
                 transaksi.dispose();
                 transaksi.setContentPane(new Transaksi(totalHarga));  
                 transaksi.revalidate(); 
@@ -234,7 +236,7 @@ public class KeranjangPanel extends JPanel {
             e.printStackTrace();
         }
     }
-
+    //Navigasi Kembali
     private void kembali() {
         JFrame kembali = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (kembali != null) {
