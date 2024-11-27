@@ -86,7 +86,7 @@ public class DashboardPanelPelanggan extends JPanel {
         add(riwayatTransaksiButton, gbc);
 
         //Tombol Kembali KeLogin
-        JButton kembaliloginButton = new JButton("Kembali");
+        JButton kembaliloginButton = new JButton("Keluar");
         UIStyle.styleButton(kembaliloginButton);
         gbc.gridx = 0;
         gbc.gridy = 5;

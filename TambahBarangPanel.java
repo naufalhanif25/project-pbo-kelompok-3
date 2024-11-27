@@ -33,7 +33,7 @@ public class TambahBarangPanel extends JPanel {
       // Panel utama dengan efek rounded
       g2d.setColor(new Color(255, 255, 255, 230));
       int panelWidth = 475;
-      int panelHeight = 580;
+      int panelHeight = 600;
       int x = (getWidth() - panelWidth) / 2;
       int y = (getHeight() - panelHeight) / 2;
       g2d.fillRoundRect(x, y, panelWidth, panelHeight, 20, 20);
@@ -148,7 +148,7 @@ public class TambahBarangPanel extends JPanel {
       gbc.anchor = GridBagConstraints.CENTER;
       add(tambahBarangButton, gbc);
 
-      JButton kembaliloginButton = new JButton("Back");
+      JButton kembaliloginButton = new JButton("Kembali");
       UIStyle.styleButton(kembaliloginButton);
         gbc.gridx = 0;
         gbc.gridy = 8;

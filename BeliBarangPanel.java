@@ -125,7 +125,7 @@ public class BeliBarangPanel extends JPanel {
         buttonPanel.add(keranjangButton);
 
         //Tombol Bayar
-        JButton bayarButton = new JButton("Bayar");
+        JButton bayarButton = new JButton("Checkout");
         UIStyle.styleButton(bayarButton);
         //Membuat Private Void prosesPembayaranz
         bayarButton.addActionListener(e -> prosesPembayaran());
@@ -136,7 +136,7 @@ public class BeliBarangPanel extends JPanel {
         add(buttonPanel, gbc);
 
         // Tombol Kembali
-        JButton kembaliButton = new JButton("Back");
+        JButton kembaliButton = new JButton("Kembali");
         UIStyle.styleButton(kembaliButton);
         //Membuat Private Void Kembali
         kembaliButton.addActionListener(e -> kembali());
@@ -194,8 +194,10 @@ public class BeliBarangPanel extends JPanel {
         // Loop untuk setiap row di tabel
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             Boolean isSelected = (Boolean) tableModel.getValueAt(i, 6);  
+            ReadLog log = new ReadLog();
             if (isSelected != null && isSelected) {
                 Double totalHarga = 0.0;
+                String username = log.readFile();
                 String namaBarang = (String) tableModel.getValueAt(i, 1);  
                 int jumlah = (int) tableModel.getValueAt(i, 5);   
                 Double hargaBarang = (Double) tableModel.getValueAt(i, 4); 
@@ -206,7 +208,7 @@ public class BeliBarangPanel extends JPanel {
                 keranjang.add(namaBarang + " (Jumlah: " + jumlah + ")");
     
                 // Menambahkan barang ke data keranjang untuk ditulis ke file
-                dataKeranjang.append(namaBarang).append(",").append(jumlah).append(",").append(totalHarga).append("\n");
+                dataKeranjang.append(username).append(",").append(namaBarang).append(",").append(jumlah).append(",").append(totalHarga).append("\n");
             }
         }
     

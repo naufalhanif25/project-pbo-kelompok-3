@@ -116,6 +116,9 @@ public class KeranjangPanel extends JPanel {
     }
 
     private void loadKeranjang() {
+        ReadLog log = new ReadLog();
+        String username = log.readFile();
+
         if (tableModel != null) {
             tableModel.setRowCount(0);
         }
@@ -124,10 +127,12 @@ public class KeranjangPanel extends JPanel {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
-                if (data.length == 3) {
-                    String namaBarang = data[0].trim();
-                    int jumlah = Integer.parseInt(data[1].trim());
-                    double totalHarga = Double.parseDouble(data[2].trim());
+                String tempName = data[0];
+
+                if (data.length == 4 && tempName.equals(username)) {
+                    String namaBarang = data[1].trim();
+                    int jumlah = Integer.parseInt(data[2].trim());
+                    double totalHarga = Double.parseDouble(data[3].trim());
                     tableModel.addRow(new Object[]{false, namaBarang, jumlah, totalHarga}); 
                 }
             }
@@ -203,15 +208,17 @@ public class KeranjangPanel extends JPanel {
 
     public void hapusBarang() {
         ArrayList<String> items = new ArrayList<>();
+        ReadLog log = new ReadLog();
         Double totalHarga = 0.0;
         for (int i = 0; i < tableModel.getRowCount(); i++) {
             Boolean isSelected = (Boolean) tableModel.getValueAt(i, 0); // Kolom 0 adalah checkbox
             if (isSelected != null && isSelected) {
+                String username = log.readFile();
                 String namaBarang = (String) tableModel.getValueAt(i, 1);
                 int jumlah = (int) tableModel.getValueAt(i, 2);
                 double harga = (double) tableModel.getValueAt(i, 3);
                 totalHarga += harga;
-                String tempKeranjang = namaBarang + "," + jumlah + "," + harga;
+                String tempKeranjang = username + "," + namaBarang + "," + jumlah + "," + harga;
                 
                 items.add(tempKeranjang);
             }

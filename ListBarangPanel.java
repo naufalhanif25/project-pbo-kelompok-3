@@ -104,7 +104,7 @@ public class ListBarangPanel extends JPanel {
         add(reloadButton, gbc);
 
         // Tombol Keluar
-        JButton backButton = new JButton("Back");
+        JButton backButton = new JButton("Kembali");
         UIStyle.styleButton(backButton);
         backButton.addActionListener(e -> kembali());
         gbc.gridy = 6;
