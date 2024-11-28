@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 
 public class QrisPanel extends JPanel {
 
-    private JLabel qrCodeLabel; // Label untuk menampilkan QR Code
+    private JLabel qrCodeLabel; 
     private double totalHarga;
 
     public QrisPanel() {

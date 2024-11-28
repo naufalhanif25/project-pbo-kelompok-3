@@ -111,8 +111,39 @@ public class ListBarangPanel extends JPanel {
         add(backButton, gbc);
     }
 
+    // Update list barang
+    public void updateBarang() {
+        ArrayList<String> items = new ArrayList<>();
+
+        for (int i = 0; i < tableModel.getRowCount(); i++) {
+            String idBarang = (String) tableModel.getValueAt(i, 0);
+            String namaBarang = (String) tableModel.getValueAt(i, 1);
+            String tipeBarang = (String) tableModel.getValueAt(i, 2);
+            String stok = (String) tableModel.getValueAt(i, 3);
+            String hargaBarang = (String) tableModel.getValueAt(i, 4);
+
+            items.add(idBarang + "," + namaBarang + "," + tipeBarang + "," + stok + "," + hargaBarang);
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("txt\\Barang.txt"))) {
+            for (String item : items) {
+                writer.write(item);
+                writer.newLine();
+            }
+
+            writer.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Memuat data barang dari file
-    private void loadBarang() {
+    private void loadBarang() {    
+        if (tableModel.getRowCount() != 0) {
+            updateBarang();
+        }
+
         tableModel.setRowCount(0); // Reset tabel
         TipeBarang.clear(); // Kosongkan HashMap
         try (BufferedReader reader = new BufferedReader(new FileReader("txt\\Barang.txt"))) {
